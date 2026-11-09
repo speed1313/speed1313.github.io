@@ -7,6 +7,7 @@
     "build": "astro check && astro build && pagefind --site dist && rm -rf public/pagefind && cp -r dist/pagefind public/",
     "build:cv": "cd cv/files && xelatex -interaction=nonstopmode -halt-on-error cv_sugiura.tex && xelatex -interaction=nonstopmode -halt-on-error cv_sugiura.tex && cp cv_sugiura.pdf ../../public/cv.pdf",
     "preview": "astro preview",
+    "deploy": "scripts/deploy.sh",
     "sync": "astro sync",
     "astro": "astro",
     "format:check": "prettier --check .",
