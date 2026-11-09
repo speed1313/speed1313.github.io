@@ -1,0 +1,267 @@
+<!DOCTYPE html><html dir="ltr" lang="ja" class="scroll-smooth"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="canonical" href="https://speed1313.github.io/posts/os_zisaku/"><link rel="alternate" hreflang="ja" href="https://speed1313.github.io/posts/os_zisaku/"><link rel="alternate" hreflang="en" href="https://speed1313.github.io/en/posts/os_zisaku/"><link rel="alternate" hreflang="x-default" href="https://speed1313.github.io/posts/os_zisaku/"><meta name="generator" content="Astro v7.4.4"><!-- General Meta Tags --><title>OS自作で変わったOSを見る目 | speed1313 Blog</title><meta name="title" content="OS自作で変わったOSを見る目 | speed1313 Blog"><meta name="description" content="本稿では、自作OSを通じて変わったOSを見る目について述べます。"><meta name="author" content="speed1313"><link rel="sitemap" href="/sitemap-index.xml"><!-- Open Graph / Facebook --><meta property="og:type" content="article"><meta property="og:locale" content="ja_JP"><meta property="og:title" content="OS自作で変わったOSを見る目 | speed1313 Blog"><meta property="og:description" content="本稿では、自作OSを通じて変わったOSを見る目について述べます。"><meta property="og:url" content="https://speed1313.github.io/posts/os_zisaku/"><meta property="og:image" content="https://speed1313.github.io/posts/os_zisaku/index.png"><!-- Article Published/Modified time --><meta property="article:published_time" content="2023-08-17T00:00:00.000Z"><!-- Twitter --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:url" content="https://speed1313.github.io/posts/os_zisaku/"><meta name="twitter:title" content="OS自作で変わったOSを見る目 | speed1313 Blog"><meta name="twitter:description" content="本稿では、自作OSを通じて変わったOSを見る目について述べます。"><meta name="twitter:image" content="https://speed1313.github.io/posts/os_zisaku/index.png"><!-- Google JSON-LD Structured data --><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"OS自作で変わったOSを見る目","image":"https://speed1313.github.io/posts/os_zisaku/index.png","datePublished":"2023-08-17T00:00:00.000Z","inLanguage":"ja","mainEntityOfPage":"https://speed1313.github.io/posts/os_zisaku/","author":[{"@type":"Person","name":"speed1313"}]}</script><!-- Enable RSS feed auto-discovery  --><!-- https://docs.astro.build/en/recipes/rss/#enabling-rss-feed-auto-discovery --><link rel="alternate" type="application/rss+xml" title="speed1313 Blog" href="https://speed1313.github.io/rss.xml"><!-- Google Analytics --><script src="https://www.googletagmanager.com/gtag/js?id=G-7X0Q0NSDB9"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        // gtag.js only reads Arguments objects from dataLayer, not arrays.
+        // eslint-disable-next-line prefer-rest-params
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-7X0Q0NSDB9");
+    </script><meta name="theme-color" content=""><meta name="astro-view-transitions-enabled" content="true"> <meta name="astro-view-transitions-fallback" content="animate"><script type="module" src="/_astro/ClientRouter.astro_astro_type_script_index_0_lang.DXqcZz58.js"></script><script src="/toggle-theme.js"></script><style>@keyframes astroFadeInOut{0%{opacity:1}to{opacity:0}}@keyframes astroFadeIn{0%{opacity:0;mix-blend-mode:plus-lighter}to{opacity:1;mix-blend-mode:plus-lighter}}@keyframes astroFadeOut{0%{opacity:1;mix-blend-mode:plus-lighter}to{opacity:0;mix-blend-mode:plus-lighter}}@keyframes astroSlideFromRight{0%{transform:translate(100%)}}@keyframes astroSlideFromLeft{0%{transform:translate(-100%)}}@keyframes astroSlideToRight{to{transform:translate(100%)}}@keyframes astroSlideToLeft{to{transform:translate(-100%)}}@media (prefers-reduced-motion){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*),[data-astro-transition-scope]{animation:none!important}}
+</style><link rel="stylesheet" href="/_astro/Footer.B68Ii7U4.css"><style>[data-astro-transition-scope="astro-eq54l3i4-1"] { view-transition-name: os\81EA\4F5C\3067\5909\308F\3063\305Fos\3092\898B\308B\76EE; }@layer astro { ::view-transition-old(os\81EA\4F5C\3067\5909\308F\3063\305Fos\3092\898B\308B\76EE) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(os\81EA\4F5C\3067\5909\308F\3063\305Fos\3092\898B\308B\76EE) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(os\81EA\4F5C\3067\5909\308F\3063\305Fos\3092\898B\308B\76EE) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(os\81EA\4F5C\3067\5909\308F\3063\305Fos\3092\898B\308B\76EE) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-eq54l3i4-1"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-eq54l3i4-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-eq54l3i4-1"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-eq54l3i4-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-eq54l3i4-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-eq54l3i4-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-eq54l3i4-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-eq54l3i4-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style></head> <body>  <header id="site-header" class="fixed inset-x-0 top-0 z-20 border-b border-transparent bg-background"> <a id="skip-to-content" href="#main-content" class="sr-only z-50 bg-background px-3 py-2 text-accent focus:not-sr-only focus:absolute focus:start-16 focus:top-4">
+Skip to content
+</a> <!-- Same width as the home and About pages, so the edges line up. --> <div id="nav-container" class="flex w-full flex-col items-center justify-between sm:flex-row"> <div id="top-nav-wrap" class="relative mx-auto flex min-h-[56px] w-full max-w-5xl items-baseline justify-between bg-background px-4 py-2 sm:items-center sm:py-2"> <a href="/" class="absolute flex items-center gap-2 py-1 text-lg leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-xl sm:leading-none"> <svg viewBox="1.8 6.2 26 18.4" fill="currentColor" aria-hidden="true" class="h-[0.9em] w-auto text-accent"><path d="M5.6 12.4 L1.8 13.9 L5.4 15.2 Z" /><path fill-rule="evenodd" d="M5.2 14.2 C5.2 9.6 8.6 6.2 13 6.2 C16.9 6.2 19.7 8.6 20.6 12.1 C22.4 12.6 25.2 12.4 27.6 11.6 C27.4 16.4 25.2 20.6 21.6 22.6 C19.6 23.8 17.2 24.4 14.8 24.4 C9.4 24.4 5.2 20.4 5.2 14.2 Z M8.9 12.6 a1.9 1.9 0 1 0 3.8 0 a1.9 1.9 0 1 0 -3.8 0 Z" /></svg> speed1313 Blog </a> <nav id="nav-menu" class="flex w-full flex-col items-center sm:ms-2 sm:flex-row sm:justify-end sm:space-x-4 sm:py-0"> <div class="flex items-center gap-1 self-end sm:hidden"> <!--
+  Names the language it switches to, written in that language. The fixed
+  width keeps the header from shifting between "English" and "日本語".
+--><a href="/en/posts/os_zisaku/" lang="en" hreflang="en" class="focus-outline flex w-16 justify-center px-2 py-2 text-sm font-medium whitespace-nowrap hover:text-accent sm:w-14 sm:px-1 sm:py-1"> English </a> <a href="/#search" data-search-toggle role="button" aria-label="Search" aria-expanded="false" aria-controls="search-panel" title="Search" class="group focus-outline flex p-2"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-aria-expanded:hidden" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden group-aria-expanded:block" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg> </a> <button id="menu-btn" class="focus-outline p-2" aria-label="Open Menu" aria-expanded="false" aria-controls="menu-items"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden" id="close-icon"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-menu-deep" id="menu-icon"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 6h16" /><path d="M7 12h13" /><path d="M10 18h10" /></svg> </button> </div> <ul id="menu-items" class="mt-4 grid w-44 grid-cols-2 place-content-center gap-2 [&amp;>li>a]:block [&amp;>li>a]:px-4 [&amp;>li>a]:py-3 [&amp;>li>a]:text-center [&amp;>li>a]:font-medium [&amp;>li>a]:hover:text-accent sm:[&amp;>li>a]:px-2 sm:[&amp;>li>a]:py-1 hidden sm:mt-0 sm:flex sm:w-auto sm:gap-x-5 sm:gap-y-0"> <li class="col-span-2"> <a href="/" class="active-nav">
+Posts
+</a> </li> <li class="col-span-2"> <a href="/about">
+About
+</a> </li>  <li class="hidden items-center justify-center sm:flex"> <a href="/#search" data-search-toggle role="button" aria-label="Search" aria-expanded="false" aria-controls="search-panel" title="Search" class="group focus-outline flex p-1"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-aria-expanded:hidden" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden group-aria-expanded:block" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg> </a> </li> <li class="col-span-2 flex items-center justify-center sm:col-span-1"> <button id="theme-btn" class="focus-outline relative size-12 p-4 sm:size-8 hover:[&amp;&gt;svg]:stroke-accent" title="Toggles light &amp; dark" aria-label="auto" aria-live="polite"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute top-[50%] left-[50%] -translate-[50%] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" /></svg> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute top-[50%] left-[50%] -translate-[50%] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M14.828 14.828a4 4 0 1 0 -5.656 -5.656a4 4 0 0 0 5.656 5.656z" /><path d="M6.343 17.657l-1.414 1.414" /><path d="M6.343 6.343l-1.414 -1.414" /><path d="M17.657 6.343l1.414 -1.414" /><path d="M17.657 17.657l1.414 1.414" /><path d="M4 12h-2" /><path d="M12 4v-2" /><path d="M20 12h2" /><path d="M12 20v2" /></svg> </button> </li> <li class="hidden items-center sm:flex">  <div class="flex"> <!--
+  Names the language it switches to, written in that language. The fixed
+  width keeps the header from shifting between "English" and "日本語".
+--><a href="/en/posts/os_zisaku/" lang="en" hreflang="en" class="focus-outline flex w-16 justify-center px-2 py-2 text-sm font-medium whitespace-nowrap hover:text-accent sm:w-14 sm:px-1 sm:py-1"> English </a> </div> </li> </ul> </nav> </div> </div> </header> <div id="search-panel" role="dialog" aria-label="Search" hidden class="fixed inset-x-0 top-[57px] bottom-0 z-20 overflow-y-auto overscroll-contain bg-background"> <div class="mx-auto max-w-app px-4 pt-10 pb-16"> <div id="search-panel-ui" class="pagefind-theme"></div> </div> </div><script type="module" src="/_astro/SearchPanel.astro_astro_type_script_index_0_lang._yjhVhtJ.js"></script> <!-- Reserves the fixed header's height (56px + 1px border) in the flow. --> <div aria-hidden="true" class="h-[57px] shrink-0"></div><script type="module">function e(){let e=document.querySelector(`#menu-btn`),t=document.querySelector(`#menu-items`),n=document.querySelector(`#menu-icon`),r=document.querySelector(`#close-icon`);e&&t&&n&&r&&e.addEventListener(`click`,()=>{let i=e.getAttribute(`aria-expanded`)===`true`;e.setAttribute(`aria-expanded`,i?`false`:`true`),e.setAttribute(`aria-label`,i?`Open Menu`:`Close Menu`),t.classList.toggle(`hidden`),n.classList.toggle(`hidden`),r.classList.toggle(`hidden`)})}e(),document.addEventListener(`astro:after-swap`,e);</script> <main id="main-content" class="relative mx-auto mt-12 w-full max-w-app px-4 pb-16 sm:mt-20 lg:ms-[max(15rem,calc((100%-48rem)/2))]" data-pagefind-body="true"> <!-- Like the OpenAI blog: date and tags above a large centered title. --><header class="text-center"> <div data-pagefind-ignore class="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-sm"> <time class datetime="2023-08-17T00:00:00.000Z">2023年8月17日</time> <ul class="flex flex-wrap justify-center gap-x-4"> <li> <a href="/?tag=notes#posts" class="text-foreground/60 underline-offset-4 hover:text-foreground hover:underline"> Notes </a> </li> </ul> </div> <h1 data-astro-transition-scope="astro-eq54l3i4-1" class="mt-5 text-3xl leading-tight text-balance sm:text-5xl sm:leading-tight"> OS自作で変わったOSを見る目 </h1> </header> <div data-pagefind-ignore class="mt-12 flex items-center justify-between gap-4 border-t border-foreground/10 pt-4 sm:mt-16">  <div class="relative ms-auto shrink-0"> <button type="button" data-share-button class="focus-outline flex items-center gap-x-2 text-sm opacity-80 hover:text-accent hover:opacity-100 sm:text-base"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-6" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 15l6 -6" /><path d="M11 6l.463 -.536a5 5 0 0 1 7.071 7.072l-.534 .464" /><path d="M13 18l-.397 .534a5.068 5.068 0 0 1 -7.127 0a4.972 4.972 0 0 1 0 -7.071l.524 -.463" /></svg> <span>Share</span> </button> <!-- Overlaid below the button so nothing around it moves. --> <span role="status" data-copied class="pointer-events-none absolute end-0 top-full mt-1 rounded bg-foreground px-2 py-0.5 text-xs whitespace-nowrap text-background opacity-0 transition-opacity motion-reduce:transition-none">コピーしました</span> </div><script type="module">function e(){for(let e of document.querySelectorAll(`[data-share-button]`)){if(e.dataset.ready)continue;e.dataset.ready=`true`;let t=e.parentElement?.querySelector(`[data-copied]`),n=t?.textContent??``,r;e.addEventListener(`click`,async()=>{let e=location.href.split(`#`)[0];try{await navigator.clipboard.writeText(e)}catch{await navigator.share?.({url:e,title:document.title}).catch(()=>{});return}t&&(t.textContent=``,t.textContent=n,t.classList.remove(`opacity-0`),clearTimeout(r),r=setTimeout(()=>t.classList.add(`opacity-0`),1500))})}}document.addEventListener(`astro:page-load`,e);</script> </div>  <div class="relative"> <aside class="absolute top-0 right-full hidden h-full w-52 pe-8 lg:block" data-pagefind-ignore> <nav id="post-toc" aria-label="Table of contents" hidden class="group sticky top-[calc(57px+2rem)] flex max-h-[calc(100svh-57px-4rem)] gap-3"> <ul class="min-w-0 flex-1 [scrollbar-width:none] overflow-y-auto overscroll-contain text-[0.8125rem] leading-snug [&amp;::-webkit-scrollbar]:hidden"></ul> <!-- Scrollbar for the list, shown on hover when it overflows. --> <div aria-hidden="true" data-track class="invisible relative w-1 shrink-0 rounded-full bg-foreground/10 opacity-0 transition-opacity group-hover:opacity-100"> <div data-thumb class="absolute inset-x-0 rounded-full bg-foreground/35"></div> </div> </nav> </aside> <div id="post-toc-mobile" hidden data-pagefind-ignore class="pointer-events-none invisible fixed inset-x-0 top-[57px] z-10 -translate-y-2 border-b border-foreground/10 bg-background opacity-0 transition-[opacity,translate] duration-200 motion-reduce:transition-none lg:hidden"> <button type="button" aria-expanded="false" aria-controls="post-toc-mobile-list" class="focus-outline flex w-full items-center gap-2 px-4 py-2.5 text-start text-[0.8125rem]"> <span class="sr-only">Table of contents:</span> <span data-current class="min-w-0 flex-1 truncate text-foreground/60"></span> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-5 shrink-0 -rotate-90 opacity-70 transition-transform motion-reduce:transition-none" aria-hidden="true" data-chevron="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 6l-6 6l6 6" /></svg> </button> <nav id="post-toc-mobile-list" aria-label="Table of contents" hidden class="pointer-events-none relative max-h-[60svh] overflow-y-auto overscroll-contain px-4 pb-2"> <!-- Starts on the bar's row; the right side stays free for the toggle. --><ul class="pointer-events-auto me-8 text-[0.8125rem] leading-snug"></ul> </nav> </div><script type="module">var e=new Set([`footnote-label`]),t=57,n=96;function r(e){let t=e.cloneNode(!0);return t.querySelectorAll(`.katex-mathml, .heading-link`).forEach(e=>e.remove()),t.textContent?.replace(/\s+/g,` `).trim()??``}function i(){let i=document.querySelector(`#post-toc`),a=i?.querySelector(`ul`),o=i?.querySelector(`[data-track]`),s=i?.querySelector(`[data-thumb]`),c=document.querySelector(`#article`);if(!i||!a||!o||!s||!c||i.dataset.ready)return;i.dataset.ready=`true`;let l=[...c.querySelectorAll(`h2[id], h3[id]`)].filter(t=>!e.has(t.id));if(l.length<2)return;let u=l.map(r),d=(e,t,n,r)=>{let i=l.map((r,i)=>{let a=document.createElement(`a`);a.href=`#${encodeURIComponent(r.id)}`,a.textContent=u[i],a.className=`block ${t} ${n} transition-colors hover:text-accent `+(r.tagName===`H3`?`ps-3`:``);let o=document.createElement(`li`);return o.append(a),e.append(o),a});return{items:i,mark:(e,t)=>i[e]?.classList.replace(t?n:r,t?r:n)}},f=d(a,`py-1`,`text-foreground/45`,`text-foreground`),p=f.items;i.hidden=!1;let m=document.querySelector(`#post-toc-mobile`),h=m?.querySelector(`button`),g=m?.querySelector(`nav`),_=g?.querySelector(`ul`),v=m?.querySelector(`[data-current]`),y=m?.querySelector(`[data-chevron]`),b=_?d(_,`py-2.5`,`text-foreground/40`,`text-foreground/85`):void 0,x=b?.items??[];m&&(m.hidden=!1);let S=-1,C=e=>{if(!h||!g)return;h.setAttribute(`aria-expanded`,String(e)),g.hidden=!e,v?.classList.toggle(`invisible`,e),g.style.marginTop=e?`-${h.offsetHeight}px`:``,y?.classList.toggle(`-rotate-90`,!e),y?.classList.toggle(`rotate-90`,e);let t=x[S];e&&t&&(g.scrollTop=t.offsetTop-g.clientHeight/3)};h?.addEventListener(`click`,()=>C(h.getAttribute(`aria-expanded`)!==`true`)),x.forEach(e=>e.addEventListener(`click`,()=>C(!1)));let w=e=>{m&&!m.contains(e.target)&&C(!1)},T=e=>{e.key===`Escape`&&g&&!g.hidden&&(C(!1),h?.focus())};document.addEventListener(`click`,w),document.addEventListener(`keydown`,T);let E=()=>{if(!m)return;let e=c.getBoundingClientRect(),n=e.top<=t&&e.bottom>177;for(let e of[`pointer-events-none`,`invisible`,`-translate-y-2`,`opacity-0`])m.classList.toggle(e,!n);n||C(!1)},D=()=>{let e=c.getBoundingClientRect().top+scrollY;i.style.marginTop=`${Math.max(0,innerHeight-e-n)}px`};D();let O=0,k=()=>{O=0,E();let e=0;if(l.forEach((t,n)=>{t.getBoundingClientRect().top<=137&&(e=n)}),e!==S){f.mark(S,!1),p[S]?.removeAttribute(`aria-current`),f.mark(e,!0),p[e].setAttribute(`aria-current`,`location`),b?.mark(S,!1),b?.mark(e,!0),v&&(v.textContent=u[e]),S=e;let t=p[e],n=t.offsetTop-a.offsetTop;(n<a.scrollTop||n+t.offsetHeight>a.scrollTop+a.clientHeight)&&a.scrollTo({top:n-a.clientHeight/3,behavior:`smooth`})}},A=()=>{let{scrollTop:e,scrollHeight:t,clientHeight:n}=a,r=t>n+8;o.classList.toggle(`invisible`,!r),r&&(s.style.height=`${n/t*100}%`,s.style.top=`${e/t*100}%`)};a.addEventListener(`scroll`,A,{passive:!0});let j=()=>{O||=requestAnimationFrame(k)};window.addEventListener(`scroll`,j,{passive:!0});let M=()=>{D(),j(),A()};window.addEventListener(`resize`,M),document.addEventListener(`astro:before-swap`,()=>{window.removeEventListener(`scroll`,j),window.removeEventListener(`resize`,M),document.removeEventListener(`click`,w),document.removeEventListener(`keydown`,T)},{once:!0}),k(),A()}document.addEventListener(`astro:page-load`,i);</script> <article id="article" class="app-prose mx-auto mt-10 max-w-app prose-pre:bg-(--shiki-light-bg) dark:prose-pre:bg-(--shiki-dark-bg)"> <p>先日<a href="https://github.com/nuta">nuta</a>さんによって書かれた**<a href="https://operating-system-in-1000-lines.vercel.app/ja/welcome">Writing an OS in 1,000 Lines</a>** という資料をもとに自作OSを始めた。</p>
+<p>大学で情報科学を専攻している身として、計算機の最重要コンポーネントの一つであるOSは様々なソフトウェアの中でも特別視している節があり、自作OSには憧れがあった。</p>
+<p>その一方、現代で使われているLinuxをはじめとするOSは非常に複雑であり、また環境構築のむずかしさなどからOSの実装に踏み入れられないでいた。</p>
+<p>そんな中X(旧Twitter)で**<a href="https://operating-system-in-1000-lines.vercel.app/ja/welcome">Writing an OS in 1,000 Lines</a>** の存在を知った。</p>
+<p>序文を読んだところ、今まで見かけたどんな自作OS本よりも敷居が低そうだと思い写経をし始めた。</p>
+<p>その結果序文の通り3日程度で以下のような自作OSを作ることができ、拡張機能の実装なども進めることができた。</p>
+<p><a href="https://github.com/speed1313/cos">https://github.com/speed1313/cos</a></p>
+<p>OSを実装する過程では、OS、特にカーネルがどのような仕組みで動いているのか実装レベルで知ることができ、カーネルを見る目がかなり変わった。</p>
+<p>本稿では自作OSを始めた瞬間の今でしか書けないであろう、自作OSをする前後で変わった「OSを見る目」について述べる。</p>
+<blockquote>
+<p><strong>Attention</strong>
+OSとカーネルをほとんど同義語として使っていることに注意。</p>
+</blockquote>
+<p>私はOS自作を始めたばかりで以下の内容には誤りを含む可能性があるので、見つけたらぜひ教えてください。</p>
+<h2 id="os自作前の認識">OS自作前の認識</h2>
+<p>Wikipediaに載っている<a href="https://en.wikipedia.org/wiki/Operating_system">Operating system</a>の図にあるような、まさにApplicationとHardwareの間に位置する仲介人といったイメージ。</p>
+<p>常に起動し続け、アプリケーションの面倒を下から支える。</p>
+<p><a href="https://amzn.to/3seOgk0">OSの教科書</a>や<a href="https://www.amazon.co.jp/%E3%82%B3%E3%83%B3%E3%83%94%E3%83%A5%E3%83%BC%E3%82%BF%E3%81%AE%E6%A7%8B%E6%88%90%E3%81%A8%E8%A8%AD%E8%A8%88-MIPS-%E7%AC%AC6%E7%89%88-%E4%B8%8A%E3%83%BB%E4%B8%8B%E9%9B%BB%E5%AD%90%E5%90%88%E6%9C%AC%E7%89%88-David-Patterson-ebook/dp/B0BLTQS81T?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&#x26;crid=195BBGMVELDAZ&#x26;keywords=%E3%83%91%E3%82%BF%E3%83%98%E3%83%8D&#x26;qid=1692239365&#x26;s=books&#x26;sprefix=%E3%83%91%E3%82%BF%E3%83%98%E3%83%8D,stripbooks,153&#x26;sr=1-1&#x26;linkCode=sl1&#x26;tag=amazon13aff-22&#x26;linkId=7d1060ae64b2eebd44735939b0e8abaf&#x26;language=ja_JP&#x26;ref_=as_li_ss_tl">パタヘネ</a>を読んでOSの役割や仕組みはざっくり知っていたが、いざプログラムとして記述しようとするとどうなるか想像がつかない。</p>
+<p>特にハードウェアとのインターフェースの部分の記述はてんでわからない。</p>
+<p>ページングや例外処理、プロセススケジューリング、メモリアロケータといった概念について仕組みや役割を知っているのに、どの部分を誰が(OS? CPU?)どのようにして担っているか曖昧としていた。</p>
+<h2 id="os自作後の認識">OS自作後の認識</h2>
+<h3 id="カーネルもある意味プロセスにすぎない">カーネルも(ある意味)プロセスにすぎない</h3>
+<p>シングルプロセッサ時代でもOSが存在していることから当たり前と言えば当たり前なのだが、OS(カーネル)は常に動いているわけではなく、アプリケーションとカーネルが交互に動いている。(マルチプロセッサの普及が進み、カーネルが常時動いているという設計もあるだろうが)</p>
+<p>より正確には、ブートローダが起動イメージ(e.g. ELFファイル)をメモリに読み込み、pcをカーネルの開始番地に設定することでカーネルが動き出し、種々の初期化をし、最初のアプリケーション(shellなど)の実行をはじめ、その後はシステムコールや例外といったイベントを皮切りにCPUの例外処理機能によってカーネルにコンテキストスイッチする処理が書かれた部分にpcを書き換え、イベントに応じた例外処理をカーネルモードで行い、例外処理を終えたらアプリケーションに移る、という動作が続く。</p>
+<p>ゆえに、アプリケーションとカーネルの間のスイッチングを実装の観点で見ると、pc(プログラムカウンタ)や汎用レジスタ、sp(スタックポインタ)、ページテーブルの開始番地や権限モードといったCPUの持つ値の変更にすぎない。</p>
+<p>この事実はかなり衝撃的に思う。というのも、権限モードの変更以外はアプリケーションのコンテキストスイッチとほとんど相違ないのだから。</p>
+<p>カーネルは</p>
+<ul>
+<li>スーパバイザモードで実行</li>
+<li>管理できる、またはしなければならない対象が多い</li>
+<li>一番最初にブートローダによって起動する</li>
+</ul>
+<p>といった特徴を持つ、特別なプロセスと言えるが、結局のところ、プロセスである。</p>
+<h3 id="アセンブリ言語での記述が必要不可欠">アセンブリ言語での記述が必要不可欠</h3>
+<p>カーネルプログラムはページテーブルの開始番地やモード切り替えのためのレジスタ等を直接操作するという、高水準プログラミング言語では記述できないような処理をする。</p>
+<p>そのため、アセンブリ言語で記述せざるを得ない。</p>
+<p>そこで、カーネルプログラムではアセンブリファイルがリンクされていたり、コンパイラの拡張機能である<a href="https://ja.wikipedia.org/wiki/%E3%82%A4%E3%83%B3%E3%83%A9%E3%82%A4%E3%83%B3%E3%82%A2%E3%82%BB%E3%83%B3%E3%83%96%E3%83%A9">インラインアセンブラ</a>によって以下のように高水準プログラミング言語のコードに部分的に差し込まれていたりする。</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="c"><code><span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">void</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic"> boot</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">void</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">){</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">    __asm__</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> _</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">_volatile__</span><span style="--shiki-light:#6F42C1;--shiki-dark:#82AAFF">(</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">        "</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">mv sp, </span><span style="--shiki-light:#22863A;--shiki-dark:#FFFFFF">%</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">[stack_top]</span><span style="--shiki-light:#22863A;--shiki-dark:#F78C6C">\n</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic"> /* set stack pointer to the top of the stack */</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">        "</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">j kernel_main</span><span style="--shiki-light:#22863A;--shiki-dark:#F78C6C">\n</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic"> /* jump to kernel_main */</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#82AAFF">        :</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#82AAFF">        : [stack_top] </span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">r</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#6F42C1;--shiki-dark:#82AAFF">(__stack_top)</span><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic"> /* __stack_top is stored in a general purpose register named stack_top */</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#82AAFF">    )</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">;</span></span>
+<span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">}</span></span></code></pre>
+<p>これについては、<a href="https://github.com/search?q=repo%3Atorvalds%2Flinux%20__asm__&#x26;type=code">Linuxのソースコードのうち、インラインアセンブラが使われている箇所</a>が参考になる。</p>
+<h3 id="cpuの機能が豊富すぎる">CPUの機能が豊富すぎる</h3>
+<p>CPUはモード切り替えや例外処理、ページングなど、addやjumpといった単純な命令にとどまらない豊富な機能を有する。</p>
+<p>例えば、RISC-VアーキテクチャのCPUでは以下のような命令により、satpレジスタにページテーブルの先頭アドレスを登録することができ、CPUが自動的にページングを行ってくれる。</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="c"><code><span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">csrw satp, </span><span style="--shiki-light:#22863A;--shiki-dark:#FFFFFF">%</span><span style="--shiki-light:#22863A;--shiki-dark:#ECC48D">[satp]</span><span style="--shiki-light:#22863A;--shiki-dark:#F78C6C">\n</span><span style="--shiki-light:#22863A;--shiki-dark:#D9F5DD">"</span></span></code></pre>
+<p>また、以下のようにecall命令を用いることで、システムコール例外を発生させ、例外ハンドラでシステムコールの処理をするという、ユーザモードからカーネルモードに移行して処理をするシステムコールを実現できる。</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="plaintext"><code><span class="line"><span>__asm__ __volatile__("ecall"</span></span>
+<span class="line"><span>	                 : "=r"(a0)</span></span>
+<span class="line"><span>	                 : "r"(a0), "r"(a1), "r"(a2), "r"(a3)</span></span>
+<span class="line"><span>	                 : "memory");</span></span></code></pre>
+<p>OS自作ではこれらのCPUの機能を惜しみなく使い、システムコールやページング、例外処理といった処理を実現する。</p>
+<p>カーネルはいろいろやっていてすごいと思っていたが、実際はCPUという強力な武器を使っていたのだった。</p>
+<h3 id="例外処理がとても重要">例外処理がとても重要</h3>
+<p>システムコールやページフォルトなど、カーネルモードに遷移するという処理は、CPUに登録された例外ハンドラの開始番地にpcを動かすことによって実現される。</p>
+<p>例外はイベントとみなすことができ、イベントが起きたらCPUが例外ハンドラをフックしてイベントごとに異なる処理をすることで多様なイベントに随時対処することができる。</p>
+<h3 id="タイマーも重要だった">タイマーも重要だった</h3>
+<p>CPUに備わっているタイマーによって起きるタイマー例外は、ラウンドロビン方式のようなプリエンプティブなマルチプロセッシングを実現するために必要不可欠である。</p>
+<p>以前はOSの教科書の例外の例として、システムコール等に並んでタイマー例外があるのを不思議に思っていたが、タイマー例外の重要性を知り腑に落ちた。</p>
+<p>タイマーのこと舐めてました。ごめんなさい。</p>
+<h3 id="カーネルパニックしたら全体が止まる">カーネルパニックしたら全体が止まる</h3>
+<p>アプリケーションがパニックしてもカーネルが対処してくれるが、カーネルがパニックして止まったらそれを対処して復帰するようなことをしてくれるものはない。よってそのまま全体が止まってしまう。</p>
+<p>全体が止まってしまったらコンピュータを再起動するしかないためカーネルパニックは実用上避けるべきだ。</p>
+<p>そういえばLinuxのRust移植が試み始められた際、Linus Torvaldsが</p>
+<blockquote>
+<p>I do think that the “run-time failure panic” is a fundamental issue.</p>
+</blockquote>
+<p><a href="https://lkml.org/lkml/2021/4/14/1099">LKML: Linus Torvalds: Re: [PATCH 00/13] [RFC] Rust support</a></p>
+<p>と、panicに大きな関心を呼びかけていた。</p>
+<p>OS自作後振り返ってみると、カーネル開発におけるpanicの取り扱いの重要さはその通りだと思った。</p>
+<p>参考:
+<a href="https://zenn.dev/garasubo/articles/rust-for-linux-alloc">Rust for Linuxでは独自のallocライブラリを使っている</a></p>
+<h3 id="osは総合格闘技">OSは総合格闘技</h3>
+<p>OS自作で触れることになる技術は、コンパイラやCPU、シェル、ファイルシステム、ネットワークプロトコルなど多岐にわたる。</p>
+<p>OS自作は過去にやってきた低レイヤ自作が至る所で活かせる総合格闘技だ。</p>
+<h3 id="ブラックボックスはどこまでも">ブラックボックスはどこまでも</h3>
+<p>カーネルの処理部分はある程度把握することができたが、ブートローダやデバイスドライバ、CPUに備わる豊富な機能の実装方法といった新たなブラックボックスが浮かび上がってきた。</p>
+<h2 id="おわりに">おわりに</h2>
+<p>今回はごく一般的なOSの設計をみた感想を述べたが、最新の研究では</p>
+<ul>
+<li>ソフトウェアでのコンテキストスイッチをハードウェアスレッドに代替する設計</li>
+<li>アプリケーションとカーネルが一体となったユニカーネル(unikernel)</li>
+</ul>
+<p>といった面白い設計が考えられているそうだ。(参考: <a href="https://www.amazon.co.jp/%E8%87%AA%E4%BD%9COS%E3%81%A7%E5%AD%A6%E3%81%B6%E3%83%9E%E3%82%A4%E3%82%AF%E3%83%AD%E3%82%AB%E3%83%BC%E3%83%8D%E3%83%AB%E3%81%AE%E8%A8%AD%E8%A8%88%E3%81%A8%E5%AE%9F%E8%A3%85-%E6%80%92%E7%94%B0%E6%99%9F%E4%B9%9F/dp/4798068713?&#x26;linkCode=sl1&#x26;tag=amazon13aff-22&#x26;linkId=068f08c484525acde5d055d463500d30&#x26;language=ja_JP&#x26;ref_=as_li_ss_tl">自作OSで学ぶマイクロカーネルの設計と実装</a>)</p>
+<p>OSの仕様や実装方法は多岐にわたり、それぞれには違った顔が備わっている。</p>
+<p>次に会うOSはどんな顔だろう。</p>
+<h2 id="参考文献">参考文献</h2>
+<ul>
+<li>
+<p><a href="https://operating-system-in-1000-lines.vercel.app/ja/welcome">Writing an OS in 1,000 Lines, nuta</a></p>
+<ul>
+<li><a href="https://github.com/nuta/operating-system-in-1000-lines">repository</a></li>
+</ul>
+<p>C言語でRISC-Vアーキテクチャをターゲットとした1000行未満のOSが実装できてとても面白かったのでぜひ読んでみてください。手軽に読めてたくさんのことが学べておすすめです。</p>
+</li>
+<li>
+<p><a href="https://amzn.to/3KKFdh1">自作OSで学ぶマイクロカーネルの設計と実装、怒田晟也、秀和システム</a></p>
+<p>こちらの本はOSにまつわる様々な技術が実装も交えて解説されています。ファイルシステムやインターネットプロトコルといった解説もされており、内容が充実しています。</p>
+<ul>
+<li><a href="https://github.com/nuta/microkernel-book">support site</a></li>
+</ul>
+<p>こちらの本で実装されているHinaOSの実装は、上記のsupport siteにあります。教育用に書かれたOSで、実装がとてもシンプルです。ファイルシステムやインターネットプロトコルも実装されています。</p>
+<p>マルチプロセッサにも対応していますが、Big Kernel Lockという方式を使っているためコード内にロックの記述がなく実装が簡素になっており読みやすいです。</p>
+<p>ただ、HinaOSはマイクロカーネルでモノリシックカーネルよりやや複雑なため、先にモノリシックカーネルを実装する<a href="https://operating-system-in-1000-lines.vercel.app/ja/welcome">Writing an OS in 1,000 Lines</a>を読むのがおすすめです。</p>
+</li>
+<li>
+<p><a href="https://github.com/mit-pdos/xv6-riscv">Xv6 for RISC-V</a></p>
+<p>Xv6はMITの授業で教材として用いられている教育用OSです。モノリシックカーネルですが、ロックの記述が至る所にありやや読みづらい気がします。</p>
+<p><a href="https://web.archive.org/web/20230608081737/https://www.sugawara-lab.jp/fig/xv6-riscv-jpn.pdf">和訳の実装の解説本</a>もあるため、合わせて読むのが良さそうです。</p>
+<p>(Go言語のメインコントリビュータの<a href="https://github.com/rsc">Russ Cox</a>氏が著者の一人でびっくりしました)</p>
+</li>
+<li>
+<p><a href="https://www.amazon.co.jp/%E3%82%B3%E3%83%B3%E3%83%94%E3%83%A5%E3%83%BC%E3%82%BF%E3%81%AE%E6%A7%8B%E6%88%90%E3%81%A8%E8%A8%AD%E8%A8%88-MIPS-%E7%AC%AC6%E7%89%88-%E4%B8%8A%E3%83%BB%E4%B8%8B%E9%9B%BB%E5%AD%90%E5%90%88%E6%9C%AC%E7%89%88-David-Patterson-ebook/dp/B0BLTQS81T?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&#x26;crid=195BBGMVELDAZ&#x26;keywords=%E3%83%91%E3%82%BF%E3%83%98%E3%83%8D&#x26;qid=1692239365&#x26;s=books&#x26;sprefix=%E3%83%91%E3%82%BF%E3%83%98%E3%83%8D,stripbooks,153&#x26;sr=1-1&#x26;linkCode=sl1&#x26;tag=amazon13aff-22&#x26;linkId=7d1060ae64b2eebd44735939b0e8abaf&#x26;language=ja_JP&#x26;ref_=as_li_ss_tl">コンピュータの構成と設計(通称パタヘネ), David Patterson (著), John Hennessy (著)、成田 光彰 (翻訳)、日経BP</a></p>
+</li>
+<li>
+<p><a href="https://amzn.to/3seOgk0">オペレーティングシステムの概念、Abraham Silberschatz+</a></p>
+</li>
+</ul> </article> </div> </main> <footer class="w-full border-t border-border mt-auto"> <div class="mx-auto flex max-w-5xl flex-col items-center justify-between px-4 py-6 sm:flex-row-reverse sm:py-4"> <div class="flex-wrap justify-center gap-1 flex"> <a href="https://github.com/speed1313" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="speed1313 Blog on GitHub">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" /></svg> <span class="sr-only">speed1313 Blog on GitHub</span>  </a><a href="https://x.com/strayer_13" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="speed1313 Blog on X">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 4l11.733 16h4.267l-11.733 -16z" /><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" /></svg> <span class="sr-only">speed1313 Blog on X</span>  </a><a href="https://www.linkedin.com/in/speed1313/" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="speed1313 Blog on LinkedIn">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M8 11v5" /><path d="M8 8v.01" /><path d="M12 16v-5" /><path d="M16 16v-3a2 2 0 1 0 -4 0" /><path d="M3 7a4 4 0 0 1 4 -4h10a4 4 0 0 1 4 4v10a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4z" /></svg> <span class="sr-only">speed1313 Blog on LinkedIn</span>  </a><a href="https://huggingface.co/speed" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="speed1313 Blog on Hugging Face">  <svg role="img" viewBox="0 0 24 24" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><title>Hugging Face</title><path d="M12.025 1.13c-5.77 0-10.449 4.647-10.449 10.378 0 1.112.178 2.181.503 3.185.064-.222.203-.444.416-.577a.96.96 0 0 1 .524-.15c.293 0 .584.124.84.284.278.173.48.408.71.694.226.282.458.611.684.951v-.014c.017-.324.106-.622.264-.874s.403-.487.762-.543c.3-.047.596.06.787.203s.31.313.4.467c.15.257.212.468.233.542.01.026.653 1.552 1.657 2.54.616.605 1.01 1.223 1.082 1.912.055.537-.096 1.059-.38 1.572.637.121 1.294.187 1.967.187.657 0 1.298-.063 1.921-.178-.287-.517-.44-1.041-.384-1.581.07-.69.465-1.307 1.081-1.913 1.004-.987 1.647-2.513 1.657-2.539.021-.074.083-.285.233-.542.09-.154.208-.323.4-.467a1.08 1.08 0 0 1 .787-.203c.359.056.604.29.762.543s.247.55.265.874v.015c.225-.34.457-.67.683-.952.23-.286.432-.52.71-.694.257-.16.547-.284.84-.285a.97.97 0 0 1 .524.151c.228.143.373.388.43.625l.006.04a10.3 10.3 0 0 0 .534-3.273c0-5.731-4.678-10.378-10.449-10.378M8.327 6.583a1.5 1.5 0 0 1 .713.174 1.487 1.487 0 0 1 .617 2.013c-.183.343-.762-.214-1.102-.094-.38.134-.532.914-.917.71a1.487 1.487 0 0 1 .69-2.803m7.486 0a1.487 1.487 0 0 1 .689 2.803c-.385.204-.536-.576-.916-.71-.34-.12-.92.437-1.103.094a1.487 1.487 0 0 1 .617-2.013 1.5 1.5 0 0 1 .713-.174m-10.68 1.55a.96.96 0 1 1 0 1.921.96.96 0 0 1 0-1.92m13.838 0a.96.96 0 1 1 0 1.92.96.96 0 0 1 0-1.92M8.489 11.458c.588.01 1.965 1.157 3.572 1.164 1.607-.007 2.984-1.155 3.572-1.164.196-.003.305.12.305.454 0 .886-.424 2.328-1.563 3.202-.22-.756-1.396-1.366-1.63-1.32q-.011.001-.02.006l-.044.026-.01.008-.03.024q-.018.017-.035.036l-.032.04a1 1 0 0 0-.058.09l-.014.025q-.049.088-.11.19a1 1 0 0 1-.083.116 1.2 1.2 0 0 1-.173.18q-.035.029-.075.058a1.3 1.3 0 0 1-.251-.243 1 1 0 0 1-.076-.107c-.124-.193-.177-.363-.337-.444-.034-.016-.104-.008-.2.022q-.094.03-.216.087-.06.028-.125.063l-.13.074q-.067.04-.136.086a3 3 0 0 0-.135.096 3 3 0 0 0-.26.219 2 2 0 0 0-.12.121 2 2 0 0 0-.106.128l-.002.002a2 2 0 0 0-.09.132l-.001.001a1.2 1.2 0 0 0-.105.212q-.013.036-.024.073c-1.139-.875-1.563-2.317-1.563-3.203 0-.334.109-.457.305-.454m.836 10.354c.824-1.19.766-2.082-.365-3.194-1.13-1.112-1.789-2.738-1.789-2.738s-.246-.945-.806-.858-.97 1.499.202 2.362c1.173.864-.233 1.45-.685.64-.45-.812-1.683-2.896-2.322-3.295s-1.089-.175-.938.647 2.822 2.813 2.562 3.244-1.176-.506-1.176-.506-2.866-2.567-3.49-1.898.473 1.23 2.037 2.16c1.564.932 1.686 1.178 1.464 1.53s-3.675-2.511-4-1.297c-.323 1.214 3.524 1.567 3.287 2.405-.238.839-2.71-1.587-3.216-.642-.506.946 3.49 2.056 3.522 2.064 1.29.33 4.568 1.028 5.713-.624m5.349 0c-.824-1.19-.766-2.082.365-3.194 1.13-1.112 1.789-2.738 1.789-2.738s.246-.945.806-.858.97 1.499-.202 2.362c-1.173.864.233 1.45.685.64.451-.812 1.683-2.896 2.322-3.295s1.089-.175.938.647-2.822 2.813-2.562 3.244 1.176-.506 1.176-.506 2.866-2.567 3.49-1.898-.473 1.23-2.037 2.16c-1.564.932-1.686 1.178-1.464 1.53s3.675-2.511 4-1.297c.323 1.214-3.524 1.567-3.287 2.405.238.839 2.71-1.587 3.216-.642.506.946-3.49 2.056-3.522 2.064-1.29.33-4.568 1.028-5.713-.624" /></svg> <span class="sr-only">speed1313 Blog on Hugging Face</span>  </a><a href="https://scholar.google.com/citations?user=717QdNoAAAAJ" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="speed1313 Blog on Google Scholar">  <svg role="img" viewBox="0 0 24 24" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><title>Google Scholar</title><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z" /></svg> <span class="sr-only">speed1313 Blog on Google Scholar</span>  </a><a href="/cv.pdf" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="speed1313 Blog CV">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+  <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+  <path d="M11 12.5a1.5 1.5 0 0 0 -3 0v3a1.5 1.5 0 0 0 3 0" />
+  <path d="M13 11l1.5 6l1.5 -6" />
+</svg> <span class="sr-only">speed1313 Blog CV</span>  </a> </div> <div class="my-2 flex flex-col items-center whitespace-nowrap sm:flex-row"> <span>speed1313 &#169; 2026</span> <span class="hidden sm:inline">&nbsp;|&nbsp;</span> <span>
+Built with <a href="https://astro.build" class="underline">Astro</a> · Theme
+<a href="https://github.com/satnaing/astro-paper" class="underline">astro-paper</a> </span> </div> </div> </footer>  </body> </html> <script data-astro-rerun>
+  /** Attaches links to headings in the document,
+   *  allowing sharing of sections easily */
+  function addHeadingLinks() {
+    const headings = Array.from(
+      document.querySelectorAll("h2, h3, h4, h5, h6")
+    );
+    for (const heading of headings) {
+      heading.classList.add("group");
+      const link = document.createElement("a");
+      link.className =
+        "heading-link ms-2 no-underline opacity-75 md:opacity-0 md:group-hover:opacity-100 md:focus:opacity-100";
+      link.href = "#" + heading.id;
+
+      const span = document.createElement("span");
+      span.ariaHidden = "true";
+      span.innerText = "#";
+      link.appendChild(span);
+      heading.appendChild(link);
+    }
+  }
+  addHeadingLinks();
+
+  /** Attaches copy buttons to code blocks in the document,
+   * allowing users to copy code easily. */
+  function attachCopyButtons() {
+    const copyButtonLabel = "Copy";
+    const codeBlocks = Array.from(document.querySelectorAll("pre"));
+
+    for (const codeBlock of codeBlocks) {
+      const wrapper = document.createElement("div");
+      wrapper.style.position = "relative";
+
+      // Check if --file-name-offset custom property exists
+      const computedStyle = getComputedStyle(codeBlock);
+      const hasFileNameOffset =
+        computedStyle.getPropertyValue("--file-name-offset").trim() !== "";
+
+      // Determine the top positioning class
+      const topClass = hasFileNameOffset
+        ? "top-(--file-name-offset)"
+        : "-top-3";
+
+      const copyButton = document.createElement("button");
+      copyButton.className = `copy-code absolute end-3 ${topClass} rounded bg-muted border border-muted px-2 py-1 text-xs leading-4 text-foreground font-medium`;
+      copyButton.innerHTML = copyButtonLabel;
+      codeBlock.setAttribute("tabindex", "0");
+      codeBlock.appendChild(copyButton);
+
+      // wrap codebock with relative parent element
+      codeBlock?.parentNode?.insertBefore(wrapper, codeBlock);
+      wrapper.appendChild(codeBlock);
+
+      copyButton.addEventListener("click", async () => {
+        await copyCode(codeBlock, copyButton);
+      });
+    }
+
+    async function copyCode(block, button) {
+      const code = block.querySelector("code");
+      const text = code?.innerText;
+
+      await navigator.clipboard.writeText(text ?? "");
+
+      // visual feedback that task is completed
+      button.innerText = "Copied";
+
+      setTimeout(() => {
+        button.innerText = copyButtonLabel;
+      }, 700);
+    }
+  }
+  attachCopyButtons();
+
+  /* Go to page start after page swap */
+  document.addEventListener("astro:after-swap", () =>
+    window.scrollTo({ left: 0, top: 0, behavior: "instant" })
+  );
+</script>

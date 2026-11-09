@@ -1,0 +1,420 @@
+<!DOCTYPE html><html dir="ltr" lang="en" class="scroll-smooth"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="canonical" href="https://speed1313.github.io/en/posts/cs_world/"><link rel="alternate" hreflang="ja" href="https://speed1313.github.io/posts/cs_world/"><link rel="alternate" hreflang="en" href="https://speed1313.github.io/en/posts/cs_world/"><link rel="alternate" hreflang="x-default" href="https://speed1313.github.io/posts/cs_world/"><meta name="generator" content="Astro v7.4.4"><!-- General Meta Tags --><title>The World of Computer Science: A Letter to My First-Year Self | speed1313 Blog</title><meta name="title" content="The World of Computer Science: A Letter to My First-Year Self | speed1313 Blog"><meta name="description" content="In this post, written for my first-year university self who was a stray sheep, I lay down a “highway of knowledge”: I explain how a browser works from the bottom up and, along the way, list good books on each topic to show how to approach learning computer science."><meta name="author" content="speed1313"><link rel="sitemap" href="/sitemap-index.xml"><!-- Open Graph / Facebook --><meta property="og:type" content="article"><meta property="og:locale" content="en_US"><meta property="og:title" content="The World of Computer Science: A Letter to My First-Year Self | speed1313 Blog"><meta property="og:description" content="In this post, written for my first-year university self who was a stray sheep, I lay down a “highway of knowledge”: I explain how a browser works from the bottom up and, along the way, list good books on each topic to show how to approach learning computer science."><meta property="og:url" content="https://speed1313.github.io/en/posts/cs_world/"><meta property="og:image" content="https://speed1313.github.io/en/posts/cs_world/index.png"><!-- Article Published/Modified time --><meta property="article:published_time" content="2022-12-18T00:00:00.000Z"><!-- Twitter --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:url" content="https://speed1313.github.io/en/posts/cs_world/"><meta name="twitter:title" content="The World of Computer Science: A Letter to My First-Year Self | speed1313 Blog"><meta name="twitter:description" content="In this post, written for my first-year university self who was a stray sheep, I lay down a “highway of knowledge”: I explain how a browser works from the bottom up and, along the way, list good books on each topic to show how to approach learning computer science."><meta name="twitter:image" content="https://speed1313.github.io/en/posts/cs_world/index.png"><!-- Google JSON-LD Structured data --><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"The World of Computer Science: A Letter to My First-Year Self","image":"https://speed1313.github.io/en/posts/cs_world/index.png","datePublished":"2022-12-18T00:00:00.000Z","inLanguage":"en","mainEntityOfPage":"https://speed1313.github.io/en/posts/cs_world/","author":[{"@type":"Person","name":"speed1313"}]}</script><!-- Enable RSS feed auto-discovery  --><!-- https://docs.astro.build/en/recipes/rss/#enabling-rss-feed-auto-discovery --><link rel="alternate" type="application/rss+xml" title="speed1313 Blog" href="https://speed1313.github.io/rss.xml"><!-- Google Analytics --><script src="https://www.googletagmanager.com/gtag/js?id=G-7X0Q0NSDB9"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        // gtag.js only reads Arguments objects from dataLayer, not arrays.
+        // eslint-disable-next-line prefer-rest-params
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-7X0Q0NSDB9");
+    </script><meta name="theme-color" content=""><meta name="astro-view-transitions-enabled" content="true"> <meta name="astro-view-transitions-fallback" content="animate"><script type="module" src="/_astro/ClientRouter.astro_astro_type_script_index_0_lang.DXqcZz58.js"></script><script src="/toggle-theme.js"></script><style>@keyframes astroFadeInOut{0%{opacity:1}to{opacity:0}}@keyframes astroFadeIn{0%{opacity:0;mix-blend-mode:plus-lighter}to{opacity:1;mix-blend-mode:plus-lighter}}@keyframes astroFadeOut{0%{opacity:1;mix-blend-mode:plus-lighter}to{opacity:0;mix-blend-mode:plus-lighter}}@keyframes astroSlideFromRight{0%{transform:translate(100%)}}@keyframes astroSlideFromLeft{0%{transform:translate(-100%)}}@keyframes astroSlideToRight{to{transform:translate(100%)}}@keyframes astroSlideToLeft{to{transform:translate(-100%)}}@media (prefers-reduced-motion){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*),[data-astro-transition-scope]{animation:none!important}}
+</style><link rel="stylesheet" href="/_astro/Footer.B68Ii7U4.css"><style>[data-astro-transition-scope="astro-eq54l3i4-1"] { view-transition-name: the-world-of-computer-science-a-letter-to-my-first-year-self; }@layer astro { ::view-transition-old(the-world-of-computer-science-a-letter-to-my-first-year-self) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(the-world-of-computer-science-a-letter-to-my-first-year-self) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(the-world-of-computer-science-a-letter-to-my-first-year-self) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(the-world-of-computer-science-a-letter-to-my-first-year-self) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-eq54l3i4-1"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-eq54l3i4-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-eq54l3i4-1"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-eq54l3i4-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-eq54l3i4-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-eq54l3i4-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-eq54l3i4-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-eq54l3i4-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style></head> <body>  <header id="site-header" class="fixed inset-x-0 top-0 z-20 border-b border-transparent bg-background"> <a id="skip-to-content" href="#main-content" class="sr-only z-50 bg-background px-3 py-2 text-accent focus:not-sr-only focus:absolute focus:start-16 focus:top-4">
+Skip to content
+</a> <!-- Same width as the home and About pages, so the edges line up. --> <div id="nav-container" class="flex w-full flex-col items-center justify-between sm:flex-row"> <div id="top-nav-wrap" class="relative mx-auto flex min-h-[56px] w-full max-w-5xl items-baseline justify-between bg-background px-4 py-2 sm:items-center sm:py-2"> <a href="/en/" class="absolute flex items-center gap-2 py-1 text-lg leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-xl sm:leading-none"> <svg viewBox="1.8 6.2 26 18.4" fill="currentColor" aria-hidden="true" class="h-[0.9em] w-auto text-accent"><path d="M5.6 12.4 L1.8 13.9 L5.4 15.2 Z" /><path fill-rule="evenodd" d="M5.2 14.2 C5.2 9.6 8.6 6.2 13 6.2 C16.9 6.2 19.7 8.6 20.6 12.1 C22.4 12.6 25.2 12.4 27.6 11.6 C27.4 16.4 25.2 20.6 21.6 22.6 C19.6 23.8 17.2 24.4 14.8 24.4 C9.4 24.4 5.2 20.4 5.2 14.2 Z M8.9 12.6 a1.9 1.9 0 1 0 3.8 0 a1.9 1.9 0 1 0 -3.8 0 Z" /></svg> speed1313 Blog </a> <nav id="nav-menu" class="flex w-full flex-col items-center sm:ms-2 sm:flex-row sm:justify-end sm:space-x-4 sm:py-0"> <div class="flex items-center gap-1 self-end sm:hidden"> <!--
+  Names the language it switches to, written in that language. The fixed
+  width keeps the header from shifting between "English" and "日本語".
+--><a href="/posts/cs_world/" lang="ja" hreflang="ja" class="focus-outline flex w-16 justify-center px-2 py-2 text-sm font-medium whitespace-nowrap hover:text-accent sm:w-14 sm:px-1 sm:py-1"> 日本語 </a> <a href="/en/#search" data-search-toggle role="button" aria-label="Search" aria-expanded="false" aria-controls="search-panel" title="Search" class="group focus-outline flex p-2"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-aria-expanded:hidden" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden group-aria-expanded:block" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg> </a> <button id="menu-btn" class="focus-outline p-2" aria-label="Open Menu" aria-expanded="false" aria-controls="menu-items"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden" id="close-icon"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-menu-deep" id="menu-icon"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 6h16" /><path d="M7 12h13" /><path d="M10 18h10" /></svg> </button> </div> <ul id="menu-items" class="mt-4 grid w-44 grid-cols-2 place-content-center gap-2 [&amp;>li>a]:block [&amp;>li>a]:px-4 [&amp;>li>a]:py-3 [&amp;>li>a]:text-center [&amp;>li>a]:font-medium [&amp;>li>a]:hover:text-accent sm:[&amp;>li>a]:px-2 sm:[&amp;>li>a]:py-1 hidden sm:mt-0 sm:flex sm:w-auto sm:gap-x-5 sm:gap-y-0"> <li class="col-span-2"> <a href="/en/" class="active-nav">
+Posts
+</a> </li> <li class="col-span-2"> <a href="/en/about">
+About
+</a> </li>  <li class="hidden items-center justify-center sm:flex"> <a href="/en/#search" data-search-toggle role="button" aria-label="Search" aria-expanded="false" aria-controls="search-panel" title="Search" class="group focus-outline flex p-1"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-aria-expanded:hidden" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden group-aria-expanded:block" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg> </a> </li> <li class="col-span-2 flex items-center justify-center sm:col-span-1"> <button id="theme-btn" class="focus-outline relative size-12 p-4 sm:size-8 hover:[&amp;&gt;svg]:stroke-accent" title="Toggles light &amp; dark" aria-label="auto" aria-live="polite"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute top-[50%] left-[50%] -translate-[50%] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" /></svg> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute top-[50%] left-[50%] -translate-[50%] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M14.828 14.828a4 4 0 1 0 -5.656 -5.656a4 4 0 0 0 5.656 5.656z" /><path d="M6.343 17.657l-1.414 1.414" /><path d="M6.343 6.343l-1.414 -1.414" /><path d="M17.657 6.343l1.414 -1.414" /><path d="M17.657 17.657l1.414 1.414" /><path d="M4 12h-2" /><path d="M12 4v-2" /><path d="M20 12h2" /><path d="M12 20v2" /></svg> </button> </li> <li class="hidden items-center sm:flex">  <div class="flex"> <!--
+  Names the language it switches to, written in that language. The fixed
+  width keeps the header from shifting between "English" and "日本語".
+--><a href="/posts/cs_world/" lang="ja" hreflang="ja" class="focus-outline flex w-16 justify-center px-2 py-2 text-sm font-medium whitespace-nowrap hover:text-accent sm:w-14 sm:px-1 sm:py-1"> 日本語 </a> </div> </li> </ul> </nav> </div> </div> </header> <div id="search-panel" role="dialog" aria-label="Search" hidden class="fixed inset-x-0 top-[57px] bottom-0 z-20 overflow-y-auto overscroll-contain bg-background"> <div class="mx-auto max-w-app px-4 pt-10 pb-16"> <div id="search-panel-ui" class="pagefind-theme"></div> </div> </div><script type="module" src="/_astro/SearchPanel.astro_astro_type_script_index_0_lang._yjhVhtJ.js"></script> <!-- Reserves the fixed header's height (56px + 1px border) in the flow. --> <div aria-hidden="true" class="h-[57px] shrink-0"></div><script type="module">function e(){let e=document.querySelector(`#menu-btn`),t=document.querySelector(`#menu-items`),n=document.querySelector(`#menu-icon`),r=document.querySelector(`#close-icon`);e&&t&&n&&r&&e.addEventListener(`click`,()=>{let i=e.getAttribute(`aria-expanded`)===`true`;e.setAttribute(`aria-expanded`,i?`false`:`true`),e.setAttribute(`aria-label`,i?`Open Menu`:`Close Menu`),t.classList.toggle(`hidden`),n.classList.toggle(`hidden`),r.classList.toggle(`hidden`)})}e(),document.addEventListener(`astro:after-swap`,e);</script> <main id="main-content" class="relative mx-auto mt-12 w-full max-w-app px-4 pb-16 sm:mt-20 lg:ms-[max(15rem,calc((100%-48rem)/2))]" data-pagefind-body="true"> <!-- Like the OpenAI blog: date and tags above a large centered title. --><header class="text-center"> <div data-pagefind-ignore class="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-sm"> <time class datetime="2022-12-18T00:00:00.000Z">Dec 18, 2022</time> <ul class="flex flex-wrap justify-center gap-x-4"> <li> <a href="/en/?tag=tips#posts" class="text-foreground/60 underline-offset-4 hover:text-foreground hover:underline"> Tips </a> </li> </ul> </div> <h1 data-astro-transition-scope="astro-eq54l3i4-1" class="mt-5 text-3xl leading-tight text-balance sm:text-5xl sm:leading-tight"> The World of Computer Science: A Letter to My First-Year Self </h1> </header> <div data-pagefind-ignore class="mt-12 flex items-center justify-between gap-4 border-t border-foreground/10 pt-4 sm:mt-16">  <div class="relative ms-auto shrink-0"> <button type="button" data-share-button class="focus-outline flex items-center gap-x-2 text-sm opacity-80 hover:text-accent hover:opacity-100 sm:text-base"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-6" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 15l6 -6" /><path d="M11 6l.463 -.536a5 5 0 0 1 7.071 7.072l-.534 .464" /><path d="M13 18l-.397 .534a5.068 5.068 0 0 1 -7.127 0a4.972 4.972 0 0 1 0 -7.071l.524 -.463" /></svg> <span>Share</span> </button> <!-- Overlaid below the button so nothing around it moves. --> <span role="status" data-copied class="pointer-events-none absolute end-0 top-full mt-1 rounded bg-foreground px-2 py-0.5 text-xs whitespace-nowrap text-background opacity-0 transition-opacity motion-reduce:transition-none">Copied</span> </div><script type="module">function e(){for(let e of document.querySelectorAll(`[data-share-button]`)){if(e.dataset.ready)continue;e.dataset.ready=`true`;let t=e.parentElement?.querySelector(`[data-copied]`),n=t?.textContent??``,r;e.addEventListener(`click`,async()=>{let e=location.href.split(`#`)[0];try{await navigator.clipboard.writeText(e)}catch{await navigator.share?.({url:e,title:document.title}).catch(()=>{});return}t&&(t.textContent=``,t.textContent=n,t.classList.remove(`opacity-0`),clearTimeout(r),r=setTimeout(()=>t.classList.add(`opacity-0`),1500))})}}document.addEventListener(`astro:page-load`,e);</script> </div> <aside role="note" class="mt-4 rounded border-s-4 border-accent bg-muted/50 px-4 py-3 text-sm" data-pagefind-ignore> <p> This article was machine-translated from the  <a href="/posts/cs_world/" lang="ja" hreflang="ja" class="underline underline-offset-4 hover:text-accent">Japanese original</a>  using an LLM. If anything differs, the original takes precedence. </p>  </aside> <div class="relative"> <aside class="absolute top-0 right-full hidden h-full w-52 pe-8 lg:block" data-pagefind-ignore> <nav id="post-toc" aria-label="Table of contents" hidden class="group sticky top-[calc(57px+2rem)] flex max-h-[calc(100svh-57px-4rem)] gap-3"> <ul class="min-w-0 flex-1 [scrollbar-width:none] overflow-y-auto overscroll-contain text-[0.8125rem] leading-snug [&amp;::-webkit-scrollbar]:hidden"></ul> <!-- Scrollbar for the list, shown on hover when it overflows. --> <div aria-hidden="true" data-track class="invisible relative w-1 shrink-0 rounded-full bg-foreground/10 opacity-0 transition-opacity group-hover:opacity-100"> <div data-thumb class="absolute inset-x-0 rounded-full bg-foreground/35"></div> </div> </nav> </aside> <div id="post-toc-mobile" hidden data-pagefind-ignore class="pointer-events-none invisible fixed inset-x-0 top-[57px] z-10 -translate-y-2 border-b border-foreground/10 bg-background opacity-0 transition-[opacity,translate] duration-200 motion-reduce:transition-none lg:hidden"> <button type="button" aria-expanded="false" aria-controls="post-toc-mobile-list" class="focus-outline flex w-full items-center gap-2 px-4 py-2.5 text-start text-[0.8125rem]"> <span class="sr-only">Table of contents:</span> <span data-current class="min-w-0 flex-1 truncate text-foreground/60"></span> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-5 shrink-0 -rotate-90 opacity-70 transition-transform motion-reduce:transition-none" aria-hidden="true" data-chevron="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 6l-6 6l6 6" /></svg> </button> <nav id="post-toc-mobile-list" aria-label="Table of contents" hidden class="pointer-events-none relative max-h-[60svh] overflow-y-auto overscroll-contain px-4 pb-2"> <!-- Starts on the bar's row; the right side stays free for the toggle. --><ul class="pointer-events-auto me-8 text-[0.8125rem] leading-snug"></ul> </nav> </div><script type="module">var e=new Set([`footnote-label`]),t=57,n=96;function r(e){let t=e.cloneNode(!0);return t.querySelectorAll(`.katex-mathml, .heading-link`).forEach(e=>e.remove()),t.textContent?.replace(/\s+/g,` `).trim()??``}function i(){let i=document.querySelector(`#post-toc`),a=i?.querySelector(`ul`),o=i?.querySelector(`[data-track]`),s=i?.querySelector(`[data-thumb]`),c=document.querySelector(`#article`);if(!i||!a||!o||!s||!c||i.dataset.ready)return;i.dataset.ready=`true`;let l=[...c.querySelectorAll(`h2[id], h3[id]`)].filter(t=>!e.has(t.id));if(l.length<2)return;let u=l.map(r),d=(e,t,n,r)=>{let i=l.map((r,i)=>{let a=document.createElement(`a`);a.href=`#${encodeURIComponent(r.id)}`,a.textContent=u[i],a.className=`block ${t} ${n} transition-colors hover:text-accent `+(r.tagName===`H3`?`ps-3`:``);let o=document.createElement(`li`);return o.append(a),e.append(o),a});return{items:i,mark:(e,t)=>i[e]?.classList.replace(t?n:r,t?r:n)}},f=d(a,`py-1`,`text-foreground/45`,`text-foreground`),p=f.items;i.hidden=!1;let m=document.querySelector(`#post-toc-mobile`),h=m?.querySelector(`button`),g=m?.querySelector(`nav`),_=g?.querySelector(`ul`),v=m?.querySelector(`[data-current]`),y=m?.querySelector(`[data-chevron]`),b=_?d(_,`py-2.5`,`text-foreground/40`,`text-foreground/85`):void 0,x=b?.items??[];m&&(m.hidden=!1);let S=-1,C=e=>{if(!h||!g)return;h.setAttribute(`aria-expanded`,String(e)),g.hidden=!e,v?.classList.toggle(`invisible`,e),g.style.marginTop=e?`-${h.offsetHeight}px`:``,y?.classList.toggle(`-rotate-90`,!e),y?.classList.toggle(`rotate-90`,e);let t=x[S];e&&t&&(g.scrollTop=t.offsetTop-g.clientHeight/3)};h?.addEventListener(`click`,()=>C(h.getAttribute(`aria-expanded`)!==`true`)),x.forEach(e=>e.addEventListener(`click`,()=>C(!1)));let w=e=>{m&&!m.contains(e.target)&&C(!1)},T=e=>{e.key===`Escape`&&g&&!g.hidden&&(C(!1),h?.focus())};document.addEventListener(`click`,w),document.addEventListener(`keydown`,T);let E=()=>{if(!m)return;let e=c.getBoundingClientRect(),n=e.top<=t&&e.bottom>177;for(let e of[`pointer-events-none`,`invisible`,`-translate-y-2`,`opacity-0`])m.classList.toggle(e,!n);n||C(!1)},D=()=>{let e=c.getBoundingClientRect().top+scrollY;i.style.marginTop=`${Math.max(0,innerHeight-e-n)}px`};D();let O=0,k=()=>{O=0,E();let e=0;if(l.forEach((t,n)=>{t.getBoundingClientRect().top<=137&&(e=n)}),e!==S){f.mark(S,!1),p[S]?.removeAttribute(`aria-current`),f.mark(e,!0),p[e].setAttribute(`aria-current`,`location`),b?.mark(S,!1),b?.mark(e,!0),v&&(v.textContent=u[e]),S=e;let t=p[e],n=t.offsetTop-a.offsetTop;(n<a.scrollTop||n+t.offsetHeight>a.scrollTop+a.clientHeight)&&a.scrollTo({top:n-a.clientHeight/3,behavior:`smooth`})}},A=()=>{let{scrollTop:e,scrollHeight:t,clientHeight:n}=a,r=t>n+8;o.classList.toggle(`invisible`,!r),r&&(s.style.height=`${n/t*100}%`,s.style.top=`${e/t*100}%`)};a.addEventListener(`scroll`,A,{passive:!0});let j=()=>{O||=requestAnimationFrame(k)};window.addEventListener(`scroll`,j,{passive:!0});let M=()=>{D(),j(),A()};window.addEventListener(`resize`,M),document.addEventListener(`astro:before-swap`,()=>{window.removeEventListener(`scroll`,j),window.removeEventListener(`resize`,M),document.removeEventListener(`click`,w),document.removeEventListener(`keydown`,T)},{once:!0}),k(),A()}document.addEventListener(`astro:page-load`,i);</script> <article id="article" class="app-prose mx-auto mt-10 max-w-app prose-pre:bg-(--shiki-light-bg) dark:prose-pre:bg-(--shiki-dark-bg)"> <h2 id="introduction">Introduction</h2>
+<p>The first time I ever touched a computer was in my first year of university. Back then, I had no clear idea of how to learn a field as vast as computer science, and it was one round of trial and error after another.</p>
+<p>In this post, I look back on how I, a lost first-year student, made my way through computer science. I explain how a browser works from the bottom up and introduce books that are useful for each topic along the way.</p>
+<h2 id="key-concepts-in-computer-science">Key Concepts in Computer Science</h2>
+<p>Before getting into the main part, here are three key concepts in computer science worth keeping in mind.</p>
+<p><strong>“Divide each difficulty” (René Descartes)</strong></p>
+<p>The IT systems in the world are extremely complex.</p>
+<p>Have you ever seen a photo of a CPU? A CPU is made up of an enormous number of gates. PCs and smartphones are built by combining such complex hardware. IT systems are made up of huge numbers of electronic devices connected by cables and electromagnetic waves.</p>
+<p>Building such complex systems is a complex problem.</p>
+<p>The approach that has long been used to deal with complex problems like this is “divide each difficulty.” You break a complex problem down into small, (relatively) simple problems, solve them one by one, and then combine the solutions to solve the whole problem.</p>
+<p>This may sound obvious, but it comes up again and again when you study computer science.</p>
+<p>Examples include modularization in programming, divide-and-conquer in algorithms, and the way components are assembled in digital circuits.</p>
+<p>If you keep “divide each difficulty” in mind, you will find the courage to tackle even complex problems when you run into them.</p>
+<p><strong>Building on existing technology</strong></p>
+<p>This applies to science in general, but information technology is built by stacking technologies on top of one another.</p>
+<p>New technology is made by building on existing technologies that already work well.</p>
+<p>You solve the problems you split up in the “divide each difficulty” step one by one, then combine those solutions cleverly to create new technology.</p>
+<p>Examples where you can see this layering include the layered structure of communication protocols and the organization of hardware.</p>
+<p><strong>Specifications and standardization</strong></p>
+<p>The concepts so far apply to science in general, but specifications and standardization may be concepts unique to information technology.</p>
+<p>Information technology is not derived from nature the way physics is (although, of course, things like the performance limits of hardware are). Instead, people decide on specifications and build systems on top of them.</p>
+<p>And standardization, the act of getting many people to agree on a single specification, is extremely important for running and inventing the IT systems of the world efficiently.</p>
+<p>Examples where specifications and standardization matter include communication protocols and the OS as the interface between hardware and software.</p>
+<p>Wherever there are humans, there is standardization.</p>
+<p>I believe the three concepts above are essential for dealing with complex, intricate problems.</p>
+<p>Of course, there are many other important concepts as well.</p>
+<ul>
+<li><a href="https://www.amazon.co.jp/UNIX%E3%81%A8%E3%81%84%E3%81%86%E8%80%83%E3%81%88%E6%96%B9%E2%80%95%E3%81%9D%E3%81%AE%E8%A8%AD%E8%A8%88%E6%80%9D%E6%83%B3%E3%81%A8%E5%93%B2%E5%AD%A6-Mike-Gancarz/dp/4274064069/ref=sr_1_1?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&#x26;crid=3UWAH5M0DRIY1&#x26;keywords=UNIX%E3%81%A8%E3%81%84%E3%81%86%E8%80%83%E3%81%88%E6%96%B9&#x26;qid=1689856430&#x26;s=books&#x26;sprefix=unix%E3%81%A8%E3%81%84%E3%81%86%E8%80%83%E3%81%88%E6%96%B9%2Cstripbooks%2C173&#x26;sr=1-1&#x26;_encoding=UTF8&#x26;tag=amazon13aff-22&#x26;linkCode=ur2&#x26;linkId=6423b2c609c438feea6d3565ff668eff&#x26;camp=247&#x26;creative=1211">UNIXという考え方―その設計思想と哲学 (The UNIX Philosophy), Mike Gancarz</a></li>
+</ul>
+<p>UNIX is the OS from which many of today’s widely used operating systems descend.</p>
+<p>This book introduces the core ideas of UNIX and gets you thinking about what kind of software ends up being used by many people for a long time.</p>
+<h2 id="what-is-a-browser">What Is a Browser?</h2>
+<p>A browser is software that sends and receives website data, renders pages (displays them), and so on.</p>
+<p>Well-known browsers include Safari, Google Chrome, Firefox, and the late Internet Explorer.</p>
+<p>Making a browser work requires almost all of the main technologies of computer science: communication, computers, operating systems, programs, and more.</p>
+<p>On top of that, it lets you deepen your understanding of the three key concepts in information technology mentioned above, especially specifications.</p>
+<p>Below, we look at the technologies of computer science from the bottom up, in this order: communication, computers, operating systems, programs, and browsers.</p>
+<h2 id="how-does-communication-work">How Does Communication Work?</h2>
+<p>In this world, information is transmitted by electric currents flowing through cables and electromagnetic waves flying through the air.</p>
+<p>What flies around there are not the numbers and letters we use when we talk. Instead, information is carried by physical signals, such as a voltage being on or off.</p>
+<p>So why 0 and 1? Actually, it does not have to be 0 and 1. If the medium can represent three or more states, 0, 1, and 2 would work just as well.</p>
+<p>However, restricting things to the two states 0 and 1, the smallest unit of information, gives more stability.</p>
+<p>For example, suppose a voltage can take any value continuously from 5V to 0V. If you divide the voltage range into three parts versus two parts, the latter is more stable. That is because in the real world, physical quantities that take continuous values are affected by noise such as cosmic rays and temperature, so they are not stable.</p>
+<p>So, to separate states clearly, you need to keep a large distance between one state and the next.</p>
+<p><strong>Why can information be transmitted with 0s and 1s?</strong></p>
+<p>Why can 0s and 1s carry information?</p>
+<p>It is because information is “encoded.”</p>
+<p>The numbers and letters we use every day, such as “0”, “1”, … or “a”, are each represented by a different symbol so that we can tell them apart.</p>
+<p>In fact, there is no necessity for them to be represented by those particular symbols.</p>
+<p>For example, in ASCII, a well-known character encoding, “A” is represented by the number 0x41 (01000001 in binary). This is where the concept of “specifications and standardization” comes in.</p>
+<p>If you decide in advance, as a specification, how to represent symbols with 0s and 1s, you can encode each symbol and represent it with 0s and 1s.</p>
+<p><strong>Information and communication</strong></p>
+<p>In communication, what matters is how 0s and 1s are sent and received.</p>
+<p>For example, when 0001 is sent, the sender and receiver may agree on the timing at which to split it into 0, 0, 0, 1; there are also clever methods such as <a href="https://www.digikey.jp/ja/blog/old-but-still-useful-the-manchester-code">Manchester code</a>. For the start of a transmission, too, you can simply assign some symbol, just like the start codon in DNA.</p>
+<p>Here you can catch a glimpse of how important “specifications” are.</p>
+<p><strong>Information theory</strong></p>
+<p>Information theory is the field that studies how to encode information efficiently, and how to encode and decode it when there is instability such as noise.</p>
+<p>QR codes are an interesting application of information theory.</p>
+<p>I will only introduce information theory briefly here and leave the rest to the books below.</p>
+<ul>
+<li>
+<p><a href="https://www.amazon.co.jp/%25E6%2583%2585%25E5%25A0%25B1%25E7%2590%2586%25E8%25AB%2596-Math%25EF%25BC%2586Science-%25E3%2581%25A1%25E3%2581%258F%25E3%2581%25BE%25E5%25AD%25A6%25E8%258A%25B8%25E6%2596%2587%25E5%25BA%25AB-%25E7%2594%2598%25E5%2588%25A9%25E4%25BF%258A%25E4%25B8%2580-ebook/dp/B01MXVVIMA/ref=sr_1_2?keywords=%25E6%2583%2585%25E5%25A0%25B1%25E7%2590%2586%25E8%25AB%2596&#x26;qid=1671339526&#x26;s=books&#x26;sr=1-2&#x26;_encoding=UTF8&#x26;tag=amazon13aff-22&#x26;linkCode=ur2&#x26;linkId=79be6dcc975e7b97944df9c0eb5e1dfb&#x26;camp=247&#x26;creative=1211&#x26;_encoding=UTF8&#x26;tag=amazon13aff-22&#x26;linkCode=ur2&#x26;linkId=a62e6cbb89cfe8b3b0910f3d875f042d&#x26;camp=247&#x26;creative=1211">情報理論 (Information Theory), Amari</a></p>
+</li>
+<li>
+<p><a href="https://www.amazon.co.jp/%E6%83%85%E5%A0%B1%E7%90%86%E8%AB%96-%E6%94%B9%E8%A8%822%E7%89%88-%E4%BB%8A%E4%BA%95-%E7%A7%80%E6%A8%B9/dp/4274223256/ref=sr_1_1?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&#x26;crid=2P21PWOKOC15C&#x26;keywords=%E6%83%85%E5%A0%B1%E7%90%86%E8%AB%96+%E6%94%B9%E8%A8%822%E7%89%88&#x26;qid=1689856335&#x26;s=books&#x26;sprefix=%2Cstripbooks%2C202&#x26;sr=1-1&#x26;_encoding=UTF8&#x26;tag=amazon13aff-22&#x26;linkCode=ur2&#x26;linkId=bb6d7b6b3b7fdc87c5e6b39a91ad7a55&#x26;camp=247&#x26;creative=1211">情報理論 改訂2版 (Information Theory, Revised 2nd Edition), Imai</a></p>
+</li>
+</ul>
+<p>If you want a theory book that uses plenty of math while carefully explaining what it all means, this is the one.</p>
+<p><strong>Protocols and the layered structure</strong></p>
+<p>In communication, you need routing: deciding who sends what to where.</p>
+<p>That is because in the real world, not every device is connected one-to-one by a cable or wireless link. Instead, devices can reach each other by hopping through other devices on a network connected like a mesh.</p>
+<p>So, besides the devices that send and receive information, you also need devices that route information (such as routers) and someone to find the destination (such as DNS servers).</p>
+<p>Moreover, in addition to the content you want to convey, the information itself has to carry what communication needs, such as the sender and the receiver.</p>
+<p>This cannot be attached arbitrarily; it must follow “specifications” (or protocols) defined through “standardization.”</p>
+<p>If you just keep adding to such specifications, they become too complex.</p>
+<p>So they are split into layers to “divide the difficulty.”</p>
+<p>Today, the TCP/IP model is widely used, and it plays a big part in how browsers work.</p>
+<ul>
+<li><a href="https://www.amazon.co.jp/%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%AA%E3%83%B3%E3%82%B0TCP-IP%E2%80%95%E5%85%A5%E9%96%80%E7%B7%A8%E2%80%95-%E7%AC%AC6%E7%89%88-%E4%BA%95%E4%B8%8A-%E7%9B%B4%E4%B9%9F/dp/4274224473/ref=tmm_hrd_swatch_0?_encoding=UTF8&#x26;qid=1689855440&#x26;sr=8-1&#x26;_encoding=UTF8&#x26;tag=amazon13aff-22&#x26;linkCode=ur2&#x26;linkId=c497ece702d01f1f62a09a567757d8ac&#x26;camp=247&#x26;creative=1211">マスタリングTCP/IP―入門編―(第6版) (Mastering TCP/IP: Introduction, 6th Edition), Inoue et al.</a></li>
+</ul>
+<p>This book covers the TCP/IP model, and communication in general, in detail. Reading it will give you a solid understanding of the fundamentals of communication, starting from how things work.</p>
+<h2 id="how-do-computers-compute">How Do Computers Compute?</h2>
+<p>How does a computer process the information it receives through communication?</p>
+<p><strong>Components of a computer</strong></p>
+<p>A computer is made up of several components working together.</p>
+<p>The main ones are the following.</p>
+<ul>
+<li>CPU</li>
+</ul>
+<p>The CPU is the hardware that processes information: it computes, moves, and temporarily stores data.</p>
+<p>It is the most important piece of hardware in a computer.</p>
+<ul>
+<li>Memory</li>
+</ul>
+<p>Hardware that stores data such as programs.</p>
+<p>Depending on the physical medium, memory differs in volatility (volatile or non-volatile), access speed, and capacity.</p>
+<p>Modern computers improve performance, such as speed and capacity, through tricks like arranging different kinds of memory into a hierarchy.</p>
+<ul>
+<li>Input/output devices</li>
+</ul>
+<p>Input/output devices include displays, keyboards, and equipment for sending and receiving communications.</p>
+<p>Data obtained through this hardware is processed by the CPU or stored in memory.</p>
+<p><strong>What computers can do</strong></p>
+<p>Using the components above, a computer can do a handful of things.</p>
+<p>By combining them, it does bigger things. That is exactly “building on existing technology.”</p>
+<ol>
+<li>Moving data</li>
+</ol>
+<p>A computer can move data.</p>
+<p>You might think, “Moving? How trivial,” but this is an important operation that could be called the essence of information processing.</p>
+<p>In fact, if you look at the code you get when a program in a high-level language (such as C) is compiled (translated) into assembly language (a program in a form closer to what the machine reads, such as x86), you will see that most of it consists of mov instructions, which move data.</p>
+<ul>
+<li>
+<p>Arithmetic: basic operations such as addition, subtraction, multiplication, division, shifts, and logical operations.</p>
+</li>
+<li>
+<p>Comparison: comparing data lets you branch the processing.</p>
+</li>
+<li>
+<p>Jump: jumps make loops and conditional branches possible.</p>
+</li>
+</ul>
+<p>There are many other operations, but computation proceeds by using these basic ones.</p>
+<p>Computers can do surprisingly few things, don’t you think? And yet, by combining them, they can do amazing things!</p>
+<p>What makes this possible is programming. You can see that programming is a truly creative activity.</p>
+<p>I will leave the details to the books below.</p>
+<ul>
+<li><a href="https://www.amazon.co.jp/%E3%82%B3%E3%83%B3%E3%83%94%E3%83%A5%E3%83%BC%E3%82%BF%E3%81%AE%E6%A7%8B%E6%88%90%E3%81%A8%E8%A8%AD%E8%A8%88-MIPS-%E7%AC%AC6%E7%89%88-%E4%B8%8A-David-Patterson-ebook/dp/B09KN4LWMZ/ref=sr_1_1?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&#x26;keywords=%E3%83%91%E3%82%BF%E3%83%98%E3%83%8D&#x26;qid=1671339683&#x26;s=books&#x26;sr=1-1&#x26;_encoding=UTF8&#x26;tag=amazon13aff-22&#x26;linkCode=ur2&#x26;linkId=5d93ae87924ab7589439840f9e1a7f61&#x26;camp=247&#x26;creative=1211">コンピュータの構成と設計 MIPS Edition 第6版 上 (Computer Organization and Design MIPS Edition, 6th Edition, Vol. 1; known in Japan as “Patahene”), Patterson &#x26; Hennessy</a></li>
+</ul>
+<p>This book covers the interface between software and hardware in detail. Specifically, it covers topics such as CPU design and instruction sets (ISAs). The authors are giants who lead this field.</p>
+<ul>
+<li><a href="https://www.amazon.co.jp/%E3%83%87%E3%82%A3%E3%82%B8%E3%82%BF%E3%83%AB%E5%9B%9E%E8%B7%AF%E8%A8%AD%E8%A8%88%E3%81%A8%E3%82%B3%E3%83%B3%E3%83%94%E3%83%A5%E3%83%BC%E3%82%BF%E3%82%A2%E3%83%BC%E3%82%AD%E3%83%86%E3%82%AF%E3%83%81%E3%83%A3-%E7%AC%AC2%E7%89%88-Sarah-L-Harris/dp/4798147524/ref=tmm_pap_swatch_0?_encoding=UTF8&#x26;qid=1671339740&#x26;sr=1-1&#x26;_encoding=UTF8&#x26;tag=amazon13aff-22&#x26;linkCode=ur2&#x26;linkId=c6f7bf7ccd1c4bbe7ddf6f63c3aa659c&#x26;camp=247&#x26;creative=1211">ディジタル回路設計とコンピュータアーキテクチャ 第2版 (Digital Design and Computer Architecture, 2nd Edition; known in Japan as “the Harris book”), Harris et al.</a></li>
+</ul>
+<p>It covers similar ground to Patahene, but explains everything from the lower gate level up to building a CPU. A distinctive feature of this book is its wealth of hardware description language (HDL) implementation examples.</p>
+<h2 id="what-is-an-os-operating-system">What Is an OS (Operating System)?</h2>
+<p>An OS is software, such as Windows, Linux, Mac OS, or iOS, that underpins PCs and smartphones.</p>
+<p>Any app, whatever it is, needs basic operations to do its computing: allocating memory, working with files, managing hardware, managing communication, and so on.</p>
+<p>The software that handles all of this comprehensively is the OS.</p>
+<p>The OS assumes that the hardware works correctly and uses it to manage that hardware. That is exactly “building on existing technology.”</p>
+<p>That said, given its role, the OS covers a very broad range and sits at a low level, so explaining how it works in detail within limited space is difficult.</p>
+<p>So I will leave the details to the books below.</p>
+<ul>
+<li><a href="https://www.amazon.co.jp/Go%E3%81%AA%E3%82%89%E3%82%8F%E3%81%8B%E3%82%8B%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0-%E7%AC%AC2%E7%89%88-%E6%B8%8B%E5%B7%9D%E3%82%88%E3%81%97%E3%81%8D/dp/4908686122/ref=sr_1_1?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&#x26;crid=WMOTE1UXG3B3&#x26;keywords=Go%E3%81%AA%E3%82%89%E3%82%8F%E3%81%8B%E3%82%8B%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0+%E7%AC%AC2%E7%89%88&#x26;qid=1689855583&#x26;s=books&#x26;sprefix=%E3%81%93%E3%81%AE%E7%94%BB%E5%83%8F%E3%82%92%E8%A1%A8%E7%A4%BA+go%E3%81%AA%E3%82%89%E3%82%8F%E3%81%8B%E3%82%8B%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0+%E7%AC%AC2%E7%89%88%2Cstripbooks%2C200&#x26;sr=1-1&#x26;_encoding=UTF8&#x26;tag=amazon13aff-22&#x26;linkCode=ur2&#x26;linkId=3d6b2218842911e4677f1e1c7a15ac7b&#x26;camp=247&#x26;creative=1211">Goならわかるシステムプログラミング 第2版 (Systems Programming Made Clear with Go, 2nd Edition), Shibukawa</a></li>
+</ul>
+<p>Using Go, a modern language, this book explains what the OS does and what operations you can perform with it.</p>
+<ul>
+<li><a href="https://www.amazon.co.jp/%E3%82%AA%E3%83%9A%E3%83%AC%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%81%AE%E6%A6%82%E5%BF%B5-Abraham-Silberschatz/dp/4320122534/ref=sr_1_1?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&#x26;crid=TRYOK4HUK4US&#x26;keywords=%E3%82%AA%E3%83%9A%E3%83%AC%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%81%AE%E6%A6%82%E5%BF%B5&#x26;qid=1671340030&#x26;sprefix=%E3%82%AA%E3%83%9A%E3%83%AC%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%81%AE%E6%A6%82%E5%BF%B5%2Caps%2C291&#x26;sr=8-1&#x26;_encoding=UTF8&#x26;tag=amazon13aff-22&#x26;linkCode=ur2&#x26;linkId=058991f4afd7dc5f8fddf301e29b6379&#x26;camp=247&#x26;creative=1211">オペレーティングシステムの概念 (Operating System Concepts), Abraham et al.</a></li>
+</ul>
+<p>A very thick book, but one of those books that is thick precisely because its explanations are so careful.</p>
+<ul>
+<li><a href="https://www.amazon.co.jp/%E3%82%BC%E3%83%AD%E3%81%8B%E3%82%89%E3%81%AEOS%E8%87%AA%E4%BD%9C%E5%85%A5%E9%96%80-%E5%86%85%E7%94%B0-%E5%85%AC%E5%A4%AA/dp/4839975868?&#x26;_encoding=UTF8&#x26;tag=amazon13aff-22&#x26;linkCode=ur2&#x26;linkId=fa7ec8711d3cd97b4b0a78dec9aafca0&#x26;camp=247&#x26;creative=1211">ゼロからのOS自作入門 (Introduction to Building Your Own OS from Scratch), Uchida</a></li>
+</ul>
+<p>A book where you build your own OS.</p>
+<h2 id="what-is-a-program">What Is a Program?</h2>
+<p>So far, we have covered communication, computers, and operating systems.</p>
+<p>Here, I explain what programs, which you need in order to build real applications on top of all this, are like.</p>
+<p>Below is a program that computes Fibonacci numbers.</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">def</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic"> fibonacci</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">(</span><span style="--shiki-light:#FF9800;--shiki-dark:#7FDBCA">n</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">)</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  # 基本条件</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">  if</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> n </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">&#x3C;=</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 1</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">    return</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> n</span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  # 再帰的な手続き</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">  else</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">    return</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6"> fibonacci</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">n </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">-</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 1</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> +</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6"> fibonacci</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">n </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">-</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 2</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic"># フィボナッチ数列の 10 番目の数を求める</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">fibonacci</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">10</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">))</span></span></code></pre>
+<p>As you can see, a program carries out computation using “variables” and “functions.”</p>
+<p>In practice, a program like this is interpreted and executed by an interpreter.</p>
+<p>Alternatively, it is translated into assembly language or machine code by software called a compiler and then executed.</p>
+<p><strong>Algorithms and data structures</strong></p>
+<p>What matters in a program are algorithms and data structures.</p>
+<p>According to Wikipedia, an algorithm</p>
+<blockquote>
+<p>refers to a procedure that correctly finds the solution to a “computable” problem whose solution is well defined</p>
+</blockquote>
+<p>So a program can be described as an abstract thing called an algorithm turned into code.</p>
+<p>Moreover, to solve problems, the concept of data structures is also indispensable.</p>
+<p>According to Wikipedia, a data structure</p>
+<blockquote>
+<p>is an organization that makes it easy to manage stored data, such as looking up and modifying each item</p>
+</blockquote>
+<p>By using a data structure that suits the nature of your data, you can make problems easier to deal with.</p>
+<p>I will leave the details to the book below.</p>
+<ul>
+<li><a href="https://www.amazon.co.jp/%E5%95%8F%E9%A1%8C%E8%A7%A3%E6%B1%BA%E5%8A%9B%E3%82%92%E9%8D%9B%E3%81%88%E3%82%8B-%E3%82%A2%E3%83%AB%E3%82%B4%E3%83%AA%E3%82%BA%E3%83%A0%E3%81%A8%E3%83%87%E3%83%BC%E3%82%BF%E6%A7%8B%E9%80%A0-KS%E6%83%85%E5%A0%B1%E7%A7%91%E5%AD%A6%E5%B0%82%E9%96%80%E6%9B%B8-%E5%A4%A7%E6%A7%BB-%E5%85%BC%E8%B3%87/dp/4065128447/ref=asc_df_4065128447/?tag=jpgo-22&#x26;linkCode=df0&#x26;hvadid=342458612368&#x26;hvpos=&#x26;hvnetw=g&#x26;hvrand=17145578494957185875&#x26;hvpone=&#x26;hvptwo=&#x26;hvqmt=&#x26;hvdev=c&#x26;hvdvcmdl=&#x26;hvlocint=&#x26;hvlocphy=1009547&#x26;hvtargid=pla-939742448341&#x26;psc=1&#x26;th=1&#x26;psc=1&#x26;_encoding=UTF8&#x26;tag=amazon13aff-22&#x26;linkCode=ur2&#x26;linkId=dc6e95c91c9459f388420d81ce8e4ab5&#x26;camp=247&#x26;creative=1211">問題解決力を鍛える!アルゴリズムとデータ構造 (KS情報科学専門書) (Algorithms and Data Structures for Building Problem-Solving Skills), Otsuki</a></li>
+</ul>
+<p>When learning data structures and algorithms, it is also important to actually write programs.</p>
+<p>Competitive programming contests are a great way to learn while having fun.</p>
+<p>In Japan, <a href="https://atcoder.jp/">AtCoder</a> is a well-known competitive programming site.</p>
+<p>I also recommend <a href="https://web.archive.org/web/20260802052601/https://algo-method.com/">アルゴ式 (Algo Method)</a>, a site with learning materials across many areas.</p>
+<p><strong>Program development is a world of splitting problems and abstraction</strong></p>
+<p>Personally, I think program development is a world of splitting problems and abstraction.</p>
+<p>Large-scale programs can reach tens of millions of lines. To develop programs that large, the idea of “divide each difficulty” and the idea of abstracting things to make them easy to reuse become important.</p>
+<p>In that sense, I think programming is packed with the essence of computer science.</p>
+<p><strong>Compilers</strong></p>
+<p>By now, many readers may be wondering how programs connect to the OS and the computer.</p>
+<p>Questions like: what is the difference between an interpreter and a compiler, and why can a program run on a computer that only understands 0s and 1s?</p>
+<p>An important topic for understanding why programs run is compilers.</p>
+<p>Earlier, I explained the operations a computer can perform. In practice, these are specified by instruction sets (ISAs) such as x86, and the computer can execute a program once a high-level language such as C has been translated into an assembly language such as x86.</p>
+<p>Compilers are packed with the essence of computer science. What I find especially fascinating is how much theory contributes to implementation. So I recommend the following.</p>
+<ul>
+<li><a href="https://www.sigbus.info/compilerbook">低レイヤを知りたい人のためのCコンパイラ作成入門 (An Introduction to Writing a C Compiler for Those Who Want to Know the Low Level), Rui Ueyama</a></li>
+</ul>
+<p>Of all the books I read in university, this is the one (a website, actually) that influenced me the most.</p>
+<p>I think the best way to really learn information technology is, after all, to write programs and build things yourself.</p>
+<p>In this book, you actually write a C compiler in C. Because you build it incrementally (a little at a time) so that the compiler always works, it is easy to stay motivated and keep enjoying it. The book also covers techniques and tools for developing large-scale software, which will be very helpful for your future development work.</p>
+<ul>
+<li><a href="https://www.amazon.co.jp/%E3%82%B3%E3%83%B3%E3%83%91%E3%82%A4%E3%83%A9-%E7%AC%AC2%E7%89%88-%E8%BE%BB%E9%87%8E-%E5%98%89%E5%AE%8F/dp/4274224724/ref=asc_df_4274224724/?tag=jpgo-22&#x26;linkCode=df0&#x26;hvadid=407530502627&#x26;hvpos=&#x26;hvnetw=g&#x26;hvrand=7904605230057517870&#x26;hvpone=&#x26;hvptwo=&#x26;hvqmt=&#x26;hvdev=c&#x26;hvdvcmdl=&#x26;hvlocint=&#x26;hvlocphy=1009547&#x26;hvtargid=pla-854840472175&#x26;psc=1&#x26;th=1&#x26;psc=1&#x26;_encoding=UTF8&#x26;tag=amazon13aff-22&#x26;linkCode=ur2&#x26;linkId=354343e4e9770ceedf337f9d0c7f533b&#x26;camp=247&#x26;creative=1211">コンパイラ(第2版) (Compilers, 2nd Edition), Tsujino</a></li>
+</ul>
+<p>Although it is a relatively thin book, it gives you a comprehensive grounding in compiler fundamentals.</p>
+<ul>
+<li><a href="https://www.amazon.co.jp/%E3%82%B3%E3%83%B3%E3%83%91%E3%82%A4%E3%83%A9%E2%80%95%E5%8E%9F%E7%90%86%E3%83%BB%E6%8A%80%E6%B3%95%E3%83%BB%E3%83%84%E3%83%BC%E3%83%AB-Information-Computing-V-%E3%82%A8%E3%82%A4%E3%83%9B/dp/478191229X?&#x26;_encoding=UTF8&#x26;tag=amazon13aff-22&#x26;linkCode=ur2&#x26;linkId=8a6484bea070e3ee322fc8aa71559cae&#x26;camp=247&#x26;creative=1211">コンパイラ―原理・技法・ツール (Information &#x26; Computing) (Compilers: Principles, Techniques, and Tools), Aho et al.</a></li>
+</ul>
+<p>For a more detailed book on compilers, try this one. It is thick, but it covers many topics. At first, it may be best to use it like a dictionary.</p>
+<h2 id="how-does-a-browser-work">How Does a Browser Work?</h2>
+<p>First, what does a browser need in order to work? It needs resources, such as the design, text, and images used to display a web page.</p>
+<p>To get these resources, you need to send a request to a web server saying “please give me the resource.” To send this request, you need to define the specification of the request message and make use of the OS, the computer, and communication. That is exactly “building on existing technology.”</p>
+<p>The server that receives the request then sends back the requested resource.</p>
+<p>The browser receives it and displays the page on the screen based on that resource. This requires a program for displaying it.</p>
+<p>Browsers also have a JavaScript execution engine and send, receive, and process all kinds of data for each page.</p>
+<p>I will leave the finer details to the books and sites below, but I hope you can now see that a browser is made possible by drawing on many technologies.</p>
+<ul>
+<li><a href="https://web.dev/howbrowserswork/">How browsers work, web.dev</a></li>
+</ul>
+<p>This covers HTML/CSS, which describe static content, and goes into detail on how the engines that render them work.</p>
+<ul>
+<li><a href="https://github.com/d0iasm/vulbr">https://github.com/d0iasm/vulbr, d0iasm</a></li>
+</ul>
+<p>A repository implementing a browser in Rust.</p>
+<ul>
+<li><a href="https://limpet.net/mbrubeck/2014/08/08/toy-layout-engine-1.html">Let’s build a browser engine!, Matt Brubeck</a></li>
+</ul>
+<p>A blog series that implements browser rendering in Rust.</p>
+<h2 id="advice-for-your-future-learning">Advice for Your Future Learning</h2>
+<p><strong>Make the most of the browser</strong></p>
+<p>The browser, which has driven the information society, is a powerful weapon for learning and development.</p>
+<p>However, its vast amount of information is a mixed bag of gems and junk, and the drawback is that it is very hard to sort out what to use.</p>
+<ul>
+<li>Search skills + fundamentals</li>
+</ul>
+<p>That is why search skills matter. Searching for the information you want is a skill that takes quite a bit of practice. An important factor in improving that search skill is having a solid foundation in the subject you are searching for. Still, in practice, how much information you can get depends on your search skills. Start by building your foundation with good books.</p>
+<p><strong>Official documentation matters</strong></p>
+<p>One thing I have come to feel strongly is the importance of official documentation. In IT, documentation is often in English, so you tend to rely on Japanese blog posts and the like, but most of what is in those blogs is written in the official documentation. And very often, the slow and steady way turns out to be the fastest. Make a conscious effort to read the official documentation.</p>
+<p><strong>Take part in events</strong></p>
+<p>There are many events that bring together students, working professionals, and researchers specializing in information technology.</p>
+<p>Taking part in them gives you opportunities to boost your motivation and technical skills, and to broaden your interests through the people you meet.</p>
+<p>Here are some well-known events.</p>
+<ul>
+<li><a href="https://www.ipa.go.jp/jinzai/camp/index.html">セキュリティキャンプ (Security Camp)</a></li>
+</ul>
+<p>I took part in this one myself and was greatly inspired by the other participants and the instructors. I highly encourage you to apply.</p>
+<p>Others include</p>
+<ul>
+<li><a href="https://sechack365.nict.go.jp/">SecHack365</a></li>
+<li><a href="https://www.ipa.go.jp/jinzai/mitou/index.html">未踏事業 (Mitou Program)</a></li>
+<li><a href="https://labs.cybozu.co.jp/youth.html">サイボウズ・ラボユース (Cybozu Labs Youth)</a></li>
+</ul>
+<p>and more. Do look them up.</p>
+<p><strong>Ask questions</strong></p>
+<p>This applies to everything, but asking questions is important. The knowledge you gain from the answers matters, of course, but the process of coming up with a question also makes you think things through and shows you what you do and do not understand.</p>
+<p><strong>Write code</strong></p>
+<p>What I regret about my first year of university is that I focused only on deepening my understanding through reading and hardly wrote any code.</p>
+<p>Writing code may be hard at first, but once you get the hang of it, it gives you a lot of freedom and is really fun.</p>
+<p>Writing code also deepens your understanding even further. As you go through trial and error in your implementation, you start paying attention to the fine details, such as corner cases.</p>
+<p>As Feynman put it, “What I cannot create, I do not understand.”</p>
+<p><strong>Output matters</strong></p>
+<p>This overlaps with writing code, but I have found that output matters.</p>
+<p>In my first year, almost everything I did was input, and I often felt anxious, not knowing whether I really understood things.</p>
+<p>By programming, you can check that your program actually works correctly,</p>
+<p>and by rereading articles where you summarized your understanding, you can see how well you understood things at each point in time.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>This completes the laying of the “highway of knowledge.”</p>
+<p>From here on, it is you who will drive down this “highway of knowledge.” In the world of computer science, where new technologies keep emerging one after another, mastering the foundational technologies will give you great strength.</p>
+<p>And with that, <strong>Let’s deep dive!</strong></p> </article> </div> </main> <footer class="w-full border-t border-border mt-auto"> <div class="mx-auto flex max-w-5xl flex-col items-center justify-between px-4 py-6 sm:flex-row-reverse sm:py-4"> <div class="flex-wrap justify-center gap-1 flex"> <a href="https://github.com/speed1313" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="speed1313 Blog on GitHub">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" /></svg> <span class="sr-only">speed1313 Blog on GitHub</span>  </a><a href="https://x.com/strayer_13" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="speed1313 Blog on X">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 4l11.733 16h4.267l-11.733 -16z" /><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" /></svg> <span class="sr-only">speed1313 Blog on X</span>  </a><a href="https://www.linkedin.com/in/speed1313/" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="speed1313 Blog on LinkedIn">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M8 11v5" /><path d="M8 8v.01" /><path d="M12 16v-5" /><path d="M16 16v-3a2 2 0 1 0 -4 0" /><path d="M3 7a4 4 0 0 1 4 -4h10a4 4 0 0 1 4 4v10a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4z" /></svg> <span class="sr-only">speed1313 Blog on LinkedIn</span>  </a><a href="https://huggingface.co/speed" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="speed1313 Blog on Hugging Face">  <svg role="img" viewBox="0 0 24 24" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><title>Hugging Face</title><path d="M12.025 1.13c-5.77 0-10.449 4.647-10.449 10.378 0 1.112.178 2.181.503 3.185.064-.222.203-.444.416-.577a.96.96 0 0 1 .524-.15c.293 0 .584.124.84.284.278.173.48.408.71.694.226.282.458.611.684.951v-.014c.017-.324.106-.622.264-.874s.403-.487.762-.543c.3-.047.596.06.787.203s.31.313.4.467c.15.257.212.468.233.542.01.026.653 1.552 1.657 2.54.616.605 1.01 1.223 1.082 1.912.055.537-.096 1.059-.38 1.572.637.121 1.294.187 1.967.187.657 0 1.298-.063 1.921-.178-.287-.517-.44-1.041-.384-1.581.07-.69.465-1.307 1.081-1.913 1.004-.987 1.647-2.513 1.657-2.539.021-.074.083-.285.233-.542.09-.154.208-.323.4-.467a1.08 1.08 0 0 1 .787-.203c.359.056.604.29.762.543s.247.55.265.874v.015c.225-.34.457-.67.683-.952.23-.286.432-.52.71-.694.257-.16.547-.284.84-.285a.97.97 0 0 1 .524.151c.228.143.373.388.43.625l.006.04a10.3 10.3 0 0 0 .534-3.273c0-5.731-4.678-10.378-10.449-10.378M8.327 6.583a1.5 1.5 0 0 1 .713.174 1.487 1.487 0 0 1 .617 2.013c-.183.343-.762-.214-1.102-.094-.38.134-.532.914-.917.71a1.487 1.487 0 0 1 .69-2.803m7.486 0a1.487 1.487 0 0 1 .689 2.803c-.385.204-.536-.576-.916-.71-.34-.12-.92.437-1.103.094a1.487 1.487 0 0 1 .617-2.013 1.5 1.5 0 0 1 .713-.174m-10.68 1.55a.96.96 0 1 1 0 1.921.96.96 0 0 1 0-1.92m13.838 0a.96.96 0 1 1 0 1.92.96.96 0 0 1 0-1.92M8.489 11.458c.588.01 1.965 1.157 3.572 1.164 1.607-.007 2.984-1.155 3.572-1.164.196-.003.305.12.305.454 0 .886-.424 2.328-1.563 3.202-.22-.756-1.396-1.366-1.63-1.32q-.011.001-.02.006l-.044.026-.01.008-.03.024q-.018.017-.035.036l-.032.04a1 1 0 0 0-.058.09l-.014.025q-.049.088-.11.19a1 1 0 0 1-.083.116 1.2 1.2 0 0 1-.173.18q-.035.029-.075.058a1.3 1.3 0 0 1-.251-.243 1 1 0 0 1-.076-.107c-.124-.193-.177-.363-.337-.444-.034-.016-.104-.008-.2.022q-.094.03-.216.087-.06.028-.125.063l-.13.074q-.067.04-.136.086a3 3 0 0 0-.135.096 3 3 0 0 0-.26.219 2 2 0 0 0-.12.121 2 2 0 0 0-.106.128l-.002.002a2 2 0 0 0-.09.132l-.001.001a1.2 1.2 0 0 0-.105.212q-.013.036-.024.073c-1.139-.875-1.563-2.317-1.563-3.203 0-.334.109-.457.305-.454m.836 10.354c.824-1.19.766-2.082-.365-3.194-1.13-1.112-1.789-2.738-1.789-2.738s-.246-.945-.806-.858-.97 1.499.202 2.362c1.173.864-.233 1.45-.685.64-.45-.812-1.683-2.896-2.322-3.295s-1.089-.175-.938.647 2.822 2.813 2.562 3.244-1.176-.506-1.176-.506-2.866-2.567-3.49-1.898.473 1.23 2.037 2.16c1.564.932 1.686 1.178 1.464 1.53s-3.675-2.511-4-1.297c-.323 1.214 3.524 1.567 3.287 2.405-.238.839-2.71-1.587-3.216-.642-.506.946 3.49 2.056 3.522 2.064 1.29.33 4.568 1.028 5.713-.624m5.349 0c-.824-1.19-.766-2.082.365-3.194 1.13-1.112 1.789-2.738 1.789-2.738s.246-.945.806-.858.97 1.499-.202 2.362c-1.173.864.233 1.45.685.64.451-.812 1.683-2.896 2.322-3.295s1.089-.175.938.647-2.822 2.813-2.562 3.244 1.176-.506 1.176-.506 2.866-2.567 3.49-1.898-.473 1.23-2.037 2.16c-1.564.932-1.686 1.178-1.464 1.53s3.675-2.511 4-1.297c.323 1.214-3.524 1.567-3.287 2.405.238.839 2.71-1.587 3.216-.642.506.946-3.49 2.056-3.522 2.064-1.29.33-4.568 1.028-5.713-.624" /></svg> <span class="sr-only">speed1313 Blog on Hugging Face</span>  </a><a href="https://scholar.google.com/citations?user=717QdNoAAAAJ" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="speed1313 Blog on Google Scholar">  <svg role="img" viewBox="0 0 24 24" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><title>Google Scholar</title><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z" /></svg> <span class="sr-only">speed1313 Blog on Google Scholar</span>  </a><a href="/cv.pdf" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="speed1313 Blog CV">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+  <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+  <path d="M11 12.5a1.5 1.5 0 0 0 -3 0v3a1.5 1.5 0 0 0 3 0" />
+  <path d="M13 11l1.5 6l1.5 -6" />
+</svg> <span class="sr-only">speed1313 Blog CV</span>  </a> </div> <div class="my-2 flex flex-col items-center whitespace-nowrap sm:flex-row"> <span>speed1313 &#169; 2026</span> <span class="hidden sm:inline">&nbsp;|&nbsp;</span> <span>
+Built with <a href="https://astro.build" class="underline">Astro</a> · Theme
+<a href="https://github.com/satnaing/astro-paper" class="underline">astro-paper</a> </span> </div> </div> </footer>  </body> </html> <script data-astro-rerun>
+  /** Attaches links to headings in the document,
+   *  allowing sharing of sections easily */
+  function addHeadingLinks() {
+    const headings = Array.from(
+      document.querySelectorAll("h2, h3, h4, h5, h6")
+    );
+    for (const heading of headings) {
+      heading.classList.add("group");
+      const link = document.createElement("a");
+      link.className =
+        "heading-link ms-2 no-underline opacity-75 md:opacity-0 md:group-hover:opacity-100 md:focus:opacity-100";
+      link.href = "#" + heading.id;
+
+      const span = document.createElement("span");
+      span.ariaHidden = "true";
+      span.innerText = "#";
+      link.appendChild(span);
+      heading.appendChild(link);
+    }
+  }
+  addHeadingLinks();
+
+  /** Attaches copy buttons to code blocks in the document,
+   * allowing users to copy code easily. */
+  function attachCopyButtons() {
+    const copyButtonLabel = "Copy";
+    const codeBlocks = Array.from(document.querySelectorAll("pre"));
+
+    for (const codeBlock of codeBlocks) {
+      const wrapper = document.createElement("div");
+      wrapper.style.position = "relative";
+
+      // Check if --file-name-offset custom property exists
+      const computedStyle = getComputedStyle(codeBlock);
+      const hasFileNameOffset =
+        computedStyle.getPropertyValue("--file-name-offset").trim() !== "";
+
+      // Determine the top positioning class
+      const topClass = hasFileNameOffset
+        ? "top-(--file-name-offset)"
+        : "-top-3";
+
+      const copyButton = document.createElement("button");
+      copyButton.className = `copy-code absolute end-3 ${topClass} rounded bg-muted border border-muted px-2 py-1 text-xs leading-4 text-foreground font-medium`;
+      copyButton.innerHTML = copyButtonLabel;
+      codeBlock.setAttribute("tabindex", "0");
+      codeBlock.appendChild(copyButton);
+
+      // wrap codebock with relative parent element
+      codeBlock?.parentNode?.insertBefore(wrapper, codeBlock);
+      wrapper.appendChild(codeBlock);
+
+      copyButton.addEventListener("click", async () => {
+        await copyCode(codeBlock, copyButton);
+      });
+    }
+
+    async function copyCode(block, button) {
+      const code = block.querySelector("code");
+      const text = code?.innerText;
+
+      await navigator.clipboard.writeText(text ?? "");
+
+      // visual feedback that task is completed
+      button.innerText = "Copied";
+
+      setTimeout(() => {
+        button.innerText = copyButtonLabel;
+      }, 700);
+    }
+  }
+  attachCopyButtons();
+
+  /* Go to page start after page swap */
+  document.addEventListener("astro:after-swap", () =>
+    window.scrollTo({ left: 0, top: 0, behavior: "instant" })
+  );
+</script>

@@ -1,0 +1,804 @@
+<!DOCTYPE html><html dir="ltr" lang="en" class="scroll-smooth"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="canonical" href="https://speed1313.github.io/en/posts/gomicollector/"><link rel="alternate" hreflang="ja" href="https://speed1313.github.io/posts/gomicollector/"><link rel="alternate" hreflang="en" href="https://speed1313.github.io/en/posts/gomicollector/"><link rel="alternate" hreflang="x-default" href="https://speed1313.github.io/posts/gomicollector/"><meta name="generator" content="Astro v7.4.4"><!-- General Meta Tags --><title>Garbage Collection: The Mark &amp; Sweep Method | speed1313 Blog</title><meta name="title" content="Garbage Collection: The Mark &amp; Sweep Method | speed1313 Blog"><meta name="description" content="This post explains the mark &amp; sweep method, one of the algorithms used for garbage collection."><meta name="author" content="speed1313"><link rel="sitemap" href="/sitemap-index.xml"><!-- Open Graph / Facebook --><meta property="og:type" content="article"><meta property="og:locale" content="en_US"><meta property="og:title" content="Garbage Collection: The Mark &amp; Sweep Method | speed1313 Blog"><meta property="og:description" content="This post explains the mark &amp; sweep method, one of the algorithms used for garbage collection."><meta property="og:url" content="https://speed1313.github.io/en/posts/gomicollector/"><meta property="og:image" content="https://speed1313.github.io/en/posts/gomicollector/index.png"><!-- Article Published/Modified time --><meta property="article:published_time" content="2023-01-23T00:00:00.000Z"><!-- Twitter --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:url" content="https://speed1313.github.io/en/posts/gomicollector/"><meta name="twitter:title" content="Garbage Collection: The Mark &amp; Sweep Method | speed1313 Blog"><meta name="twitter:description" content="This post explains the mark &amp; sweep method, one of the algorithms used for garbage collection."><meta name="twitter:image" content="https://speed1313.github.io/en/posts/gomicollector/index.png"><!-- Google JSON-LD Structured data --><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Garbage Collection: The Mark & Sweep Method","image":"https://speed1313.github.io/en/posts/gomicollector/index.png","datePublished":"2023-01-23T00:00:00.000Z","inLanguage":"en","mainEntityOfPage":"https://speed1313.github.io/en/posts/gomicollector/","author":[{"@type":"Person","name":"speed1313"}]}</script><!-- Enable RSS feed auto-discovery  --><!-- https://docs.astro.build/en/recipes/rss/#enabling-rss-feed-auto-discovery --><link rel="alternate" type="application/rss+xml" title="speed1313 Blog" href="https://speed1313.github.io/rss.xml"><!-- Google Analytics --><script src="https://www.googletagmanager.com/gtag/js?id=G-7X0Q0NSDB9"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        // gtag.js only reads Arguments objects from dataLayer, not arrays.
+        // eslint-disable-next-line prefer-rest-params
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-7X0Q0NSDB9");
+    </script><meta name="theme-color" content=""><meta name="astro-view-transitions-enabled" content="true"> <meta name="astro-view-transitions-fallback" content="animate"><script type="module" src="/_astro/ClientRouter.astro_astro_type_script_index_0_lang.DXqcZz58.js"></script><script src="/toggle-theme.js"></script><style>@keyframes astroFadeInOut{0%{opacity:1}to{opacity:0}}@keyframes astroFadeIn{0%{opacity:0;mix-blend-mode:plus-lighter}to{opacity:1;mix-blend-mode:plus-lighter}}@keyframes astroFadeOut{0%{opacity:1;mix-blend-mode:plus-lighter}to{opacity:0;mix-blend-mode:plus-lighter}}@keyframes astroSlideFromRight{0%{transform:translate(100%)}}@keyframes astroSlideFromLeft{0%{transform:translate(-100%)}}@keyframes astroSlideToRight{to{transform:translate(100%)}}@keyframes astroSlideToLeft{to{transform:translate(-100%)}}@media (prefers-reduced-motion){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*),[data-astro-transition-scope]{animation:none!important}}
+</style><link rel="stylesheet" href="/_astro/Footer.B68Ii7U4.css"><style>[data-astro-transition-scope="astro-eq54l3i4-1"] { view-transition-name: garbage-collection-the-mark-sweep-method; }@layer astro { ::view-transition-old(garbage-collection-the-mark-sweep-method) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(garbage-collection-the-mark-sweep-method) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(garbage-collection-the-mark-sweep-method) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(garbage-collection-the-mark-sweep-method) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-eq54l3i4-1"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-eq54l3i4-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-eq54l3i4-1"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-eq54l3i4-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-eq54l3i4-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-eq54l3i4-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-eq54l3i4-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-eq54l3i4-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style></head> <body>  <header id="site-header" class="fixed inset-x-0 top-0 z-20 border-b border-transparent bg-background"> <a id="skip-to-content" href="#main-content" class="sr-only z-50 bg-background px-3 py-2 text-accent focus:not-sr-only focus:absolute focus:start-16 focus:top-4">
+Skip to content
+</a> <!-- Same width as the home and About pages, so the edges line up. --> <div id="nav-container" class="flex w-full flex-col items-center justify-between sm:flex-row"> <div id="top-nav-wrap" class="relative mx-auto flex min-h-[56px] w-full max-w-5xl items-baseline justify-between bg-background px-4 py-2 sm:items-center sm:py-2"> <a href="/en/" class="absolute flex items-center gap-2 py-1 text-lg leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-xl sm:leading-none"> <svg viewBox="1.8 6.2 26 18.4" fill="currentColor" aria-hidden="true" class="h-[0.9em] w-auto text-accent"><path d="M5.6 12.4 L1.8 13.9 L5.4 15.2 Z" /><path fill-rule="evenodd" d="M5.2 14.2 C5.2 9.6 8.6 6.2 13 6.2 C16.9 6.2 19.7 8.6 20.6 12.1 C22.4 12.6 25.2 12.4 27.6 11.6 C27.4 16.4 25.2 20.6 21.6 22.6 C19.6 23.8 17.2 24.4 14.8 24.4 C9.4 24.4 5.2 20.4 5.2 14.2 Z M8.9 12.6 a1.9 1.9 0 1 0 3.8 0 a1.9 1.9 0 1 0 -3.8 0 Z" /></svg> speed1313 Blog </a> <nav id="nav-menu" class="flex w-full flex-col items-center sm:ms-2 sm:flex-row sm:justify-end sm:space-x-4 sm:py-0"> <div class="flex items-center gap-1 self-end sm:hidden"> <!--
+  Names the language it switches to, written in that language. The fixed
+  width keeps the header from shifting between "English" and "日本語".
+--><a href="/posts/gomicollector/" lang="ja" hreflang="ja" class="focus-outline flex w-16 justify-center px-2 py-2 text-sm font-medium whitespace-nowrap hover:text-accent sm:w-14 sm:px-1 sm:py-1"> 日本語 </a> <a href="/en/#search" data-search-toggle role="button" aria-label="Search" aria-expanded="false" aria-controls="search-panel" title="Search" class="group focus-outline flex p-2"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-aria-expanded:hidden" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden group-aria-expanded:block" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg> </a> <button id="menu-btn" class="focus-outline p-2" aria-label="Open Menu" aria-expanded="false" aria-controls="menu-items"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden" id="close-icon"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-menu-deep" id="menu-icon"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 6h16" /><path d="M7 12h13" /><path d="M10 18h10" /></svg> </button> </div> <ul id="menu-items" class="mt-4 grid w-44 grid-cols-2 place-content-center gap-2 [&amp;>li>a]:block [&amp;>li>a]:px-4 [&amp;>li>a]:py-3 [&amp;>li>a]:text-center [&amp;>li>a]:font-medium [&amp;>li>a]:hover:text-accent sm:[&amp;>li>a]:px-2 sm:[&amp;>li>a]:py-1 hidden sm:mt-0 sm:flex sm:w-auto sm:gap-x-5 sm:gap-y-0"> <li class="col-span-2"> <a href="/en/" class="active-nav">
+Posts
+</a> </li> <li class="col-span-2"> <a href="/en/about">
+About
+</a> </li>  <li class="hidden items-center justify-center sm:flex"> <a href="/en/#search" data-search-toggle role="button" aria-label="Search" aria-expanded="false" aria-controls="search-panel" title="Search" class="group focus-outline flex p-1"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-aria-expanded:hidden" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden group-aria-expanded:block" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg> </a> </li> <li class="col-span-2 flex items-center justify-center sm:col-span-1"> <button id="theme-btn" class="focus-outline relative size-12 p-4 sm:size-8 hover:[&amp;&gt;svg]:stroke-accent" title="Toggles light &amp; dark" aria-label="auto" aria-live="polite"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute top-[50%] left-[50%] -translate-[50%] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" /></svg> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute top-[50%] left-[50%] -translate-[50%] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M14.828 14.828a4 4 0 1 0 -5.656 -5.656a4 4 0 0 0 5.656 5.656z" /><path d="M6.343 17.657l-1.414 1.414" /><path d="M6.343 6.343l-1.414 -1.414" /><path d="M17.657 6.343l1.414 -1.414" /><path d="M17.657 17.657l1.414 1.414" /><path d="M4 12h-2" /><path d="M12 4v-2" /><path d="M20 12h2" /><path d="M12 20v2" /></svg> </button> </li> <li class="hidden items-center sm:flex">  <div class="flex"> <!--
+  Names the language it switches to, written in that language. The fixed
+  width keeps the header from shifting between "English" and "日本語".
+--><a href="/posts/gomicollector/" lang="ja" hreflang="ja" class="focus-outline flex w-16 justify-center px-2 py-2 text-sm font-medium whitespace-nowrap hover:text-accent sm:w-14 sm:px-1 sm:py-1"> 日本語 </a> </div> </li> </ul> </nav> </div> </div> </header> <div id="search-panel" role="dialog" aria-label="Search" hidden class="fixed inset-x-0 top-[57px] bottom-0 z-20 overflow-y-auto overscroll-contain bg-background"> <div class="mx-auto max-w-app px-4 pt-10 pb-16"> <div id="search-panel-ui" class="pagefind-theme"></div> </div> </div><script type="module" src="/_astro/SearchPanel.astro_astro_type_script_index_0_lang._yjhVhtJ.js"></script> <!-- Reserves the fixed header's height (56px + 1px border) in the flow. --> <div aria-hidden="true" class="h-[57px] shrink-0"></div><script type="module">function e(){let e=document.querySelector(`#menu-btn`),t=document.querySelector(`#menu-items`),n=document.querySelector(`#menu-icon`),r=document.querySelector(`#close-icon`);e&&t&&n&&r&&e.addEventListener(`click`,()=>{let i=e.getAttribute(`aria-expanded`)===`true`;e.setAttribute(`aria-expanded`,i?`false`:`true`),e.setAttribute(`aria-label`,i?`Open Menu`:`Close Menu`),t.classList.toggle(`hidden`),n.classList.toggle(`hidden`),r.classList.toggle(`hidden`)})}e(),document.addEventListener(`astro:after-swap`,e);</script> <main id="main-content" class="relative mx-auto mt-12 w-full max-w-app px-4 pb-16 sm:mt-20 lg:ms-[max(15rem,calc((100%-48rem)/2))]" data-pagefind-body="true"> <!-- Like the OpenAI blog: date and tags above a large centered title. --><header class="text-center"> <div data-pagefind-ignore class="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-sm"> <time class datetime="2023-01-23T00:00:00.000Z">Jan 23, 2023</time> <ul class="flex flex-wrap justify-center gap-x-4"> <li> <a href="/en/?tag=notes#posts" class="text-foreground/60 underline-offset-4 hover:text-foreground hover:underline"> Notes </a> </li> </ul> </div> <h1 data-astro-transition-scope="astro-eq54l3i4-1" class="mt-5 text-3xl leading-tight text-balance sm:text-5xl sm:leading-tight"> Garbage Collection: The Mark &amp; Sweep Method </h1> </header> <div data-pagefind-ignore class="mt-12 flex items-center justify-between gap-4 border-t border-foreground/10 pt-4 sm:mt-16">  <div class="relative ms-auto shrink-0"> <button type="button" data-share-button class="focus-outline flex items-center gap-x-2 text-sm opacity-80 hover:text-accent hover:opacity-100 sm:text-base"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-6" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 15l6 -6" /><path d="M11 6l.463 -.536a5 5 0 0 1 7.071 7.072l-.534 .464" /><path d="M13 18l-.397 .534a5.068 5.068 0 0 1 -7.127 0a4.972 4.972 0 0 1 0 -7.071l.524 -.463" /></svg> <span>Share</span> </button> <!-- Overlaid below the button so nothing around it moves. --> <span role="status" data-copied class="pointer-events-none absolute end-0 top-full mt-1 rounded bg-foreground px-2 py-0.5 text-xs whitespace-nowrap text-background opacity-0 transition-opacity motion-reduce:transition-none">Copied</span> </div><script type="module">function e(){for(let e of document.querySelectorAll(`[data-share-button]`)){if(e.dataset.ready)continue;e.dataset.ready=`true`;let t=e.parentElement?.querySelector(`[data-copied]`),n=t?.textContent??``,r;e.addEventListener(`click`,async()=>{let e=location.href.split(`#`)[0];try{await navigator.clipboard.writeText(e)}catch{await navigator.share?.({url:e,title:document.title}).catch(()=>{});return}t&&(t.textContent=``,t.textContent=n,t.classList.remove(`opacity-0`),clearTimeout(r),r=setTimeout(()=>t.classList.add(`opacity-0`),1500))})}}document.addEventListener(`astro:page-load`,e);</script> </div> <aside role="note" class="mt-4 rounded border-s-4 border-accent bg-muted/50 px-4 py-3 text-sm" data-pagefind-ignore> <p> This article was machine-translated from the  <a href="/posts/gomicollector/" lang="ja" hreflang="ja" class="underline underline-offset-4 hover:text-accent">Japanese original</a>  using an LLM. If anything differs, the original takes precedence. </p>  </aside> <div class="relative"> <aside class="absolute top-0 right-full hidden h-full w-52 pe-8 lg:block" data-pagefind-ignore> <nav id="post-toc" aria-label="Table of contents" hidden class="group sticky top-[calc(57px+2rem)] flex max-h-[calc(100svh-57px-4rem)] gap-3"> <ul class="min-w-0 flex-1 [scrollbar-width:none] overflow-y-auto overscroll-contain text-[0.8125rem] leading-snug [&amp;::-webkit-scrollbar]:hidden"></ul> <!-- Scrollbar for the list, shown on hover when it overflows. --> <div aria-hidden="true" data-track class="invisible relative w-1 shrink-0 rounded-full bg-foreground/10 opacity-0 transition-opacity group-hover:opacity-100"> <div data-thumb class="absolute inset-x-0 rounded-full bg-foreground/35"></div> </div> </nav> </aside> <div id="post-toc-mobile" hidden data-pagefind-ignore class="pointer-events-none invisible fixed inset-x-0 top-[57px] z-10 -translate-y-2 border-b border-foreground/10 bg-background opacity-0 transition-[opacity,translate] duration-200 motion-reduce:transition-none lg:hidden"> <button type="button" aria-expanded="false" aria-controls="post-toc-mobile-list" class="focus-outline flex w-full items-center gap-2 px-4 py-2.5 text-start text-[0.8125rem]"> <span class="sr-only">Table of contents:</span> <span data-current class="min-w-0 flex-1 truncate text-foreground/60"></span> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-5 shrink-0 -rotate-90 opacity-70 transition-transform motion-reduce:transition-none" aria-hidden="true" data-chevron="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 6l-6 6l6 6" /></svg> </button> <nav id="post-toc-mobile-list" aria-label="Table of contents" hidden class="pointer-events-none relative max-h-[60svh] overflow-y-auto overscroll-contain px-4 pb-2"> <!-- Starts on the bar's row; the right side stays free for the toggle. --><ul class="pointer-events-auto me-8 text-[0.8125rem] leading-snug"></ul> </nav> </div><script type="module">var e=new Set([`footnote-label`]),t=57,n=96;function r(e){let t=e.cloneNode(!0);return t.querySelectorAll(`.katex-mathml, .heading-link`).forEach(e=>e.remove()),t.textContent?.replace(/\s+/g,` `).trim()??``}function i(){let i=document.querySelector(`#post-toc`),a=i?.querySelector(`ul`),o=i?.querySelector(`[data-track]`),s=i?.querySelector(`[data-thumb]`),c=document.querySelector(`#article`);if(!i||!a||!o||!s||!c||i.dataset.ready)return;i.dataset.ready=`true`;let l=[...c.querySelectorAll(`h2[id], h3[id]`)].filter(t=>!e.has(t.id));if(l.length<2)return;let u=l.map(r),d=(e,t,n,r)=>{let i=l.map((r,i)=>{let a=document.createElement(`a`);a.href=`#${encodeURIComponent(r.id)}`,a.textContent=u[i],a.className=`block ${t} ${n} transition-colors hover:text-accent `+(r.tagName===`H3`?`ps-3`:``);let o=document.createElement(`li`);return o.append(a),e.append(o),a});return{items:i,mark:(e,t)=>i[e]?.classList.replace(t?n:r,t?r:n)}},f=d(a,`py-1`,`text-foreground/45`,`text-foreground`),p=f.items;i.hidden=!1;let m=document.querySelector(`#post-toc-mobile`),h=m?.querySelector(`button`),g=m?.querySelector(`nav`),_=g?.querySelector(`ul`),v=m?.querySelector(`[data-current]`),y=m?.querySelector(`[data-chevron]`),b=_?d(_,`py-2.5`,`text-foreground/40`,`text-foreground/85`):void 0,x=b?.items??[];m&&(m.hidden=!1);let S=-1,C=e=>{if(!h||!g)return;h.setAttribute(`aria-expanded`,String(e)),g.hidden=!e,v?.classList.toggle(`invisible`,e),g.style.marginTop=e?`-${h.offsetHeight}px`:``,y?.classList.toggle(`-rotate-90`,!e),y?.classList.toggle(`rotate-90`,e);let t=x[S];e&&t&&(g.scrollTop=t.offsetTop-g.clientHeight/3)};h?.addEventListener(`click`,()=>C(h.getAttribute(`aria-expanded`)!==`true`)),x.forEach(e=>e.addEventListener(`click`,()=>C(!1)));let w=e=>{m&&!m.contains(e.target)&&C(!1)},T=e=>{e.key===`Escape`&&g&&!g.hidden&&(C(!1),h?.focus())};document.addEventListener(`click`,w),document.addEventListener(`keydown`,T);let E=()=>{if(!m)return;let e=c.getBoundingClientRect(),n=e.top<=t&&e.bottom>177;for(let e of[`pointer-events-none`,`invisible`,`-translate-y-2`,`opacity-0`])m.classList.toggle(e,!n);n||C(!1)},D=()=>{let e=c.getBoundingClientRect().top+scrollY;i.style.marginTop=`${Math.max(0,innerHeight-e-n)}px`};D();let O=0,k=()=>{O=0,E();let e=0;if(l.forEach((t,n)=>{t.getBoundingClientRect().top<=137&&(e=n)}),e!==S){f.mark(S,!1),p[S]?.removeAttribute(`aria-current`),f.mark(e,!0),p[e].setAttribute(`aria-current`,`location`),b?.mark(S,!1),b?.mark(e,!0),v&&(v.textContent=u[e]),S=e;let t=p[e],n=t.offsetTop-a.offsetTop;(n<a.scrollTop||n+t.offsetHeight>a.scrollTop+a.clientHeight)&&a.scrollTo({top:n-a.clientHeight/3,behavior:`smooth`})}},A=()=>{let{scrollTop:e,scrollHeight:t,clientHeight:n}=a,r=t>n+8;o.classList.toggle(`invisible`,!r),r&&(s.style.height=`${n/t*100}%`,s.style.top=`${e/t*100}%`)};a.addEventListener(`scroll`,A,{passive:!0});let j=()=>{O||=requestAnimationFrame(k)};window.addEventListener(`scroll`,j,{passive:!0});let M=()=>{D(),j(),A()};window.addEventListener(`resize`,M),document.addEventListener(`astro:before-swap`,()=>{window.removeEventListener(`scroll`,j),window.removeEventListener(`resize`,M),document.removeEventListener(`click`,w),document.removeEventListener(`keydown`,T)},{once:!0}),k(),A()}document.addEventListener(`astro:page-load`,i);</script> <article id="article" class="app-prose mx-auto mt-10 max-w-app prose-pre:bg-(--shiki-light-bg) dark:prose-pre:bg-(--shiki-dark-bg)"> <p>This post explains the mark &#x26; sweep method, one of the algorithms used for garbage collection.</p>
+<h2 id="introduction">Introduction</h2>
+<p>Garbage collection (GC), the software that automatically manages memory in the heap, is used by many programming languages, including Python, Go, and Java.</p>
+<p>GC tends to sound intimidating, but the idea behind mark &#x26; sweep, the GC algorithm introduced in this post, is remarkably simple.</p>
+<p>In fact, when I implemented a simple garbage collector in Rust, it took only about 100 lines. (Implementation: <a href="https://github.com/speed1313/gomicollector">https://github.com/speed1313/gomicollector</a>)</p>
+<p>In this post, let’s walk through the mark &#x26; sweep algorithm!</p>
+<h2 id="background">Background</h2>
+<p>First, let’s understand why GC is needed in the first place.</p>
+<p>Running a program requires <strong>memory</strong>.</p>
+<p>When a program runs, the memory available to it is basically laid out as follows.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Text segment</th></tr></thead><tbody><tr><td>Data segment</td></tr><tr><td>Heap</td></tr><tr><td>↓</td></tr><tr><td></td></tr><tr><td></td></tr><tr><td>↑</td></tr><tr><td>Stack</td></tr></tbody></table>
+<p>The parts to focus on are the heap and the stack. Both grow and shrink dynamically at run time.</p>
+<p>By using the stack and the heap for different purposes, memory can be used efficiently.</p>
+<p><strong>The stack</strong></p>
+<p>Modern programs basically operate according to the stack machine, a model of computation that uses a stack to perform calculations.</p>
+<p>For example, to compute 5+3 on a stack machine, the arguments (5, 3) are pushed onto the stack, then popped off the top and added together, and finally the result is pushed back, as shown below.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th></th><th></th><th></th><th></th></tr></thead><tbody><tr><td></td><td></td><td>+</td><td></td></tr><tr><td></td><td></td><td>3</td><td></td></tr><tr><td></td><td>5</td><td>5</td><td>8</td></tr><tr><td>・</td><td>・</td><td>・</td><td>・</td></tr><tr><td>・</td><td>・</td><td>・</td><td>・</td></tr><tr><td>・</td><td>・</td><td>・</td><td>・</td></tr><tr><td>Bottom of stack</td><td>Bottom of stack</td><td>Bottom of stack</td><td>Bottom of stack</td></tr></tbody></table>
+<p>Time →</p>
+<p>Using a stack in this way makes it possible to evaluate expressions that combine arithmetic operations, such as (5+3)<em>(3</em>2), as well as logical operations.</p>
+<p>Functions, recursion, if statements, and so on can also be handled by a stack machine.</p>
+<p>In this way, program execution basically follows the stack machine model.</p>
+<p>For more detail on how programs work, please refer to books on operating systems and compilers (see: <a href="https://www.ohmsha.co.jp/book/9784274224720/">Tsujino, Compilers</a>, <a href="https://www.sigbus.info/compilerbook">Rui Ueyama, An Introduction to Writing a C Compiler for Those Who Want to Understand Low-Level Systems</a>).</p>
+<p><strong>The heap</strong></p>
+<p>The previous section explained why the stack is needed. So why do we need the heap?</p>
+<p>The reason is that programs sometimes need to allocate memory dynamically, and that cannot be done with the stack, whose allocation order and sizes are fixed at compile time.</p>
+<p>Memory allocated on the stack is constrained: it can only be allocated and freed at push and pop, and its size must be determined statically.</p>
+<p>With the heap, by contrast, memory can be allocated and freed at any time and in any size, within the bounds of the heap.</p>
+<p>For example, a tree whose size is determined at run time must have its memory allocated on the heap.</p>
+<p>The heap is convenient in this way, but when using heap memory, allocation and deallocation must be done correctly.</p>
+<p>For example, the following rules must be observed.</p>
+<ul>
+<li>Always free memory that is no longer needed → the heap is finite, so failing to free memory causes it to overflow</li>
+<li>Never use a pointer to freed memory → this can cause you to read unintended values or write to the wrong place</li>
+<li>Never free memory twice → this may free memory that has since been allocated to something else</li>
+</ul>
+<p>If these rules are not followed, the program will behave in unexpected ways.</p>
+<p>Freeing heap memory is notoriously tricky and has troubled programmers for a long time. In fact, it is said that a large share of bugs stem from memory.</p>
+<p>In a huge, complex program, it is hard to know precisely where memory should be allocated and where it should be freed.</p>
+<p>GC addresses this problem by allocating and freeing memory automatically.</p>
+<p>Thanks to GC, programmers no longer have to agonize over memory management. (GC does have its own problems, such as slowdowns due to overhead. Trade-offs are everywhere in computer science.)</p>
+<h2 id="algorithms">Algorithms</h2>
+<p>Many algorithms for implementing GC have been invented over the years.</p>
+<p>Two representative ones are reference counting and mark &#x26; sweep.</p>
+<p>Reference counting</p>
+<blockquote>
+<p>A method that counts the number of pointers referencing an object and frees the object when that count reaches zero. It has the problem of circular references. When many objects are freed at once, a naive implementation can cause long pause times.
+(Quoted from <a href="https://ja.wikipedia.org/wiki/%E3%82%AC%E3%83%99%E3%83%BC%E3%82%B8%E3%82%B3%E3%83%AC%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3">https://ja.wikipedia.org/wiki/ガベージコレクション</a>)</p>
+</blockquote>
+<p>Mark &#x26; sweep</p>
+<blockquote>
+<p>A method that follows references from one object to another and discards objects that cannot be reached. (Quoted from <a href="https://ja.wikipedia.org/wiki/%E3%82%AC%E3%83%99%E3%83%BC%E3%82%B8%E3%82%B3%E3%83%AC%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3">https://ja.wikipedia.org/wiki/ガベージコレクション</a>)</p>
+</blockquote>
+<p>Here, I explain mark &#x26; sweep with a concrete example.</p>
+<h2 id="the-mark--sweep-method">The Mark &#x26; Sweep Method</h2>
+<p>In mark &#x26; sweep, objects in the heap are traversed recursively starting from the root, and each object visited is marked along the way. Once the traversal finishes, any object without a mark is considered unnecessary, and is discarded and reclaimed.</p>
+<p>The algorithm proceeds as follows.</p>
+<ol>
+<li>Check the list (free_list) that stores the indices of currently available slots in the heap. If the list contains an index, pop one and allocate that memory. Otherwise, do the following to collect garbage and reuse it.</li>
+<li>Initialization: set marked=false on every object in the heap.</li>
+<li>Mark phase: recursively traverse objects starting from the root, setting marked=true on each one visited</li>
+<li>Sweep phase: scan objects from the start of the heap and add each index with marked=false to free_list</li>
+<li>Pop one index from free_list and return it. If there is none, there is no space left to allocate, so return an error.</li>
+</ol>
+<p>The algorithm presented here is just one example of how mark &#x26; sweep can be implemented. In fact, although a real heap grows, here it is treated like a fixed-length vector.</p>
+<p>There are many ways to do mark &#x26; sweep, but the core logic is the same in all of them.</p>
+<p><strong>A concrete example</strong></p>
+<p>Suppose we have a heap with four slots, as shown below.</p>
+<p>The table below is fixed-length, but if you interpret it as a table of indices pointing to raw memory, the actual memory can be variable-length. Alternatively, you can assume that only fixed-size memory blocks can be allocated.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>root</th><th></th><th></th><th></th></tr></thead><tbody><tr><td>index</td><td>marked: bool</td><td>object name</td><td>points to</td></tr><tr><td>0</td><td></td><td></td><td></td></tr><tr><td>1</td><td></td><td></td><td></td></tr><tr><td>2</td><td></td><td></td><td></td></tr><tr><td>3</td><td></td><td></td><td></td></tr></tbody></table>
+<p>At first, the heap is unused, so it is initialized with None (None is omitted from the table).</p>
+<p>The root is the starting point for marking during GC, and is a variable on the stack. In C, it corresponds to a pointer into the heap.</p>
+<p>Just as you can define as many pointers as you like in C, there can be any number of roots, but for simplicity we use just one here.</p>
+<p>The set of starting points explored during marking is called the root_set.</p>
+<p>One way to store the root_set would be to keep a stack of hash maps that follows the nesting of the program: insert pointer variables that point into the heap when entering a nested scope, and pop them when leaving it.</p>
+<p>This way, the pointers are also released when leaving a nested scope.</p>
+<p>Memory pointed to by a released pointer cannot be reached during the mark phase if no other pointer points to it, so it is collected as garbage.</p>
+<p>However, a hash map is itself a data structure stored in the heap, so this approach seems to lead to a chicken-and-egg problem.</p>
+<p>One could, for example, use a different data structure that does not use the heap. I’ll leave a deeper discussion to specialized books.</p>
+<p>Objects pointed to by the root are currently in use and are not collected by GC.</p>
+<p>We also prepare free_list, which stores the available indices in the heap. Initially, it is empty, since we don’t yet know which slots are available.</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="plaintext"><code><span class="line"><span>free_list: []</span></span></code></pre>
+<p>In this state, memory for obj1 is allocated as follows.</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="rust"><code><span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#C5E478">obj1_id</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> =</span><span style="--shiki-light:#24292EFF;--shiki-dark:#C5E478"> gc</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">.</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">allocate</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">()</span></span></code></pre>
+<p>The gc then checks free_list for free space.</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="plaintext"><code><span class="line"><span>free_list: []</span></span></code></pre>
+<p>Here free_list is empty, so the gc enters the phase of collecting garbage from the heap.</p>
+<p>First, it sets marked=false on everything.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>root</th><th></th><th></th><th></th></tr></thead><tbody><tr><td>index</td><td>marked</td><td>object name</td><td>points to</td></tr><tr><td>0</td><td>false</td><td></td><td></td></tr><tr><td>1</td><td>false</td><td></td><td></td></tr><tr><td>2</td><td>false</td><td></td><td></td></tr><tr><td>3</td><td>false</td><td></td><td></td></tr></tbody></table>
+<p>Next comes the mark step.</p>
+<p>The mark step finds and marks every object currently in use.</p>
+<p>It traverses recursively from the root, but here the root does not point to any index, so the mark step finishes without finding a single object.</p>
+<p>Next comes the sweep step.</p>
+<p>The sweep step reclaims the unreached, that is, unnecessary, slots in the heap and stores them in free_list.</p>
+<p>Here it scans indices starting from 0, and since every one has marked=false, the result is</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="plaintext"><code><span class="line"><span>free_list: [0, 1, 2, 3]</span></span></code></pre>
+<p>Finally, one index is popped from the end of free_list.</p>
+<p>In this case, obj1 is assigned slot 3.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>root</th><th></th><th></th><th></th></tr></thead><tbody><tr><td>index</td><td>marked</td><td>object name</td><td>points to</td></tr><tr><td>0</td><td>false</td><td></td><td></td></tr><tr><td>1</td><td>false</td><td></td><td></td></tr><tr><td>2</td><td>false</td><td></td><td></td></tr><tr><td>3</td><td>false</td><td>obj1</td><td></td></tr></tbody></table>
+<p>Now memory has been allocated for obj1.</p>
+<p>Unfortunately, nothing points to obj1 yet. Keep in mind that, as things stand, it will probably be collected once memory fills up.</p>
+<p>Next, in this state, if we run</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="rust"><code><span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#C5E478">obj2_id</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> =</span><span style="--shiki-light:#24292EFF;--shiki-dark:#C5E478"> gc</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA">.</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic">allocate</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">()</span></span></code></pre>
+<p>free_list still has free space, as shown below,</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="plaintext"><code><span class="line"><span>free_list: [0, 1, 2]</span></span></code></pre>
+<p>so no garbage collection takes place, and obj2 is assigned slot 2.</p>
+<p>As a result, the heap looks like this.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>root</th><th></th><th></th><th></th></tr></thead><tbody><tr><td>index</td><td>marked</td><td>object name</td><td>points to</td></tr><tr><td>0</td><td>false</td><td></td><td></td></tr><tr><td>1</td><td>false</td><td></td><td></td></tr><tr><td>2</td><td>false</td><td>obj2</td><td></td></tr><tr><td>3</td><td>false</td><td>obj1</td><td></td></tr></tbody></table>
+<p>Calling allocate() two more times fills up the entire heap, as shown below.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>root</th><th></th><th></th><th></th></tr></thead><tbody><tr><td>index</td><td>marked</td><td>object name</td><td>points to</td></tr><tr><td>0</td><td>false</td><td>obj4</td><td></td></tr><tr><td>1</td><td>false</td><td>obj3</td><td></td></tr><tr><td>2</td><td>false</td><td>obj2</td><td></td></tr><tr><td>3</td><td>false</td><td>obj1</td><td></td></tr></tbody></table>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="plaintext"><code><span class="line"><span>free_list: []</span></span></code></pre>
+<p>If we call allocate() in this state, free_list is currently empty, so memory needs to be reclaimed, and the garbage collector collects garbage following the mark &#x26; sweep method.</p>
+<p>Once again, the root points to nothing, so after mark() every marked is false, and after the sweep free_list becomes</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="plaintext"><code><span class="line"><span>free_list: [0, 1, 2, 3]</span></span></code></pre>
+<p>This means that <strong>unreachable objects</strong> such as obj1, … , obj4, which nothing points to, <strong>are unnecessary and are automatically freed by GC</strong>.</p>
+<p>Then an index is popped from free_list, and obj5 is assigned slot 3.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>root</th><th></th><th></th><th></th></tr></thead><tbody><tr><td>index</td><td>marked</td><td>object name</td><td>points to</td></tr><tr><td>0</td><td>false</td><td></td><td></td></tr><tr><td>1</td><td>false</td><td></td><td></td></tr><tr><td>2</td><td>false</td><td></td><td></td></tr><tr><td>3</td><td>false</td><td>obj5</td><td></td></tr></tbody></table>
+<p>Sure enough, GC has reclaimed the unneeded slots and allocated new memory.</p>
+<p>Now let’s go back to the state just before obj5 was allocated. This is the state below, where the entire heap is allocated.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>root</th><th></th><th></th><th></th></tr></thead><tbody><tr><td>index</td><td>marked</td><td>object name</td><td>points to</td></tr><tr><td>0</td><td>false</td><td>obj4</td><td></td></tr><tr><td>1</td><td>false</td><td>obj3</td><td></td></tr><tr><td>2</td><td>false</td><td>obj2</td><td></td></tr><tr><td>3</td><td>false</td><td>obj1</td><td></td></tr></tbody></table>
+<p>In this state, let’s make the root point to obj1:</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="rust"><code><span class="line"><span style="--shiki-light:#24292EFF;--shiki-dark:#C5E478">root</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> =</span><span style="--shiki-light:#D32F2F;--shiki-dark:#7FDBCA"> *</span><span style="--shiki-light:#24292EFF;--shiki-dark:#C5E478">heap</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">[</span><span style="--shiki-light:#24292EFF;--shiki-dark:#C5E478">obj1_id</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">]</span></span></code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>root</th><th></th><th></th><th>obj1</th></tr></thead><tbody><tr><td>index</td><td>marked</td><td>object name</td><td>points to</td></tr><tr><td>0</td><td>false</td><td>obj4</td><td></td></tr><tr><td>1</td><td>false</td><td>obj3</td><td></td></tr><tr><td>2</td><td>false</td><td>obj2</td><td></td></tr><tr><td>3</td><td>false</td><td>obj1</td><td></td></tr></tbody></table>
+<p>If we now call allocate() for obj5, the heap looks like this when mark() finishes.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>root</th><th></th><th></th><th>obj1</th></tr></thead><tbody><tr><td>index</td><td>marked</td><td>object name</td><td>points to</td></tr><tr><td>0</td><td>false</td><td>obj4</td><td></td></tr><tr><td>1</td><td>false</td><td>obj3</td><td></td></tr><tr><td>2</td><td>false</td><td>obj2</td><td></td></tr><tr><td>3</td><td>true</td><td>obj1</td><td></td></tr></tbody></table>
+<p>root→obj1</p>
+<p>Because of this, calling mark(root) sets marked=true on obj1 only.</p>
+<p>Therefore, after sweep(), free_list looks like this.</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="plaintext"><code><span class="line"><span>free_list: [0, 1, 2]</span></span></code></pre>
+<p>This means that <strong>reachable objects are not collected</strong>.</p>
+<p>GC never collects anything that is still reachable, that is, still needed.</p>
+<p>After obj5 is allocated, the heap and free_list look like this.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>root</th><th></th><th></th><th>obj1</th></tr></thead><tbody><tr><td>index</td><td>marked</td><td>object name</td><td>points to</td></tr><tr><td>0</td><td>false</td><td></td><td></td></tr><tr><td>1</td><td>false</td><td></td><td></td></tr><tr><td>2</td><td>false</td><td>obj5</td><td></td></tr><tr><td>3</td><td>true</td><td>obj1</td><td></td></tr></tbody></table>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="plaintext"><code><span class="line"><span>free_list: [0, 1]</span></span></code></pre>
+<p>From this example, we have seen that GC distinguishes reachable from unreachable objects using marked=true and false, and collects garbage so that the heap can be used as fully as possible.</p>
+<p>This post simplifies things considerably, for example by replacing the heap structure with a vector.</p>
+<p>For how allocation actually works, please refer to resources such as the video below.</p>
+<p>The following video explains the inner workings of malloc() in great detail.</p>
+<p><a href="https://youtu.be/0-vWT-t0UHg">The 67th Yokohama kernel reading party</a></p>
+<h2 id="summary">Summary</h2>
+<p>This post explained mark &#x26; sweep, a representative garbage collection algorithm.</p>
+<p>GC may sound difficult from the name alone, but we have seen that mark &#x26; sweep is a simple algorithm:</p>
+<p><strong>Traverse objects, mark the ones that can be reached, and treat unmarked ones as unnecessary and free their memory.</strong></p>
+<p>For a more detailed look at how it works, I implemented a mark &#x26; sweep GC in about 100 lines of Rust, so please take a look. A star would be appreciated, too.</p>
+<ul>
+<li><a href="https://github.com/speed1313/gomicollector">https://github.com/speed1313/gomicollector</a></li>
+</ul>
+<p>What I covered here only scratches the surface of GC.</p>
+<p>Making it practical involves many more complex topics, such as tuning when garbage is collected, compacting the heap, and making collection concurrent (I don’t yet know anything about them beyond the names of the main topics).</p>
+<p>I encourage you to dive deeper.</p>
+<h2 id="references">References</h2>
+<ul>
+<li>
+<p><a href="https://github.com/speed1313/gomicollector">https://github.com/speed1313/gomicollector</a></p>
+</li>
+<li>
+<p><a href="https://github.com/munificent/mark-sweep">https://github.com/munificent/mark-sweep</a></p>
+</li>
+<li>
+<p><a href="https://github.com/jorendorff/gc-in-50-lines">https://github.com/jorendorff/gc-in-50-lines</a></p>
+</li>
+<li>
+<p><a href="https://amzn.to/44jVEbh">Garbage Collection: Theory and Implementation of Automatic Memory Management (Japanese edition of The Garbage Collection Handbook), Richard Jones et al.</a></p>
+</li>
+<li>
+<p><a href="https://craftinginterpreters.com/garbage-collection.html">Crafting Interpreters, Robert Nystrom</a></p>
+</li>
+</ul> </article> </div> </main> <footer class="w-full border-t border-border mt-auto"> <div class="mx-auto flex max-w-5xl flex-col items-center justify-between px-4 py-6 sm:flex-row-reverse sm:py-4"> <div class="flex-wrap justify-center gap-1 flex"> <a href="https://github.com/speed1313" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="speed1313 Blog on GitHub">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" /></svg> <span class="sr-only">speed1313 Blog on GitHub</span>  </a><a href="https://x.com/strayer_13" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="speed1313 Blog on X">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 4l11.733 16h4.267l-11.733 -16z" /><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" /></svg> <span class="sr-only">speed1313 Blog on X</span>  </a><a href="https://www.linkedin.com/in/speed1313/" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="speed1313 Blog on LinkedIn">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M8 11v5" /><path d="M8 8v.01" /><path d="M12 16v-5" /><path d="M16 16v-3a2 2 0 1 0 -4 0" /><path d="M3 7a4 4 0 0 1 4 -4h10a4 4 0 0 1 4 4v10a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4z" /></svg> <span class="sr-only">speed1313 Blog on LinkedIn</span>  </a><a href="https://huggingface.co/speed" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="speed1313 Blog on Hugging Face">  <svg role="img" viewBox="0 0 24 24" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><title>Hugging Face</title><path d="M12.025 1.13c-5.77 0-10.449 4.647-10.449 10.378 0 1.112.178 2.181.503 3.185.064-.222.203-.444.416-.577a.96.96 0 0 1 .524-.15c.293 0 .584.124.84.284.278.173.48.408.71.694.226.282.458.611.684.951v-.014c.017-.324.106-.622.264-.874s.403-.487.762-.543c.3-.047.596.06.787.203s.31.313.4.467c.15.257.212.468.233.542.01.026.653 1.552 1.657 2.54.616.605 1.01 1.223 1.082 1.912.055.537-.096 1.059-.38 1.572.637.121 1.294.187 1.967.187.657 0 1.298-.063 1.921-.178-.287-.517-.44-1.041-.384-1.581.07-.69.465-1.307 1.081-1.913 1.004-.987 1.647-2.513 1.657-2.539.021-.074.083-.285.233-.542.09-.154.208-.323.4-.467a1.08 1.08 0 0 1 .787-.203c.359.056.604.29.762.543s.247.55.265.874v.015c.225-.34.457-.67.683-.952.23-.286.432-.52.71-.694.257-.16.547-.284.84-.285a.97.97 0 0 1 .524.151c.228.143.373.388.43.625l.006.04a10.3 10.3 0 0 0 .534-3.273c0-5.731-4.678-10.378-10.449-10.378M8.327 6.583a1.5 1.5 0 0 1 .713.174 1.487 1.487 0 0 1 .617 2.013c-.183.343-.762-.214-1.102-.094-.38.134-.532.914-.917.71a1.487 1.487 0 0 1 .69-2.803m7.486 0a1.487 1.487 0 0 1 .689 2.803c-.385.204-.536-.576-.916-.71-.34-.12-.92.437-1.103.094a1.487 1.487 0 0 1 .617-2.013 1.5 1.5 0 0 1 .713-.174m-10.68 1.55a.96.96 0 1 1 0 1.921.96.96 0 0 1 0-1.92m13.838 0a.96.96 0 1 1 0 1.92.96.96 0 0 1 0-1.92M8.489 11.458c.588.01 1.965 1.157 3.572 1.164 1.607-.007 2.984-1.155 3.572-1.164.196-.003.305.12.305.454 0 .886-.424 2.328-1.563 3.202-.22-.756-1.396-1.366-1.63-1.32q-.011.001-.02.006l-.044.026-.01.008-.03.024q-.018.017-.035.036l-.032.04a1 1 0 0 0-.058.09l-.014.025q-.049.088-.11.19a1 1 0 0 1-.083.116 1.2 1.2 0 0 1-.173.18q-.035.029-.075.058a1.3 1.3 0 0 1-.251-.243 1 1 0 0 1-.076-.107c-.124-.193-.177-.363-.337-.444-.034-.016-.104-.008-.2.022q-.094.03-.216.087-.06.028-.125.063l-.13.074q-.067.04-.136.086a3 3 0 0 0-.135.096 3 3 0 0 0-.26.219 2 2 0 0 0-.12.121 2 2 0 0 0-.106.128l-.002.002a2 2 0 0 0-.09.132l-.001.001a1.2 1.2 0 0 0-.105.212q-.013.036-.024.073c-1.139-.875-1.563-2.317-1.563-3.203 0-.334.109-.457.305-.454m.836 10.354c.824-1.19.766-2.082-.365-3.194-1.13-1.112-1.789-2.738-1.789-2.738s-.246-.945-.806-.858-.97 1.499.202 2.362c1.173.864-.233 1.45-.685.64-.45-.812-1.683-2.896-2.322-3.295s-1.089-.175-.938.647 2.822 2.813 2.562 3.244-1.176-.506-1.176-.506-2.866-2.567-3.49-1.898.473 1.23 2.037 2.16c1.564.932 1.686 1.178 1.464 1.53s-3.675-2.511-4-1.297c-.323 1.214 3.524 1.567 3.287 2.405-.238.839-2.71-1.587-3.216-.642-.506.946 3.49 2.056 3.522 2.064 1.29.33 4.568 1.028 5.713-.624m5.349 0c-.824-1.19-.766-2.082.365-3.194 1.13-1.112 1.789-2.738 1.789-2.738s.246-.945.806-.858.97 1.499-.202 2.362c-1.173.864.233 1.45.685.64.451-.812 1.683-2.896 2.322-3.295s1.089-.175.938.647-2.822 2.813-2.562 3.244 1.176-.506 1.176-.506 2.866-2.567 3.49-1.898-.473 1.23-2.037 2.16c-1.564.932-1.686 1.178-1.464 1.53s3.675-2.511 4-1.297c.323 1.214-3.524 1.567-3.287 2.405.238.839 2.71-1.587 3.216-.642.506.946-3.49 2.056-3.522 2.064-1.29.33-4.568 1.028-5.713-.624" /></svg> <span class="sr-only">speed1313 Blog on Hugging Face</span>  </a><a href="https://scholar.google.com/citations?user=717QdNoAAAAJ" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="speed1313 Blog on Google Scholar">  <svg role="img" viewBox="0 0 24 24" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><title>Google Scholar</title><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z" /></svg> <span class="sr-only">speed1313 Blog on Google Scholar</span>  </a><a href="/cv.pdf" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="speed1313 Blog CV">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+  <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+  <path d="M11 12.5a1.5 1.5 0 0 0 -3 0v3a1.5 1.5 0 0 0 3 0" />
+  <path d="M13 11l1.5 6l1.5 -6" />
+</svg> <span class="sr-only">speed1313 Blog CV</span>  </a> </div> <div class="my-2 flex flex-col items-center whitespace-nowrap sm:flex-row"> <span>speed1313 &#169; 2026</span> <span class="hidden sm:inline">&nbsp;|&nbsp;</span> <span>
+Built with <a href="https://astro.build" class="underline">Astro</a> · Theme
+<a href="https://github.com/satnaing/astro-paper" class="underline">astro-paper</a> </span> </div> </div> </footer>  </body> </html> <script data-astro-rerun>
+  /** Attaches links to headings in the document,
+   *  allowing sharing of sections easily */
+  function addHeadingLinks() {
+    const headings = Array.from(
+      document.querySelectorAll("h2, h3, h4, h5, h6")
+    );
+    for (const heading of headings) {
+      heading.classList.add("group");
+      const link = document.createElement("a");
+      link.className =
+        "heading-link ms-2 no-underline opacity-75 md:opacity-0 md:group-hover:opacity-100 md:focus:opacity-100";
+      link.href = "#" + heading.id;
+
+      const span = document.createElement("span");
+      span.ariaHidden = "true";
+      span.innerText = "#";
+      link.appendChild(span);
+      heading.appendChild(link);
+    }
+  }
+  addHeadingLinks();
+
+  /** Attaches copy buttons to code blocks in the document,
+   * allowing users to copy code easily. */
+  function attachCopyButtons() {
+    const copyButtonLabel = "Copy";
+    const codeBlocks = Array.from(document.querySelectorAll("pre"));
+
+    for (const codeBlock of codeBlocks) {
+      const wrapper = document.createElement("div");
+      wrapper.style.position = "relative";
+
+      // Check if --file-name-offset custom property exists
+      const computedStyle = getComputedStyle(codeBlock);
+      const hasFileNameOffset =
+        computedStyle.getPropertyValue("--file-name-offset").trim() !== "";
+
+      // Determine the top positioning class
+      const topClass = hasFileNameOffset
+        ? "top-(--file-name-offset)"
+        : "-top-3";
+
+      const copyButton = document.createElement("button");
+      copyButton.className = `copy-code absolute end-3 ${topClass} rounded bg-muted border border-muted px-2 py-1 text-xs leading-4 text-foreground font-medium`;
+      copyButton.innerHTML = copyButtonLabel;
+      codeBlock.setAttribute("tabindex", "0");
+      codeBlock.appendChild(copyButton);
+
+      // wrap codebock with relative parent element
+      codeBlock?.parentNode?.insertBefore(wrapper, codeBlock);
+      wrapper.appendChild(codeBlock);
+
+      copyButton.addEventListener("click", async () => {
+        await copyCode(codeBlock, copyButton);
+      });
+    }
+
+    async function copyCode(block, button) {
+      const code = block.querySelector("code");
+      const text = code?.innerText;
+
+      await navigator.clipboard.writeText(text ?? "");
+
+      // visual feedback that task is completed
+      button.innerText = "Copied";
+
+      setTimeout(() => {
+        button.innerText = copyButtonLabel;
+      }, 700);
+    }
+  }
+  attachCopyButtons();
+
+  /* Go to page start after page swap */
+  document.addEventListener("astro:after-swap", () =>
+    window.scrollTo({ left: 0, top: 0, behavior: "instant" })
+  );
+</script>

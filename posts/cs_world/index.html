@@ -1,0 +1,420 @@
+<!DOCTYPE html><html dir="ltr" lang="ja" class="scroll-smooth"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="canonical" href="https://speed1313.github.io/posts/cs_world/"><link rel="alternate" hreflang="ja" href="https://speed1313.github.io/posts/cs_world/"><link rel="alternate" hreflang="en" href="https://speed1313.github.io/en/posts/cs_world/"><link rel="alternate" hreflang="x-default" href="https://speed1313.github.io/posts/cs_world/"><meta name="generator" content="Astro v7.4.4"><!-- General Meta Tags --><title>大学一年生の私に贈る「情報科学の世界」 | speed1313 Blog</title><meta name="title" content="大学一年生の私に贈る「情報科学の世界」 | speed1313 Blog"><meta name="description" content="本書では、stray sheep(迷える子羊)だった大学一年生の私に向けて、どのように情報科学を学ぶのが良いか、ブラウザの仕組みをボトムアップに説明していく過程で各論の良書をリストアップしながら「知の高速道路」を提供します。"><meta name="author" content="speed1313"><link rel="sitemap" href="/sitemap-index.xml"><!-- Open Graph / Facebook --><meta property="og:type" content="article"><meta property="og:locale" content="ja_JP"><meta property="og:title" content="大学一年生の私に贈る「情報科学の世界」 | speed1313 Blog"><meta property="og:description" content="本書では、stray sheep(迷える子羊)だった大学一年生の私に向けて、どのように情報科学を学ぶのが良いか、ブラウザの仕組みをボトムアップに説明していく過程で各論の良書をリストアップしながら「知の高速道路」を提供します。"><meta property="og:url" content="https://speed1313.github.io/posts/cs_world/"><meta property="og:image" content="https://speed1313.github.io/posts/cs_world/index.png"><!-- Article Published/Modified time --><meta property="article:published_time" content="2022-12-18T00:00:00.000Z"><!-- Twitter --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:url" content="https://speed1313.github.io/posts/cs_world/"><meta name="twitter:title" content="大学一年生の私に贈る「情報科学の世界」 | speed1313 Blog"><meta name="twitter:description" content="本書では、stray sheep(迷える子羊)だった大学一年生の私に向けて、どのように情報科学を学ぶのが良いか、ブラウザの仕組みをボトムアップに説明していく過程で各論の良書をリストアップしながら「知の高速道路」を提供します。"><meta name="twitter:image" content="https://speed1313.github.io/posts/cs_world/index.png"><!-- Google JSON-LD Structured data --><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"大学一年生の私に贈る「情報科学の世界」","image":"https://speed1313.github.io/posts/cs_world/index.png","datePublished":"2022-12-18T00:00:00.000Z","inLanguage":"ja","mainEntityOfPage":"https://speed1313.github.io/posts/cs_world/","author":[{"@type":"Person","name":"speed1313"}]}</script><!-- Enable RSS feed auto-discovery  --><!-- https://docs.astro.build/en/recipes/rss/#enabling-rss-feed-auto-discovery --><link rel="alternate" type="application/rss+xml" title="speed1313 Blog" href="https://speed1313.github.io/rss.xml"><!-- Google Analytics --><script src="https://www.googletagmanager.com/gtag/js?id=G-7X0Q0NSDB9"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        // gtag.js only reads Arguments objects from dataLayer, not arrays.
+        // eslint-disable-next-line prefer-rest-params
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-7X0Q0NSDB9");
+    </script><meta name="theme-color" content=""><meta name="astro-view-transitions-enabled" content="true"> <meta name="astro-view-transitions-fallback" content="animate"><script type="module" src="/_astro/ClientRouter.astro_astro_type_script_index_0_lang.DXqcZz58.js"></script><script src="/toggle-theme.js"></script><style>@keyframes astroFadeInOut{0%{opacity:1}to{opacity:0}}@keyframes astroFadeIn{0%{opacity:0;mix-blend-mode:plus-lighter}to{opacity:1;mix-blend-mode:plus-lighter}}@keyframes astroFadeOut{0%{opacity:1;mix-blend-mode:plus-lighter}to{opacity:0;mix-blend-mode:plus-lighter}}@keyframes astroSlideFromRight{0%{transform:translate(100%)}}@keyframes astroSlideFromLeft{0%{transform:translate(-100%)}}@keyframes astroSlideToRight{to{transform:translate(100%)}}@keyframes astroSlideToLeft{to{transform:translate(-100%)}}@media (prefers-reduced-motion){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*),[data-astro-transition-scope]{animation:none!important}}
+</style><link rel="stylesheet" href="/_astro/Footer.B68Ii7U4.css"><style>[data-astro-transition-scope="astro-eq54l3i4-1"] { view-transition-name: \5927\5B66\4E00\5E74\751F\306E\79C1\306B\8D08\308B\300C\60C5\5831\79D1\5B66\306E\4E16\754C\300D; }@layer astro { ::view-transition-old(\5927\5B66\4E00\5E74\751F\306E\79C1\306B\8D08\308B\300C\60C5\5831\79D1\5B66\306E\4E16\754C\300D) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(\5927\5B66\4E00\5E74\751F\306E\79C1\306B\8D08\308B\300C\60C5\5831\79D1\5B66\306E\4E16\754C\300D) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(\5927\5B66\4E00\5E74\751F\306E\79C1\306B\8D08\308B\300C\60C5\5831\79D1\5B66\306E\4E16\754C\300D) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(\5927\5B66\4E00\5E74\751F\306E\79C1\306B\8D08\308B\300C\60C5\5831\79D1\5B66\306E\4E16\754C\300D) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-eq54l3i4-1"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-eq54l3i4-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-eq54l3i4-1"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-eq54l3i4-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-eq54l3i4-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-eq54l3i4-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-eq54l3i4-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-eq54l3i4-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style></head> <body>  <header id="site-header" class="fixed inset-x-0 top-0 z-20 border-b border-transparent bg-background"> <a id="skip-to-content" href="#main-content" class="sr-only z-50 bg-background px-3 py-2 text-accent focus:not-sr-only focus:absolute focus:start-16 focus:top-4">
+Skip to content
+</a> <!-- Same width as the home and About pages, so the edges line up. --> <div id="nav-container" class="flex w-full flex-col items-center justify-between sm:flex-row"> <div id="top-nav-wrap" class="relative mx-auto flex min-h-[56px] w-full max-w-5xl items-baseline justify-between bg-background px-4 py-2 sm:items-center sm:py-2"> <a href="/" class="absolute flex items-center gap-2 py-1 text-lg leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-xl sm:leading-none"> <svg viewBox="1.8 6.2 26 18.4" fill="currentColor" aria-hidden="true" class="h-[0.9em] w-auto text-accent"><path d="M5.6 12.4 L1.8 13.9 L5.4 15.2 Z" /><path fill-rule="evenodd" d="M5.2 14.2 C5.2 9.6 8.6 6.2 13 6.2 C16.9 6.2 19.7 8.6 20.6 12.1 C22.4 12.6 25.2 12.4 27.6 11.6 C27.4 16.4 25.2 20.6 21.6 22.6 C19.6 23.8 17.2 24.4 14.8 24.4 C9.4 24.4 5.2 20.4 5.2 14.2 Z M8.9 12.6 a1.9 1.9 0 1 0 3.8 0 a1.9 1.9 0 1 0 -3.8 0 Z" /></svg> speed1313 Blog </a> <nav id="nav-menu" class="flex w-full flex-col items-center sm:ms-2 sm:flex-row sm:justify-end sm:space-x-4 sm:py-0"> <div class="flex items-center gap-1 self-end sm:hidden"> <!--
+  Names the language it switches to, written in that language. The fixed
+  width keeps the header from shifting between "English" and "日本語".
+--><a href="/en/posts/cs_world/" lang="en" hreflang="en" class="focus-outline flex w-16 justify-center px-2 py-2 text-sm font-medium whitespace-nowrap hover:text-accent sm:w-14 sm:px-1 sm:py-1"> English </a> <a href="/#search" data-search-toggle role="button" aria-label="Search" aria-expanded="false" aria-controls="search-panel" title="Search" class="group focus-outline flex p-2"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-aria-expanded:hidden" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden group-aria-expanded:block" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg> </a> <button id="menu-btn" class="focus-outline p-2" aria-label="Open Menu" aria-expanded="false" aria-controls="menu-items"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden" id="close-icon"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-menu-deep" id="menu-icon"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 6h16" /><path d="M7 12h13" /><path d="M10 18h10" /></svg> </button> </div> <ul id="menu-items" class="mt-4 grid w-44 grid-cols-2 place-content-center gap-2 [&amp;>li>a]:block [&amp;>li>a]:px-4 [&amp;>li>a]:py-3 [&amp;>li>a]:text-center [&amp;>li>a]:font-medium [&amp;>li>a]:hover:text-accent sm:[&amp;>li>a]:px-2 sm:[&amp;>li>a]:py-1 hidden sm:mt-0 sm:flex sm:w-auto sm:gap-x-5 sm:gap-y-0"> <li class="col-span-2"> <a href="/" class="active-nav">
+Posts
+</a> </li> <li class="col-span-2"> <a href="/about">
+About
+</a> </li>  <li class="hidden items-center justify-center sm:flex"> <a href="/#search" data-search-toggle role="button" aria-label="Search" aria-expanded="false" aria-controls="search-panel" title="Search" class="group focus-outline flex p-1"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-aria-expanded:hidden" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden group-aria-expanded:block" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg> </a> </li> <li class="col-span-2 flex items-center justify-center sm:col-span-1"> <button id="theme-btn" class="focus-outline relative size-12 p-4 sm:size-8 hover:[&amp;&gt;svg]:stroke-accent" title="Toggles light &amp; dark" aria-label="auto" aria-live="polite"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute top-[50%] left-[50%] -translate-[50%] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" /></svg> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute top-[50%] left-[50%] -translate-[50%] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M14.828 14.828a4 4 0 1 0 -5.656 -5.656a4 4 0 0 0 5.656 5.656z" /><path d="M6.343 17.657l-1.414 1.414" /><path d="M6.343 6.343l-1.414 -1.414" /><path d="M17.657 6.343l1.414 -1.414" /><path d="M17.657 17.657l1.414 1.414" /><path d="M4 12h-2" /><path d="M12 4v-2" /><path d="M20 12h2" /><path d="M12 20v2" /></svg> </button> </li> <li class="hidden items-center sm:flex">  <div class="flex"> <!--
+  Names the language it switches to, written in that language. The fixed
+  width keeps the header from shifting between "English" and "日本語".
+--><a href="/en/posts/cs_world/" lang="en" hreflang="en" class="focus-outline flex w-16 justify-center px-2 py-2 text-sm font-medium whitespace-nowrap hover:text-accent sm:w-14 sm:px-1 sm:py-1"> English </a> </div> </li> </ul> </nav> </div> </div> </header> <div id="search-panel" role="dialog" aria-label="Search" hidden class="fixed inset-x-0 top-[57px] bottom-0 z-20 overflow-y-auto overscroll-contain bg-background"> <div class="mx-auto max-w-app px-4 pt-10 pb-16"> <div id="search-panel-ui" class="pagefind-theme"></div> </div> </div><script type="module" src="/_astro/SearchPanel.astro_astro_type_script_index_0_lang._yjhVhtJ.js"></script> <!-- Reserves the fixed header's height (56px + 1px border) in the flow. --> <div aria-hidden="true" class="h-[57px] shrink-0"></div><script type="module">function e(){let e=document.querySelector(`#menu-btn`),t=document.querySelector(`#menu-items`),n=document.querySelector(`#menu-icon`),r=document.querySelector(`#close-icon`);e&&t&&n&&r&&e.addEventListener(`click`,()=>{let i=e.getAttribute(`aria-expanded`)===`true`;e.setAttribute(`aria-expanded`,i?`false`:`true`),e.setAttribute(`aria-label`,i?`Open Menu`:`Close Menu`),t.classList.toggle(`hidden`),n.classList.toggle(`hidden`),r.classList.toggle(`hidden`)})}e(),document.addEventListener(`astro:after-swap`,e);</script> <main id="main-content" class="relative mx-auto mt-12 w-full max-w-app px-4 pb-16 sm:mt-20 lg:ms-[max(15rem,calc((100%-48rem)/2))]" data-pagefind-body="true"> <!-- Like the OpenAI blog: date and tags above a large centered title. --><header class="text-center"> <div data-pagefind-ignore class="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-sm"> <time class datetime="2022-12-18T00:00:00.000Z">2022年12月18日</time> <ul class="flex flex-wrap justify-center gap-x-4"> <li> <a href="/?tag=tips#posts" class="text-foreground/60 underline-offset-4 hover:text-foreground hover:underline"> Tips </a> </li> </ul> </div> <h1 data-astro-transition-scope="astro-eq54l3i4-1" class="mt-5 text-3xl leading-tight text-balance sm:text-5xl sm:leading-tight"> 大学一年生の私に贈る「情報科学の世界」 </h1> </header> <div data-pagefind-ignore class="mt-12 flex items-center justify-between gap-4 border-t border-foreground/10 pt-4 sm:mt-16">  <div class="relative ms-auto shrink-0"> <button type="button" data-share-button class="focus-outline flex items-center gap-x-2 text-sm opacity-80 hover:text-accent hover:opacity-100 sm:text-base"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-6" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 15l6 -6" /><path d="M11 6l.463 -.536a5 5 0 0 1 7.071 7.072l-.534 .464" /><path d="M13 18l-.397 .534a5.068 5.068 0 0 1 -7.127 0a4.972 4.972 0 0 1 0 -7.071l.524 -.463" /></svg> <span>Share</span> </button> <!-- Overlaid below the button so nothing around it moves. --> <span role="status" data-copied class="pointer-events-none absolute end-0 top-full mt-1 rounded bg-foreground px-2 py-0.5 text-xs whitespace-nowrap text-background opacity-0 transition-opacity motion-reduce:transition-none">コピーしました</span> </div><script type="module">function e(){for(let e of document.querySelectorAll(`[data-share-button]`)){if(e.dataset.ready)continue;e.dataset.ready=`true`;let t=e.parentElement?.querySelector(`[data-copied]`),n=t?.textContent??``,r;e.addEventListener(`click`,async()=>{let e=location.href.split(`#`)[0];try{await navigator.clipboard.writeText(e)}catch{await navigator.share?.({url:e,title:document.title}).catch(()=>{});return}t&&(t.textContent=``,t.textContent=n,t.classList.remove(`opacity-0`),clearTimeout(r),r=setTimeout(()=>t.classList.add(`opacity-0`),1500))})}}document.addEventListener(`astro:page-load`,e);</script> </div>  <div class="relative"> <aside class="absolute top-0 right-full hidden h-full w-52 pe-8 lg:block" data-pagefind-ignore> <nav id="post-toc" aria-label="Table of contents" hidden class="group sticky top-[calc(57px+2rem)] flex max-h-[calc(100svh-57px-4rem)] gap-3"> <ul class="min-w-0 flex-1 [scrollbar-width:none] overflow-y-auto overscroll-contain text-[0.8125rem] leading-snug [&amp;::-webkit-scrollbar]:hidden"></ul> <!-- Scrollbar for the list, shown on hover when it overflows. --> <div aria-hidden="true" data-track class="invisible relative w-1 shrink-0 rounded-full bg-foreground/10 opacity-0 transition-opacity group-hover:opacity-100"> <div data-thumb class="absolute inset-x-0 rounded-full bg-foreground/35"></div> </div> </nav> </aside> <div id="post-toc-mobile" hidden data-pagefind-ignore class="pointer-events-none invisible fixed inset-x-0 top-[57px] z-10 -translate-y-2 border-b border-foreground/10 bg-background opacity-0 transition-[opacity,translate] duration-200 motion-reduce:transition-none lg:hidden"> <button type="button" aria-expanded="false" aria-controls="post-toc-mobile-list" class="focus-outline flex w-full items-center gap-2 px-4 py-2.5 text-start text-[0.8125rem]"> <span class="sr-only">Table of contents:</span> <span data-current class="min-w-0 flex-1 truncate text-foreground/60"></span> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-5 shrink-0 -rotate-90 opacity-70 transition-transform motion-reduce:transition-none" aria-hidden="true" data-chevron="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 6l-6 6l6 6" /></svg> </button> <nav id="post-toc-mobile-list" aria-label="Table of contents" hidden class="pointer-events-none relative max-h-[60svh] overflow-y-auto overscroll-contain px-4 pb-2"> <!-- Starts on the bar's row; the right side stays free for the toggle. --><ul class="pointer-events-auto me-8 text-[0.8125rem] leading-snug"></ul> </nav> </div><script type="module">var e=new Set([`footnote-label`]),t=57,n=96;function r(e){let t=e.cloneNode(!0);return t.querySelectorAll(`.katex-mathml, .heading-link`).forEach(e=>e.remove()),t.textContent?.replace(/\s+/g,` `).trim()??``}function i(){let i=document.querySelector(`#post-toc`),a=i?.querySelector(`ul`),o=i?.querySelector(`[data-track]`),s=i?.querySelector(`[data-thumb]`),c=document.querySelector(`#article`);if(!i||!a||!o||!s||!c||i.dataset.ready)return;i.dataset.ready=`true`;let l=[...c.querySelectorAll(`h2[id], h3[id]`)].filter(t=>!e.has(t.id));if(l.length<2)return;let u=l.map(r),d=(e,t,n,r)=>{let i=l.map((r,i)=>{let a=document.createElement(`a`);a.href=`#${encodeURIComponent(r.id)}`,a.textContent=u[i],a.className=`block ${t} ${n} transition-colors hover:text-accent `+(r.tagName===`H3`?`ps-3`:``);let o=document.createElement(`li`);return o.append(a),e.append(o),a});return{items:i,mark:(e,t)=>i[e]?.classList.replace(t?n:r,t?r:n)}},f=d(a,`py-1`,`text-foreground/45`,`text-foreground`),p=f.items;i.hidden=!1;let m=document.querySelector(`#post-toc-mobile`),h=m?.querySelector(`button`),g=m?.querySelector(`nav`),_=g?.querySelector(`ul`),v=m?.querySelector(`[data-current]`),y=m?.querySelector(`[data-chevron]`),b=_?d(_,`py-2.5`,`text-foreground/40`,`text-foreground/85`):void 0,x=b?.items??[];m&&(m.hidden=!1);let S=-1,C=e=>{if(!h||!g)return;h.setAttribute(`aria-expanded`,String(e)),g.hidden=!e,v?.classList.toggle(`invisible`,e),g.style.marginTop=e?`-${h.offsetHeight}px`:``,y?.classList.toggle(`-rotate-90`,!e),y?.classList.toggle(`rotate-90`,e);let t=x[S];e&&t&&(g.scrollTop=t.offsetTop-g.clientHeight/3)};h?.addEventListener(`click`,()=>C(h.getAttribute(`aria-expanded`)!==`true`)),x.forEach(e=>e.addEventListener(`click`,()=>C(!1)));let w=e=>{m&&!m.contains(e.target)&&C(!1)},T=e=>{e.key===`Escape`&&g&&!g.hidden&&(C(!1),h?.focus())};document.addEventListener(`click`,w),document.addEventListener(`keydown`,T);let E=()=>{if(!m)return;let e=c.getBoundingClientRect(),n=e.top<=t&&e.bottom>177;for(let e of[`pointer-events-none`,`invisible`,`-translate-y-2`,`opacity-0`])m.classList.toggle(e,!n);n||C(!1)},D=()=>{let e=c.getBoundingClientRect().top+scrollY;i.style.marginTop=`${Math.max(0,innerHeight-e-n)}px`};D();let O=0,k=()=>{O=0,E();let e=0;if(l.forEach((t,n)=>{t.getBoundingClientRect().top<=137&&(e=n)}),e!==S){f.mark(S,!1),p[S]?.removeAttribute(`aria-current`),f.mark(e,!0),p[e].setAttribute(`aria-current`,`location`),b?.mark(S,!1),b?.mark(e,!0),v&&(v.textContent=u[e]),S=e;let t=p[e],n=t.offsetTop-a.offsetTop;(n<a.scrollTop||n+t.offsetHeight>a.scrollTop+a.clientHeight)&&a.scrollTo({top:n-a.clientHeight/3,behavior:`smooth`})}},A=()=>{let{scrollTop:e,scrollHeight:t,clientHeight:n}=a,r=t>n+8;o.classList.toggle(`invisible`,!r),r&&(s.style.height=`${n/t*100}%`,s.style.top=`${e/t*100}%`)};a.addEventListener(`scroll`,A,{passive:!0});let j=()=>{O||=requestAnimationFrame(k)};window.addEventListener(`scroll`,j,{passive:!0});let M=()=>{D(),j(),A()};window.addEventListener(`resize`,M),document.addEventListener(`astro:before-swap`,()=>{window.removeEventListener(`scroll`,j),window.removeEventListener(`resize`,M),document.removeEventListener(`click`,w),document.removeEventListener(`keydown`,T)},{once:!0}),k(),A()}document.addEventListener(`astro:page-load`,i);</script> <article id="article" class="app-prose mx-auto mt-10 max-w-app prose-pre:bg-(--shiki-light-bg) dark:prose-pre:bg-(--shiki-dark-bg)"> <h2 id="はじめに">はじめに</h2>
+<p>私がパソコンを初めて触ったのは大学一年生の時です。当時、情報科学という広大な分野をどう学んでいけばいいのか、明確な道筋がわからず、試行錯誤の連続でした。</p>
+<p>本書では、迷える大学一年生の私がどのように情報科学を学び進めていったかを振り返りながら、ブラウザの仕組みをボトムアップで説明し、各論で役立つ書籍を紹介していきます。</p>
+<h2 id="情報科学における重要な概念">情報科学における重要な概念</h2>
+<p>本編に入る前に、頭に入れておくべき情報科学における以下の三つの重要な概念を挙げておきます。</p>
+<p><strong>「困難は分割せよ」(ルネ・デカルト)</strong></p>
+<p>世にあるITシステムは非常に複雑です。</p>
+<p>CPUの写真を見たことはありますでしょうか。CPUは非常に多数のゲートから成り立っています。パソコンやスマホはそのような複雑なハードウェアが組み合わさってできています。ITシステムは大量の電子機器が有線のケーブルや電磁波によってつながって成り立っています。</p>
+<p>このように複雑なシステムを構築するのは複雑な問題です。</p>
+<p>この複雑な問題に対処するための方法論として古くから用いられてきたのが、「困難は分割せよ」です。複雑な問題を小さく(比較的)簡単な問題に落とし込んで一つ一つ解決し、それらを組み合わせて全体の問題を解決するのです。</p>
+<p>このようなことは当たり前のように思われるかもしれませんが、情報科学を学んでいると頻繁に出てきます。</p>
+<p>例えばプログラミングにおけるモジュール化、アルゴリズムにおける分割統治法、デジタル回路における部品の組み立て方、などです。</p>
+<p>「困難は分割せよ」を意識していると、複雑な問題に出会ったときも、問題に取り組む勇気が湧いてきます。</p>
+<p><strong>技術の積み上げ</strong></p>
+<p>これは科学全般に通ずることですが、情報技術は技術の積み上げによって成り立っています。</p>
+<p>技術はすでにうまくいっている既存技術を積み上げてできています。</p>
+<p>「困難は分割せよ」のステップで分割した問題を、一つ一つ解いて、それらをうまく組み合わせて新しい技術を生み出すのです。</p>
+<p>技術の積み上げを意識する例として、通信プロトコルのレイヤ構造や、ハードウェアの構成があります。</p>
+<p><strong>仕様と標準化</strong></p>
+<p>今までは科学全般に通ずる概念でしたが、仕様と標準化という概念は情報技術特有の概念かもしれません。</p>
+<p>情報技術は物理のように自然から導かれるわけではなく(もちろんハードウェアの性能の限界などはそうですが)、人間が仕様を決めて、それを前提としてシステムを構築していきます。</p>
+<p>そして、仕様を多数の人々で一本化させる行為である標準化は、世の中のITシステムを効率的に運用、発明していくために非常に重要です。</p>
+<p>仕様と標準化が重要となってくる例として、通信プロトコルや、ハードウェアとソフトウェアのインターフェースとしてのOSがあります。</p>
+<p>人間の在るところ、標準化あり、デス。</p>
+<p>ここであげた3つの概念は、複雑で込み入った問題に対処するためには欠かせないものだと考えています。</p>
+<p>もちろん他にも重要な概念はたくさんあります。</p>
+<ul>
+<li><a href="https://www.amazon.co.jp/UNIX%E3%81%A8%E3%81%84%E3%81%86%E8%80%83%E3%81%88%E6%96%B9%E2%80%95%E3%81%9D%E3%81%AE%E8%A8%AD%E8%A8%88%E6%80%9D%E6%83%B3%E3%81%A8%E5%93%B2%E5%AD%A6-Mike-Gancarz/dp/4274064069/ref=sr_1_1?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&#x26;crid=3UWAH5M0DRIY1&#x26;keywords=UNIX%E3%81%A8%E3%81%84%E3%81%86%E8%80%83%E3%81%88%E6%96%B9&#x26;qid=1689856430&#x26;s=books&#x26;sprefix=unix%E3%81%A8%E3%81%84%E3%81%86%E8%80%83%E3%81%88%E6%96%B9%2Cstripbooks%2C173&#x26;sr=1-1&#x26;_encoding=UTF8&#x26;tag=amazon13aff-22&#x26;linkCode=ur2&#x26;linkId=6423b2c609c438feea6d3565ff668eff&#x26;camp=247&#x26;creative=1211">UNIXという考え方―その設計思想と哲学、Mike Gancarz</a></li>
+</ul>
+<p>UNIXは、現在普及している多くのOSの源流となったOSです。</p>
+<p>本書では、UNIXの核となる考え方を紹介しており、多くの人に長く使われるソフトウェアとはどのようなものか考えるきっかけを与えてくれます。</p>
+<h2 id="ブラウザとは">ブラウザとは?</h2>
+<p>webサイトのデータの送受信やレンダリング(ページを表示する)などを行うソフトウェアです。</p>
+<p>ブラウザの代表的なものとして、Safari、Google Chrome、Firefox、今は亡きInternet Explorerなどがあります。</p>
+<p>ブラウザを成り立たせるためには、通信、計算機、OS、プログラムなどなど情報科学の主要技術のほとんどを必要とします。</p>
+<p>さらには先に挙げた情報技術で重要な概念3つ、特に仕様について理解を深めることができます。</p>
+<p>以下では通信、計算機、OS、プログラム、ブラウザの順にボトムアップに情報科学の技術を見ていきます。</p>
+<h2 id="通信はどのように行われているの">通信はどのように行われているの?</h2>
+<p>この世界には電流がケーブルを通ったり、電磁波が飛び交ったりして情報が伝達しています。</p>
+<p>そこでは、私たちが会話している時に用いている数字や文字が飛び交っているわけではありません。その代わりに、電圧のオンオフのような物理的な信号によって情報が伝わります。</p>
+<p>ではなぜ0と1なのでしょうか。実は、0と1である必要は必ずしもありません。3つ以上の状態を表せるような媒体であれば、0, 1, 2であっても構いません。</p>
+<p>しかし、情報の最小単位である0と1という2状態に制限することで、より安定性が生まれます。</p>
+<p>例えば、電圧の値が5Vから0Vを連続的にとるとしましょう。その時、電圧の値を3分割した場合と2分割した場合では、後者の方がより安定です。というのも、実世界においては連続量をとる物理的なものには宇宙線や温度などのノイズが入り込み、安定していません。</p>
+<p>そのため、状態を明確に区切るためには、状態と状態の間の距離を大きく取る必要があるのです。</p>
+<p><strong>0と1でなぜ情報が伝達できるの?</strong></p>
+<p>0と1でなぜ情報が伝わるのでしょうか。</p>
+<p>それは、情報の「符号化」がなされるからです。</p>
+<p>私たちが普段使う数字や文字はそれぞれ「0」、「1」、..や「a」など、それぞれを区別するために別々の記号によって表現されています。</p>
+<p>これらは実際のところその記号で表す必然性はありません。</p>
+<p>例えば、有名な文字コードのASCIIコードでは、「A」は0x41(2進数では、01000001)という数字で表されます。ここに「仕様と標準化」という概念が立ち現れてきます。</p>
+<p>あらかじめ0と1でどのように記号を表すか仕様として決めておけば、各記号を符号化して0と1で表せてしまうのです。</p>
+<p><strong>情報通信</strong></p>
+<p>情報通信においては、0と1をどのように送受信するかが重要です。</p>
+<p>例えば、0001が送られた時、どのタイミングで0, 0, 0, 1と区切るかが送受信者同士の間で決まっていたり、他には<a href="https://www.digikey.jp/ja/blog/old-but-still-useful-the-manchester-code">マンチェスター符号</a>のようにして工夫する方法などがあります。通信の開始も、DNAの開始コドンの如く、何らかの記号を割り当てれば良いのです。</p>
+<p>ここに「仕様」の重要さを垣間みることができます。</p>
+<p><strong>情報理論</strong></p>
+<p>情報をどのように効率的に符号化するか、ノイズなどで安定性がない場合、どのように符号化・復号するのかといったことを研究する領域が情報理論です。</p>
+<p>情報理論の面白い応用先としてQRコードがあります。</p>
+<p>情報理論については紹介程度にしておき、以下にあげる本に託します。</p>
+<ul>
+<li>
+<p><a href="https://www.amazon.co.jp/%25E6%2583%2585%25E5%25A0%25B1%25E7%2590%2586%25E8%25AB%2596-Math%25EF%25BC%2586Science-%25E3%2581%25A1%25E3%2581%258F%25E3%2581%25BE%25E5%25AD%25A6%25E8%258A%25B8%25E6%2596%2587%25E5%25BA%25AB-%25E7%2594%2598%25E5%2588%25A9%25E4%25BF%258A%25E4%25B8%2580-ebook/dp/B01MXVVIMA/ref=sr_1_2?keywords=%25E6%2583%2585%25E5%25A0%25B1%25E7%2590%2586%25E8%25AB%2596&#x26;qid=1671339526&#x26;s=books&#x26;sr=1-2&#x26;_encoding=UTF8&#x26;tag=amazon13aff-22&#x26;linkCode=ur2&#x26;linkId=79be6dcc975e7b97944df9c0eb5e1dfb&#x26;camp=247&#x26;creative=1211&#x26;_encoding=UTF8&#x26;tag=amazon13aff-22&#x26;linkCode=ur2&#x26;linkId=a62e6cbb89cfe8b3b0910f3d875f042d&#x26;camp=247&#x26;creative=1211">情報理論、甘利</a></p>
+</li>
+<li>
+<p><a href="https://www.amazon.co.jp/%E6%83%85%E5%A0%B1%E7%90%86%E8%AB%96-%E6%94%B9%E8%A8%822%E7%89%88-%E4%BB%8A%E4%BA%95-%E7%A7%80%E6%A8%B9/dp/4274223256/ref=sr_1_1?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&#x26;crid=2P21PWOKOC15C&#x26;keywords=%E6%83%85%E5%A0%B1%E7%90%86%E8%AB%96+%E6%94%B9%E8%A8%822%E7%89%88&#x26;qid=1689856335&#x26;s=books&#x26;sprefix=%2Cstripbooks%2C202&#x26;sr=1-1&#x26;_encoding=UTF8&#x26;tag=amazon13aff-22&#x26;linkCode=ur2&#x26;linkId=bb6d7b6b3b7fdc87c5e6b39a91ad7a55&#x26;camp=247&#x26;creative=1211">情報理論 改訂2版、今井</a></p>
+</li>
+</ul>
+<p>数式を多く使いつつ、丁寧に意味を解説してくれる理論書はこちら。</p>
+<p><strong>プロトコルとレイヤ構造</strong></p>
+<p>通信においては、誰がどこに送信するかといったルーティングを行わなければなりません。</p>
+<p>というのも、実世界では、すべてのデバイス同士がケーブルや無線で1対1に繋がっているわけではなく、網のように繋がったネットワーク上で、他のデバイスを辿っていくことでつながることができます。</p>
+<p>よって、情報を送信するデバイス、受信するデバイスだけでなく、情報をルーティングするデバイス(ルータなど)、宛先を見つける人(DNSサーバなど)などが必要となってきます。</p>
+<p>さらには、情報自体に、伝えたい情報の内容だけでなく、送信者、受信者といった通信のために必要な情報を付加しなくてはいけません。</p>
+<p>それらは適当につけるのではなく、「標準化」によって定められた「仕様」(またはプロトコル)に従ってつけなければなりません。</p>
+<p>そのような仕様はただ単に仕様を加えていくのでは複雑化してしまいます。</p>
+<p>そこで、レイヤに分けて「困難を分割」しています。</p>
+<p>現在はTCP/IPモデルが広く使われています。そして、これがブラウザの仕組みに大きく関わってきます。</p>
+<ul>
+<li><a href="https://www.amazon.co.jp/%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%AA%E3%83%B3%E3%82%B0TCP-IP%E2%80%95%E5%85%A5%E9%96%80%E7%B7%A8%E2%80%95-%E7%AC%AC6%E7%89%88-%E4%BA%95%E4%B8%8A-%E7%9B%B4%E4%B9%9F/dp/4274224473/ref=tmm_hrd_swatch_0?_encoding=UTF8&#x26;qid=1689855440&#x26;sr=8-1&#x26;_encoding=UTF8&#x26;tag=amazon13aff-22&#x26;linkCode=ur2&#x26;linkId=c497ece702d01f1f62a09a567757d8ac&#x26;camp=247&#x26;creative=1211">マスタリングTCP/IP―入門編―(第6版)、井上+</a></li>
+</ul>
+<p>TCP/IPモデル、さらには通信全般について詳しく載っています。本書を読めば通信の基礎を仕組みからしっかりと理解できます。</p>
+<h2 id="コンピュータはどのように計算をするの">コンピュータはどのように計算をするの?</h2>
+<p>通信によって得られた情報を、コンピュータはどのように処理していくのでしょうか。</p>
+<p><strong>コンピュータの構成要素</strong></p>
+<p>コンピュータはいくつかのコンポーネントが組み合わさってできています。</p>
+<p>そのうち代表的なものが以下のものです。</p>
+<ul>
+<li>CPU</li>
+</ul>
+<p>CPUはデータを演算・移動・一時的な保存といった情報処理をするハードウェアです。</p>
+<p>コンピュータの最も重要なハードウェアです。</p>
+<ul>
+<li>メモリ</li>
+</ul>
+<p>プログラムなどのデータを保存するハードウェア。</p>
+<p>メモリにも、物理的媒体によって揮発性・不揮発性やアクセス速度、容量が異なります。</p>
+<p>そして、現在のコンピュータは種類の異なるメモリを階層に分けるなどの工夫をして速度、容量といった性能を向上しています。</p>
+<ul>
+<li>入出力装置</li>
+</ul>
+<p>入出力装置としては、ディスプレイやキーボード、通信を送受信するための機器などがあります。</p>
+<p>これらのハードウェアによって得られたデータが、CPUを通して演算処理を加えられたりメモリに保存されたりします。</p>
+<p><strong>コンピュータにできること</strong></p>
+<p>コンピュータは先にあげたコンポーネントを用いていくつかのことができます。</p>
+<p>それらを組み合わせてより大きなことをしていきます。まさに「技術の積み上げ」ですね。</p>
+<ol>
+<li>データの移動</li>
+</ol>
+<p>コンピュータはデータの移動ができます。</p>
+<p>移動とは何とちっぽけな、と思われるかもしれませんが、これは情報処理の本質とも言える重要な操作です。</p>
+<p>実際、高級言語プログラム(C言語などを用いたプログラム)がアセンブリ言語(x86などによる、機械がより読み取りやすい形式のプログラム)にコンパイル(変換)されたコードを見てみると、mov命令というデータの移動をする命令が大部分を占めていることがわかります。</p>
+<ul>
+<li>
+<p>演算: 加減乗除やシフト、論理演算といった基本操作ができます。</p>
+</li>
+<li>
+<p>比較: データの比較を行うことによって、処理を分岐できます。</p>
+</li>
+<li>
+<p>ジャンプ: ジャンプによってループや条件分岐が可能となります。</p>
+</li>
+</ul>
+<p>他にもさまざまな処理ができますが、基本的な処理を用いて計算を進めていきます。</p>
+<p>コンピュータにできることは意外と少ないですね。なのに、これらを組み合わせてすごいことができるのです！</p>
+<p>それを可能にするのがプログラミングです。プログラミングはとてもcreativeな行為だということがわかりますね。</p>
+<p>詳細は以下の本に任せることとします。</p>
+<ul>
+<li><a href="https://www.amazon.co.jp/%E3%82%B3%E3%83%B3%E3%83%94%E3%83%A5%E3%83%BC%E3%82%BF%E3%81%AE%E6%A7%8B%E6%88%90%E3%81%A8%E8%A8%AD%E8%A8%88-MIPS-%E7%AC%AC6%E7%89%88-%E4%B8%8A-David-Patterson-ebook/dp/B09KN4LWMZ/ref=sr_1_1?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&#x26;keywords=%E3%83%91%E3%82%BF%E3%83%98%E3%83%8D&#x26;qid=1671339683&#x26;s=books&#x26;sr=1-1&#x26;_encoding=UTF8&#x26;tag=amazon13aff-22&#x26;linkCode=ur2&#x26;linkId=5d93ae87924ab7589439840f9e1a7f61&#x26;camp=247&#x26;creative=1211">コンピュータの構成と設計 MIPS Edition 第6版 上(通称パタヘネ)、パターソン&#x26;ヘネシー</a></li>
+</ul>
+<p>ソフトウェアとハードウェアのインターフェースについて詳しく書かれています。具体的には、CPUの設計や命令セット(ISA)などについて書かれています。著者はこの分野を牽引する偉大な方々です。</p>
+<ul>
+<li><a href="https://www.amazon.co.jp/%E3%83%87%E3%82%A3%E3%82%B8%E3%82%BF%E3%83%AB%E5%9B%9E%E8%B7%AF%E8%A8%AD%E8%A8%88%E3%81%A8%E3%82%B3%E3%83%B3%E3%83%94%E3%83%A5%E3%83%BC%E3%82%BF%E3%82%A2%E3%83%BC%E3%82%AD%E3%83%86%E3%82%AF%E3%83%81%E3%83%A3-%E7%AC%AC2%E7%89%88-Sarah-L-Harris/dp/4798147524/ref=tmm_pap_swatch_0?_encoding=UTF8&#x26;qid=1671339740&#x26;sr=1-1&#x26;_encoding=UTF8&#x26;tag=amazon13aff-22&#x26;linkCode=ur2&#x26;linkId=c6f7bf7ccd1c4bbe7ddf6f63c3aa659c&#x26;camp=247&#x26;creative=1211">ディジタル回路設計とコンピュータアーキテクチャ 第2版(通称ハリス本), Harris+</a></li>
+</ul>
+<p>扱っている内容はパタヘネ本に似ていますが、より低レイヤのゲートレベルからCPUを構築するまでを解説しています。本書の特徴として、ハードウェア記述言語(HDL)の実装例が豊富に載っています。</p>
+<h2 id="osoperating-systemって何">OS(Operating System)って何?</h2>
+<p>OSはWindowsやLinux, Mac OS, iOSというような、パソコンやスマホを支えるソフトウェアです。</p>
+<p>どのようなアプリであっても、計算処理をするためにメモリの確保やファイル操作、ハードウェアの管理、通信の管理といった基本的な操作を必要とします。</p>
+<p>それらを包括的に行うソフトウェアがOSです。</p>
+<p>ハードウェアが正しく動くことを前提とし、それらを用いてOSでハードウェアを管理するのです。まさに「技術の積み上げ」ですね。</p>
+<p>ただ、OSはその役割からして非常に幅広い上、低レイヤであり、仕組みを詳細に説明することは限られた紙面の中では困難です。</p>
+<p>よって、詳細は以下にあげる本に譲ります。</p>
+<ul>
+<li><a href="https://www.amazon.co.jp/Go%E3%81%AA%E3%82%89%E3%82%8F%E3%81%8B%E3%82%8B%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0-%E7%AC%AC2%E7%89%88-%E6%B8%8B%E5%B7%9D%E3%82%88%E3%81%97%E3%81%8D/dp/4908686122/ref=sr_1_1?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&#x26;crid=WMOTE1UXG3B3&#x26;keywords=Go%E3%81%AA%E3%82%89%E3%82%8F%E3%81%8B%E3%82%8B%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0+%E7%AC%AC2%E7%89%88&#x26;qid=1689855583&#x26;s=books&#x26;sprefix=%E3%81%93%E3%81%AE%E7%94%BB%E5%83%8F%E3%82%92%E8%A1%A8%E7%A4%BA+go%E3%81%AA%E3%82%89%E3%82%8F%E3%81%8B%E3%82%8B%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0+%E7%AC%AC2%E7%89%88%2Cstripbooks%2C200&#x26;sr=1-1&#x26;_encoding=UTF8&#x26;tag=amazon13aff-22&#x26;linkCode=ur2&#x26;linkId=3d6b2218842911e4677f1e1c7a15ac7b&#x26;camp=247&#x26;creative=1211">Goならわかるシステムプログラミング 第2版、渋川</a></li>
+</ul>
+<p>Go言語というモダンな言語を用いて、OSが行っていることや、OSを用いて行える操作についての説明がなされている。</p>
+<ul>
+<li><a href="https://www.amazon.co.jp/%E3%82%AA%E3%83%9A%E3%83%AC%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%81%AE%E6%A6%82%E5%BF%B5-Abraham-Silberschatz/dp/4320122534/ref=sr_1_1?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&#x26;crid=TRYOK4HUK4US&#x26;keywords=%E3%82%AA%E3%83%9A%E3%83%AC%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%81%AE%E6%A6%82%E5%BF%B5&#x26;qid=1671340030&#x26;sprefix=%E3%82%AA%E3%83%9A%E3%83%AC%E3%83%BC%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%81%AE%E6%A6%82%E5%BF%B5%2Caps%2C291&#x26;sr=8-1&#x26;_encoding=UTF8&#x26;tag=amazon13aff-22&#x26;linkCode=ur2&#x26;linkId=058991f4afd7dc5f8fddf301e29b6379&#x26;camp=247&#x26;creative=1211">オペレーティングシステムの概念、Abraham+</a></li>
+</ul>
+<p>非常に分厚いが、説明がとても丁寧だからこそ分厚い系の本。</p>
+<ul>
+<li><a href="https://www.amazon.co.jp/%E3%82%BC%E3%83%AD%E3%81%8B%E3%82%89%E3%81%AEOS%E8%87%AA%E4%BD%9C%E5%85%A5%E9%96%80-%E5%86%85%E7%94%B0-%E5%85%AC%E5%A4%AA/dp/4839975868?&#x26;_encoding=UTF8&#x26;tag=amazon13aff-22&#x26;linkCode=ur2&#x26;linkId=fa7ec8711d3cd97b4b0a78dec9aafca0&#x26;camp=247&#x26;creative=1211">ゼロからのOS自作入門、内田</a></li>
+</ul>
+<p>OSを自作する本。</p>
+<h2 id="プログラムって何">プログラムって何?</h2>
+<p>ここまでで通信、計算機、OSについて理解しました。</p>
+<p>ここでは、これらを用いて実際のアプリケーションを作成するために必要となるプログラムがどのようなものか説明します。</p>
+<p>以下はフィボナッチ数を求めるプログラムです。</p>
+<pre class="astro-code astro-code-themes min-light night-owl" style="--shiki-light:#24292eff;--shiki-dark:#d6deeb;--shiki-light-bg:#ffffff;--shiki-dark-bg:#011627; overflow-x: auto;--file-name-offset: -0.75rem;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">def</span><span style="--shiki-light:#6F42C1;--shiki-light-font-style:inherit;--shiki-dark:#82AAFF;--shiki-dark-font-style:italic"> fibonacci</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">(</span><span style="--shiki-light:#FF9800;--shiki-dark:#7FDBCA">n</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D9F5DD">)</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  # 基本条件</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">  if</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> n </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">&#x3C;=</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 1</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">    return</span><span style="--shiki-light:#24292EFF;--shiki-dark:#D6DEEB"> n</span></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic">  # 再帰的な手続き</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">  else</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">:</span></span>
+<span class="line"><span style="--shiki-light:#D32F2F;--shiki-light-font-style:inherit;--shiki-dark:#C792EA;--shiki-dark-font-style:italic">    return</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6"> fibonacci</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">n </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">-</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 1</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA"> +</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6"> fibonacci</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#212121;--shiki-dark:#82AAFF">n </span><span style="--shiki-light:#D32F2F;--shiki-dark:#C792EA">-</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C"> 2</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#C2C3C5;--shiki-light-font-style:inherit;--shiki-dark:#637777;--shiki-dark-font-style:italic"># フィボナッチ数列の 10 番目の数を求める</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#C5E478">print</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B2CCD6">fibonacci</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">(</span><span style="--shiki-light:#1976D2;--shiki-dark:#F78C6C">10</span><span style="--shiki-light:#212121;--shiki-dark:#D6DEEB">))</span></span></code></pre>
+<p>このように、プログラムは「変数」や「関数」を用いて、計算を行っていくものです。</p>
+<p>実際にはこのようなプログラムがインタープリターで解釈・実行されます。</p>
+<p>または、コンパイラというソフトウェアによってアセンブリ言語や機械語に変換されて実行されます。</p>
+<p><strong>アルゴリズムとデータ構造</strong></p>
+<p>プログラムにおいて重要なのは、アルゴリズムとデータ構造です。</p>
+<p>Wikipediaによれば、アルゴリズムとは</p>
+<blockquote>
+<p>解が定まっている「計算可能」問題に対して、その解を正しく求める手続きをさす</p>
+</blockquote>
+<p>とのことです。よって、プログラムは、アルゴリズムという抽象的なものをコードに落とし込んだものと言えます。</p>
+<p>さらに、問題を解決するためには、データ構造という概念も欠かせません。</p>
+<p>Wikipediaによれば、データ構造とは</p>
+<blockquote>
+<p>格納された各データの参照や修正といった管理を容易にするための構成である</p>
+</blockquote>
+<p>とのことです。対象のデータの性質にあったデータ構造を用いることで、問題を対処しやすくできるのです。</p>
+<p>詳細は以下の本に譲ります。</p>
+<ul>
+<li><a href="https://www.amazon.co.jp/%E5%95%8F%E9%A1%8C%E8%A7%A3%E6%B1%BA%E5%8A%9B%E3%82%92%E9%8D%9B%E3%81%88%E3%82%8B-%E3%82%A2%E3%83%AB%E3%82%B4%E3%83%AA%E3%82%BA%E3%83%A0%E3%81%A8%E3%83%87%E3%83%BC%E3%82%BF%E6%A7%8B%E9%80%A0-KS%E6%83%85%E5%A0%B1%E7%A7%91%E5%AD%A6%E5%B0%82%E9%96%80%E6%9B%B8-%E5%A4%A7%E6%A7%BB-%E5%85%BC%E8%B3%87/dp/4065128447/ref=asc_df_4065128447/?tag=jpgo-22&#x26;linkCode=df0&#x26;hvadid=342458612368&#x26;hvpos=&#x26;hvnetw=g&#x26;hvrand=17145578494957185875&#x26;hvpone=&#x26;hvptwo=&#x26;hvqmt=&#x26;hvdev=c&#x26;hvdvcmdl=&#x26;hvlocint=&#x26;hvlocphy=1009547&#x26;hvtargid=pla-939742448341&#x26;psc=1&#x26;th=1&#x26;psc=1&#x26;_encoding=UTF8&#x26;tag=amazon13aff-22&#x26;linkCode=ur2&#x26;linkId=dc6e95c91c9459f388420d81ce8e4ab5&#x26;camp=247&#x26;creative=1211">問題解決力を鍛える!アルゴリズムとデータ構造 (KS情報科学専門書)、大槻</a></li>
+</ul>
+<p>また、データ構造とアルゴリズムを学ぶ上で、プログラムを実際に書くことも重要です。</p>
+<p>そのために競技プログラミングコンテストなどを用いると楽しみながら学べて良いでしょう。</p>
+<p>日本で代表的な競プロコンテストサイトとしては<a href="https://atcoder.jp/">AtCoder</a>が有名です。</p>
+<p><a href="https://web.archive.org/web/20260802052601/https://algo-method.com/">アルゴ式</a>というサイトもさまざまな分野の学習教材が揃っておりおすすめです。</p>
+<p><strong>プログラム開発は、問題の分割と抽象化の世界</strong></p>
+<p>個人的に、プログラム開発は問題の分割と抽象化の世界だと思っています。</p>
+<p>大規模なプログラム開発となると、行数が何千万となるほどになります。このように大規模なプログラムを開発するためには、「困難は分割せよ」という考えと、抽象化して再利用しやすくする、という考えが重要となってきます。</p>
+<p>その点、プログラミングは情報科学のエッセンスが詰まったものだと思います。</p>
+<p><strong>コンパイラ</strong></p>
+<p>ここまでで、プログラムとOS、計算機との接続がどのようになっているか疑問に思った読者も多いことでしょう。</p>
+<p>インタープリターとコンパイラの違いや、0と1を解釈する計算機に対して、プログラムがなぜ実行できるのかといった疑問です。</p>
+<p>そこで、プログラムがなぜ動くのかを知る上で重要なテーマがコンパイラです。</p>
+<p>以前計算機ができる操作について解説しました。それは実際にはx86などの命令セット(ISA)によって仕様が決まっており、C言語などの高級言語をx86などのアセンブリ言語に変換することで計算機が実行できるようになるのです。</p>
+<p>コンパイラは情報科学のエッセンスが詰まっています。特に、理論が実装に大きく貢献している点がとても面白いです。そこで以下をおすすめします。</p>
+<ul>
+<li><a href="https://www.sigbus.info/compilerbook">低レイヤを知りたい人のためのCコンパイラ作成入門、Rui Ueyama</a></li>
+</ul>
+<p>個人的に大学で読んだ本の中で最も影響を受けた本(webサイト)です。</p>
+<p>情報技術を学ぶ上で最も身につくのはやはり実際にプログラムを書いて自作することだと思います。</p>
+<p>本書では、実際にCコンパイラをC言語で作成します。本書では、常にコンパイラが動く状態になるようにインクリメンタルに(少しずつ)作成していくため楽しみが継続されやすいです。さらに、本書では大規模ソフトウェアを開発するための技法やツールについても書かれており、今後の開発に大変参考になります。</p>
+<ul>
+<li><a href="https://www.amazon.co.jp/%E3%82%B3%E3%83%B3%E3%83%91%E3%82%A4%E3%83%A9-%E7%AC%AC2%E7%89%88-%E8%BE%BB%E9%87%8E-%E5%98%89%E5%AE%8F/dp/4274224724/ref=asc_df_4274224724/?tag=jpgo-22&#x26;linkCode=df0&#x26;hvadid=407530502627&#x26;hvpos=&#x26;hvnetw=g&#x26;hvrand=7904605230057517870&#x26;hvpone=&#x26;hvptwo=&#x26;hvqmt=&#x26;hvdev=c&#x26;hvdvcmdl=&#x26;hvlocint=&#x26;hvlocphy=1009547&#x26;hvtargid=pla-854840472175&#x26;psc=1&#x26;th=1&#x26;psc=1&#x26;_encoding=UTF8&#x26;tag=amazon13aff-22&#x26;linkCode=ur2&#x26;linkId=354343e4e9770ceedf337f9d0c7f533b&#x26;camp=247&#x26;creative=1211">コンパイラ(第2版)、辻野</a></li>
+</ul>
+<p>比較的薄い本でありながら、コンパイラの基礎を網羅的に学べます。</p>
+<ul>
+<li><a href="https://www.amazon.co.jp/%E3%82%B3%E3%83%B3%E3%83%91%E3%82%A4%E3%83%A9%E2%80%95%E5%8E%9F%E7%90%86%E3%83%BB%E6%8A%80%E6%B3%95%E3%83%BB%E3%83%84%E3%83%BC%E3%83%AB-Information-Computing-V-%E3%82%A8%E3%82%A4%E3%83%9B/dp/478191229X?&#x26;_encoding=UTF8&#x26;tag=amazon13aff-22&#x26;linkCode=ur2&#x26;linkId=8a6484bea070e3ee322fc8aa71559cae&#x26;camp=247&#x26;creative=1211">コンパイラ―原理・技法・ツール (Information &#x26; Computing)、エイホ+</a></li>
+</ul>
+<p>コンパイラのより詳しい本はこちら。分厚いですが、多くのトピックを取り扱っています。はじめは辞書のように使うのがいいかもしれません。</p>
+<h2 id="ブラウザはなぜ動くの">ブラウザはなぜ動くの?</h2>
+<p>まず、ブラウザを成り立たせるために必要なものは何でしょうか。それは、例えばwebページを表示するためのデザインや文章、画像などといったリソースです。</p>
+<p>このリソースを得るには、webサーバに「リソースをください」と言うリクエストが必要になります。このリクエストを送信するために、リクエスト文の仕様を決めたり、OSや計算機や通信を活用する必要があります。まさに「技術の積み上げ」ですね。</p>
+<p>そしてリクエストを受け取ったサーバは要求されたリソースを送り返します。</p>
+<p>それを受け取ったブラウザは、リソースをもとにディスプレイにページを表示します。ここでは表示のためのプログラムが必要となります。</p>
+<p>また、ブラウザはJavaScriptの実行エンジンを備え、ページごとに様々なデータの送受信や処理を行います。</p>
+<p>より詳細な仕組みは以下の書籍やサイトに譲りますが、ブラウザは多くの技術を活用して実現していることが理解いただけたと思います。</p>
+<ul>
+<li><a href="https://web.dev/howbrowserswork/">How browsers work, web.dev</a></li>
+</ul>
+<p>静的コンテンツを記述するHTML/CSSや、それをレンダリングするエンジンの仕組みなどまで詳しく載っています。</p>
+<ul>
+<li><a href="https://github.com/d0iasm/vulbr">https://github.com/d0iasm/vulbr, d0iasm</a></li>
+</ul>
+<p>Rustによるブラウザ実装のrepository</p>
+<ul>
+<li><a href="https://limpet.net/mbrubeck/2014/08/08/toy-layout-engine-1.html">Let’s build a browser engine!, Matt Brubeck</a></li>
+</ul>
+<p>ブラウザのレンダリングをRustを用いて実装するブログ</p>
+<h2 id="今後の学びのアドバイス">今後の学びのアドバイス</h2>
+<p><strong>ブラウザを活用する</strong></p>
+<p>情報化社会を牽引してきたブラウザは学習・開発する上でやはり強力な武器となります。</p>
+<p>しかし、その莫大な情報は玉石混交であり、取捨選択するのが非常に難しいという欠点があります。</p>
+<ul>
+<li>検索能力 + 基礎力</li>
+</ul>
+<p>そこで重要なのが検索能力です。自分の知りたい情報を検索するのはかなりスキルの必要な技術です。その検索能力を向上するためのファクターとして重要なのが検索対象の基礎力です。しかし実際は検索力次第で多大な情報を得ることができます。まずは良書を用いて基礎力を高めていくのがいいでしょう。</p>
+<p><strong>公式ドキュメント大事</strong></p>
+<p>現在に至るまでに感じていることは公式ドキュメントの重要性です。IT系だと特にドキュメントが英語だったりして日本語のブログなどを参照しがちですが、ブログにあることはだいたい公式ドキュメントに書いてあります。そして、急がば回れ的なことがよくあるのです。意識的に公式ドキュメントを見ましょう。</p>
+<p><strong>イベントを活用する</strong></p>
+<p>世の中には、情報技術の専門の学生や社会人、研究者が多く集まるイベントがいくつもあります。</p>
+<p>それらに参加することで、モチベーションや技術力の向上、交流に伴う興味の広がりといった機会を得ることができます。</p>
+<p>以下に有名なイベントを挙げます。</p>
+<ul>
+<li><a href="https://www.ipa.go.jp/jinzai/camp/index.html">セキュリティキャンプ</a></li>
+</ul>
+<p>こちらは私も実際に参加して、参加者や講師の方々から多くの刺激を受けました。ぜひ応募してみてください。</p>
+<p>他にも</p>
+<ul>
+<li><a href="https://sechack365.nict.go.jp/">SecHack365</a></li>
+<li><a href="https://www.ipa.go.jp/jinzai/mitou/index.html">未踏事業</a></li>
+<li><a href="https://labs.cybozu.co.jp/youth.html">サイボウズ・ラボユース</a></li>
+</ul>
+<p>などがあるようです。ぜひ調べてみてください。</p>
+<p><strong>質問する</strong></p>
+<p>どんなことにも言えますが、質問は大切です。質問によって得られる知見自体も大事ですが、質問を考えようとする過程で、思考を巡らせたり、理解しているところとしていないところを知ることができます。</p>
+<p><strong>コードを書く</strong></p>
+<p>私が大学一年生の頃後悔していることは、読書を通して理解を深めるばかりでコードをあまり書いていなかったことです。</p>
+<p>コードを書くことは初めは難しいかもしれませんが、わかってくると自由度が高くとても面白いものです。</p>
+<p>コードを書くことで理解もより一層深まります。実装において試行錯誤を繰り返すと、コーナーケースなど細かいことまで注意が行き届きます。</p>
+<p>「What I cannot create, I do not understand。」というファインマンの言葉の通りですね。</p>
+<p><strong>アウトプット大事</strong></p>
+<p>コードを書く、にも通ずるところですが、アウトプットは大事だと思いました。</p>
+<p>一年の頃はほとんどがインプットで本当に理解しているのかわからず不安になっていることが多々ありました。</p>
+<p>プログラミングをすることで実際にプログラムが正しく動いていることを確認できたり、</p>
+<p>自身の理解をまとめた記事を読み返すことで、各時点での自分の理解の程度を知ることができます。</p>
+<h2 id="おわりに">おわりに</h2>
+<p>以上で「知の高速道路」の敷設を終わります。</p>
+<p>今から「知の高速道路」を走っていくのはあなた自身です。新しい技術が次々と生まれる情報科学の世界において、基盤となる技術を身につけておくととても力になります。</p>
+<p>それでは、<strong>Let’s deep dive!</strong></p> </article> </div> </main> <footer class="w-full border-t border-border mt-auto"> <div class="mx-auto flex max-w-5xl flex-col items-center justify-between px-4 py-6 sm:flex-row-reverse sm:py-4"> <div class="flex-wrap justify-center gap-1 flex"> <a href="https://github.com/speed1313" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="speed1313 Blog on GitHub">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" /></svg> <span class="sr-only">speed1313 Blog on GitHub</span>  </a><a href="https://x.com/strayer_13" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="speed1313 Blog on X">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 4l11.733 16h4.267l-11.733 -16z" /><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" /></svg> <span class="sr-only">speed1313 Blog on X</span>  </a><a href="https://www.linkedin.com/in/speed1313/" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="speed1313 Blog on LinkedIn">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M8 11v5" /><path d="M8 8v.01" /><path d="M12 16v-5" /><path d="M16 16v-3a2 2 0 1 0 -4 0" /><path d="M3 7a4 4 0 0 1 4 -4h10a4 4 0 0 1 4 4v10a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4z" /></svg> <span class="sr-only">speed1313 Blog on LinkedIn</span>  </a><a href="https://huggingface.co/speed" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="speed1313 Blog on Hugging Face">  <svg role="img" viewBox="0 0 24 24" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><title>Hugging Face</title><path d="M12.025 1.13c-5.77 0-10.449 4.647-10.449 10.378 0 1.112.178 2.181.503 3.185.064-.222.203-.444.416-.577a.96.96 0 0 1 .524-.15c.293 0 .584.124.84.284.278.173.48.408.71.694.226.282.458.611.684.951v-.014c.017-.324.106-.622.264-.874s.403-.487.762-.543c.3-.047.596.06.787.203s.31.313.4.467c.15.257.212.468.233.542.01.026.653 1.552 1.657 2.54.616.605 1.01 1.223 1.082 1.912.055.537-.096 1.059-.38 1.572.637.121 1.294.187 1.967.187.657 0 1.298-.063 1.921-.178-.287-.517-.44-1.041-.384-1.581.07-.69.465-1.307 1.081-1.913 1.004-.987 1.647-2.513 1.657-2.539.021-.074.083-.285.233-.542.09-.154.208-.323.4-.467a1.08 1.08 0 0 1 .787-.203c.359.056.604.29.762.543s.247.55.265.874v.015c.225-.34.457-.67.683-.952.23-.286.432-.52.71-.694.257-.16.547-.284.84-.285a.97.97 0 0 1 .524.151c.228.143.373.388.43.625l.006.04a10.3 10.3 0 0 0 .534-3.273c0-5.731-4.678-10.378-10.449-10.378M8.327 6.583a1.5 1.5 0 0 1 .713.174 1.487 1.487 0 0 1 .617 2.013c-.183.343-.762-.214-1.102-.094-.38.134-.532.914-.917.71a1.487 1.487 0 0 1 .69-2.803m7.486 0a1.487 1.487 0 0 1 .689 2.803c-.385.204-.536-.576-.916-.71-.34-.12-.92.437-1.103.094a1.487 1.487 0 0 1 .617-2.013 1.5 1.5 0 0 1 .713-.174m-10.68 1.55a.96.96 0 1 1 0 1.921.96.96 0 0 1 0-1.92m13.838 0a.96.96 0 1 1 0 1.92.96.96 0 0 1 0-1.92M8.489 11.458c.588.01 1.965 1.157 3.572 1.164 1.607-.007 2.984-1.155 3.572-1.164.196-.003.305.12.305.454 0 .886-.424 2.328-1.563 3.202-.22-.756-1.396-1.366-1.63-1.32q-.011.001-.02.006l-.044.026-.01.008-.03.024q-.018.017-.035.036l-.032.04a1 1 0 0 0-.058.09l-.014.025q-.049.088-.11.19a1 1 0 0 1-.083.116 1.2 1.2 0 0 1-.173.18q-.035.029-.075.058a1.3 1.3 0 0 1-.251-.243 1 1 0 0 1-.076-.107c-.124-.193-.177-.363-.337-.444-.034-.016-.104-.008-.2.022q-.094.03-.216.087-.06.028-.125.063l-.13.074q-.067.04-.136.086a3 3 0 0 0-.135.096 3 3 0 0 0-.26.219 2 2 0 0 0-.12.121 2 2 0 0 0-.106.128l-.002.002a2 2 0 0 0-.09.132l-.001.001a1.2 1.2 0 0 0-.105.212q-.013.036-.024.073c-1.139-.875-1.563-2.317-1.563-3.203 0-.334.109-.457.305-.454m.836 10.354c.824-1.19.766-2.082-.365-3.194-1.13-1.112-1.789-2.738-1.789-2.738s-.246-.945-.806-.858-.97 1.499.202 2.362c1.173.864-.233 1.45-.685.64-.45-.812-1.683-2.896-2.322-3.295s-1.089-.175-.938.647 2.822 2.813 2.562 3.244-1.176-.506-1.176-.506-2.866-2.567-3.49-1.898.473 1.23 2.037 2.16c1.564.932 1.686 1.178 1.464 1.53s-3.675-2.511-4-1.297c-.323 1.214 3.524 1.567 3.287 2.405-.238.839-2.71-1.587-3.216-.642-.506.946 3.49 2.056 3.522 2.064 1.29.33 4.568 1.028 5.713-.624m5.349 0c-.824-1.19-.766-2.082.365-3.194 1.13-1.112 1.789-2.738 1.789-2.738s.246-.945.806-.858.97 1.499-.202 2.362c-1.173.864.233 1.45.685.64.451-.812 1.683-2.896 2.322-3.295s1.089-.175.938.647-2.822 2.813-2.562 3.244 1.176-.506 1.176-.506 2.866-2.567 3.49-1.898-.473 1.23-2.037 2.16c-1.564.932-1.686 1.178-1.464 1.53s3.675-2.511 4-1.297c.323 1.214-3.524 1.567-3.287 2.405.238.839 2.71-1.587 3.216-.642.506.946-3.49 2.056-3.522 2.064-1.29.33-4.568 1.028-5.713-.624" /></svg> <span class="sr-only">speed1313 Blog on Hugging Face</span>  </a><a href="https://scholar.google.com/citations?user=717QdNoAAAAJ" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="speed1313 Blog on Google Scholar">  <svg role="img" viewBox="0 0 24 24" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><title>Google Scholar</title><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z" /></svg> <span class="sr-only">speed1313 Blog on Google Scholar</span>  </a><a href="/cv.pdf" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="speed1313 Blog CV">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+  <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+  <path d="M11 12.5a1.5 1.5 0 0 0 -3 0v3a1.5 1.5 0 0 0 3 0" />
+  <path d="M13 11l1.5 6l1.5 -6" />
+</svg> <span class="sr-only">speed1313 Blog CV</span>  </a> </div> <div class="my-2 flex flex-col items-center whitespace-nowrap sm:flex-row"> <span>speed1313 &#169; 2026</span> <span class="hidden sm:inline">&nbsp;|&nbsp;</span> <span>
+Built with <a href="https://astro.build" class="underline">Astro</a> · Theme
+<a href="https://github.com/satnaing/astro-paper" class="underline">astro-paper</a> </span> </div> </div> </footer>  </body> </html> <script data-astro-rerun>
+  /** Attaches links to headings in the document,
+   *  allowing sharing of sections easily */
+  function addHeadingLinks() {
+    const headings = Array.from(
+      document.querySelectorAll("h2, h3, h4, h5, h6")
+    );
+    for (const heading of headings) {
+      heading.classList.add("group");
+      const link = document.createElement("a");
+      link.className =
+        "heading-link ms-2 no-underline opacity-75 md:opacity-0 md:group-hover:opacity-100 md:focus:opacity-100";
+      link.href = "#" + heading.id;
+
+      const span = document.createElement("span");
+      span.ariaHidden = "true";
+      span.innerText = "#";
+      link.appendChild(span);
+      heading.appendChild(link);
+    }
+  }
+  addHeadingLinks();
+
+  /** Attaches copy buttons to code blocks in the document,
+   * allowing users to copy code easily. */
+  function attachCopyButtons() {
+    const copyButtonLabel = "Copy";
+    const codeBlocks = Array.from(document.querySelectorAll("pre"));
+
+    for (const codeBlock of codeBlocks) {
+      const wrapper = document.createElement("div");
+      wrapper.style.position = "relative";
+
+      // Check if --file-name-offset custom property exists
+      const computedStyle = getComputedStyle(codeBlock);
+      const hasFileNameOffset =
+        computedStyle.getPropertyValue("--file-name-offset").trim() !== "";
+
+      // Determine the top positioning class
+      const topClass = hasFileNameOffset
+        ? "top-(--file-name-offset)"
+        : "-top-3";
+
+      const copyButton = document.createElement("button");
+      copyButton.className = `copy-code absolute end-3 ${topClass} rounded bg-muted border border-muted px-2 py-1 text-xs leading-4 text-foreground font-medium`;
+      copyButton.innerHTML = copyButtonLabel;
+      codeBlock.setAttribute("tabindex", "0");
+      codeBlock.appendChild(copyButton);
+
+      // wrap codebock with relative parent element
+      codeBlock?.parentNode?.insertBefore(wrapper, codeBlock);
+      wrapper.appendChild(codeBlock);
+
+      copyButton.addEventListener("click", async () => {
+        await copyCode(codeBlock, copyButton);
+      });
+    }
+
+    async function copyCode(block, button) {
+      const code = block.querySelector("code");
+      const text = code?.innerText;
+
+      await navigator.clipboard.writeText(text ?? "");
+
+      // visual feedback that task is completed
+      button.innerText = "Copied";
+
+      setTimeout(() => {
+        button.innerText = copyButtonLabel;
+      }, 700);
+    }
+  }
+  attachCopyButtons();
+
+  /* Go to page start after page swap */
+  document.addEventListener("astro:after-swap", () =>
+    window.scrollTo({ left: 0, top: 0, behavior: "instant" })
+  );
+</script>

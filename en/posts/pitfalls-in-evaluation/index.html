@@ -1,0 +1,246 @@
+<!DOCTYPE html><html dir="ltr" lang="en" class="scroll-smooth"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="canonical" href="https://speed1313.github.io/en/posts/pitfalls-in-evaluation/"><link rel="alternate" hreflang="ja" href="https://speed1313.github.io/posts/pitfalls-in-evaluation/"><link rel="alternate" hreflang="en" href="https://speed1313.github.io/en/posts/pitfalls-in-evaluation/"><link rel="alternate" hreflang="x-default" href="https://speed1313.github.io/posts/pitfalls-in-evaluation/"><meta name="generator" content="Astro v7.4.4"><!-- General Meta Tags --><title>Pitfalls in Model Evaluation | speed1313 Blog</title><meta name="title" content="Pitfalls in Model Evaluation | speed1313 Blog"><meta name="description" content="Model evaluation is full of pitfalls. This post walks through the many factors that affect evaluation scores."><meta name="author" content="speed1313"><link rel="sitemap" href="/sitemap-index.xml"><!-- Open Graph / Facebook --><meta property="og:type" content="article"><meta property="og:locale" content="en_US"><meta property="og:title" content="Pitfalls in Model Evaluation | speed1313 Blog"><meta property="og:description" content="Model evaluation is full of pitfalls. This post walks through the many factors that affect evaluation scores."><meta property="og:url" content="https://speed1313.github.io/en/posts/pitfalls-in-evaluation/"><meta property="og:image" content="https://speed1313.github.io/en/posts/pitfalls-in-evaluation/index.png"><!-- Article Published/Modified time --><meta property="article:published_time" content="2026-08-19T00:00:00.000Z"><!-- Twitter --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:url" content="https://speed1313.github.io/en/posts/pitfalls-in-evaluation/"><meta name="twitter:title" content="Pitfalls in Model Evaluation | speed1313 Blog"><meta name="twitter:description" content="Model evaluation is full of pitfalls. This post walks through the many factors that affect evaluation scores."><meta name="twitter:image" content="https://speed1313.github.io/en/posts/pitfalls-in-evaluation/index.png"><!-- Google JSON-LD Structured data --><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Pitfalls in Model Evaluation","image":"https://speed1313.github.io/en/posts/pitfalls-in-evaluation/index.png","datePublished":"2026-08-19T00:00:00.000Z","inLanguage":"en","mainEntityOfPage":"https://speed1313.github.io/en/posts/pitfalls-in-evaluation/","author":[{"@type":"Person","name":"speed1313"}]}</script><!-- Enable RSS feed auto-discovery  --><!-- https://docs.astro.build/en/recipes/rss/#enabling-rss-feed-auto-discovery --><link rel="alternate" type="application/rss+xml" title="speed1313 Blog" href="https://speed1313.github.io/rss.xml"><!-- Google Analytics --><script src="https://www.googletagmanager.com/gtag/js?id=G-7X0Q0NSDB9"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        // gtag.js only reads Arguments objects from dataLayer, not arrays.
+        // eslint-disable-next-line prefer-rest-params
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-7X0Q0NSDB9");
+    </script><meta name="theme-color" content=""><meta name="astro-view-transitions-enabled" content="true"> <meta name="astro-view-transitions-fallback" content="animate"><script type="module" src="/_astro/ClientRouter.astro_astro_type_script_index_0_lang.DXqcZz58.js"></script><script src="/toggle-theme.js"></script><style>@keyframes astroFadeInOut{0%{opacity:1}to{opacity:0}}@keyframes astroFadeIn{0%{opacity:0;mix-blend-mode:plus-lighter}to{opacity:1;mix-blend-mode:plus-lighter}}@keyframes astroFadeOut{0%{opacity:1;mix-blend-mode:plus-lighter}to{opacity:0;mix-blend-mode:plus-lighter}}@keyframes astroSlideFromRight{0%{transform:translate(100%)}}@keyframes astroSlideFromLeft{0%{transform:translate(-100%)}}@keyframes astroSlideToRight{to{transform:translate(100%)}}@keyframes astroSlideToLeft{to{transform:translate(-100%)}}@media (prefers-reduced-motion){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*),[data-astro-transition-scope]{animation:none!important}}
+</style><link rel="stylesheet" href="/_astro/Footer.B68Ii7U4.css"><style>[data-astro-transition-scope="astro-eq54l3i4-1"] { view-transition-name: pitfalls-in-model-evaluation; }@layer astro { ::view-transition-old(pitfalls-in-model-evaluation) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(pitfalls-in-model-evaluation) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(pitfalls-in-model-evaluation) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(pitfalls-in-model-evaluation) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-eq54l3i4-1"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-eq54l3i4-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-eq54l3i4-1"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-eq54l3i4-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-eq54l3i4-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-eq54l3i4-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-eq54l3i4-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-eq54l3i4-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style></head> <body>  <header id="site-header" class="fixed inset-x-0 top-0 z-20 border-b border-transparent bg-background"> <a id="skip-to-content" href="#main-content" class="sr-only z-50 bg-background px-3 py-2 text-accent focus:not-sr-only focus:absolute focus:start-16 focus:top-4">
+Skip to content
+</a> <!-- Same width as the home and About pages, so the edges line up. --> <div id="nav-container" class="flex w-full flex-col items-center justify-between sm:flex-row"> <div id="top-nav-wrap" class="relative mx-auto flex min-h-[56px] w-full max-w-5xl items-baseline justify-between bg-background px-4 py-2 sm:items-center sm:py-2"> <a href="/en/" class="absolute flex items-center gap-2 py-1 text-lg leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-xl sm:leading-none"> <svg viewBox="1.8 6.2 26 18.4" fill="currentColor" aria-hidden="true" class="h-[0.9em] w-auto text-accent"><path d="M5.6 12.4 L1.8 13.9 L5.4 15.2 Z" /><path fill-rule="evenodd" d="M5.2 14.2 C5.2 9.6 8.6 6.2 13 6.2 C16.9 6.2 19.7 8.6 20.6 12.1 C22.4 12.6 25.2 12.4 27.6 11.6 C27.4 16.4 25.2 20.6 21.6 22.6 C19.6 23.8 17.2 24.4 14.8 24.4 C9.4 24.4 5.2 20.4 5.2 14.2 Z M8.9 12.6 a1.9 1.9 0 1 0 3.8 0 a1.9 1.9 0 1 0 -3.8 0 Z" /></svg> speed1313 Blog </a> <nav id="nav-menu" class="flex w-full flex-col items-center sm:ms-2 sm:flex-row sm:justify-end sm:space-x-4 sm:py-0"> <div class="flex items-center gap-1 self-end sm:hidden"> <!--
+  Names the language it switches to, written in that language. The fixed
+  width keeps the header from shifting between "English" and "日本語".
+--><a href="/posts/pitfalls-in-evaluation/" lang="ja" hreflang="ja" class="focus-outline flex w-16 justify-center px-2 py-2 text-sm font-medium whitespace-nowrap hover:text-accent sm:w-14 sm:px-1 sm:py-1"> 日本語 </a> <a href="/en/#search" data-search-toggle role="button" aria-label="Search" aria-expanded="false" aria-controls="search-panel" title="Search" class="group focus-outline flex p-2"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-aria-expanded:hidden" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden group-aria-expanded:block" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg> </a> <button id="menu-btn" class="focus-outline p-2" aria-label="Open Menu" aria-expanded="false" aria-controls="menu-items"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden" id="close-icon"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-menu-deep" id="menu-icon"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 6h16" /><path d="M7 12h13" /><path d="M10 18h10" /></svg> </button> </div> <ul id="menu-items" class="mt-4 grid w-44 grid-cols-2 place-content-center gap-2 [&amp;>li>a]:block [&amp;>li>a]:px-4 [&amp;>li>a]:py-3 [&amp;>li>a]:text-center [&amp;>li>a]:font-medium [&amp;>li>a]:hover:text-accent sm:[&amp;>li>a]:px-2 sm:[&amp;>li>a]:py-1 hidden sm:mt-0 sm:flex sm:w-auto sm:gap-x-5 sm:gap-y-0"> <li class="col-span-2"> <a href="/en/" class="active-nav">
+Posts
+</a> </li> <li class="col-span-2"> <a href="/en/about">
+About
+</a> </li>  <li class="hidden items-center justify-center sm:flex"> <a href="/en/#search" data-search-toggle role="button" aria-label="Search" aria-expanded="false" aria-controls="search-panel" title="Search" class="group focus-outline flex p-1"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-aria-expanded:hidden" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden group-aria-expanded:block" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg> </a> </li> <li class="col-span-2 flex items-center justify-center sm:col-span-1"> <button id="theme-btn" class="focus-outline relative size-12 p-4 sm:size-8 hover:[&amp;&gt;svg]:stroke-accent" title="Toggles light &amp; dark" aria-label="auto" aria-live="polite"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute top-[50%] left-[50%] -translate-[50%] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" /></svg> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute top-[50%] left-[50%] -translate-[50%] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M14.828 14.828a4 4 0 1 0 -5.656 -5.656a4 4 0 0 0 5.656 5.656z" /><path d="M6.343 17.657l-1.414 1.414" /><path d="M6.343 6.343l-1.414 -1.414" /><path d="M17.657 6.343l1.414 -1.414" /><path d="M17.657 17.657l1.414 1.414" /><path d="M4 12h-2" /><path d="M12 4v-2" /><path d="M20 12h2" /><path d="M12 20v2" /></svg> </button> </li> <li class="hidden items-center sm:flex">  <div class="flex"> <!--
+  Names the language it switches to, written in that language. The fixed
+  width keeps the header from shifting between "English" and "日本語".
+--><a href="/posts/pitfalls-in-evaluation/" lang="ja" hreflang="ja" class="focus-outline flex w-16 justify-center px-2 py-2 text-sm font-medium whitespace-nowrap hover:text-accent sm:w-14 sm:px-1 sm:py-1"> 日本語 </a> </div> </li> </ul> </nav> </div> </div> </header> <div id="search-panel" role="dialog" aria-label="Search" hidden class="fixed inset-x-0 top-[57px] bottom-0 z-20 overflow-y-auto overscroll-contain bg-background"> <div class="mx-auto max-w-app px-4 pt-10 pb-16"> <div id="search-panel-ui" class="pagefind-theme"></div> </div> </div><script type="module" src="/_astro/SearchPanel.astro_astro_type_script_index_0_lang._yjhVhtJ.js"></script> <!-- Reserves the fixed header's height (56px + 1px border) in the flow. --> <div aria-hidden="true" class="h-[57px] shrink-0"></div><script type="module">function e(){let e=document.querySelector(`#menu-btn`),t=document.querySelector(`#menu-items`),n=document.querySelector(`#menu-icon`),r=document.querySelector(`#close-icon`);e&&t&&n&&r&&e.addEventListener(`click`,()=>{let i=e.getAttribute(`aria-expanded`)===`true`;e.setAttribute(`aria-expanded`,i?`false`:`true`),e.setAttribute(`aria-label`,i?`Open Menu`:`Close Menu`),t.classList.toggle(`hidden`),n.classList.toggle(`hidden`),r.classList.toggle(`hidden`)})}e(),document.addEventListener(`astro:after-swap`,e);</script> <main id="main-content" class="relative mx-auto mt-12 w-full max-w-app px-4 pb-16 sm:mt-20 lg:ms-[max(15rem,calc((100%-48rem)/2))]" data-pagefind-body="true"> <!-- Like the OpenAI blog: date and tags above a large centered title. --><header class="text-center"> <div data-pagefind-ignore class="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-sm"> <time class datetime="2026-08-19T00:00:00.000Z">Aug 19, 2026</time> <ul class="flex flex-wrap justify-center gap-x-4"> <li> <a href="/en/?tag=benchmarks#posts" class="text-foreground/60 underline-offset-4 hover:text-foreground hover:underline"> Benchmarks </a> </li> </ul> </div> <h1 data-astro-transition-scope="astro-eq54l3i4-1" class="mt-5 text-3xl leading-tight text-balance sm:text-5xl sm:leading-tight"> Pitfalls in Model Evaluation </h1> </header> <div data-pagefind-ignore class="mt-12 flex items-center justify-between gap-4 border-t border-foreground/10 pt-4 sm:mt-16">  <div class="relative ms-auto shrink-0"> <button type="button" data-share-button class="focus-outline flex items-center gap-x-2 text-sm opacity-80 hover:text-accent hover:opacity-100 sm:text-base"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-6" aria-hidden="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 15l6 -6" /><path d="M11 6l.463 -.536a5 5 0 0 1 7.071 7.072l-.534 .464" /><path d="M13 18l-.397 .534a5.068 5.068 0 0 1 -7.127 0a4.972 4.972 0 0 1 0 -7.071l.524 -.463" /></svg> <span>Share</span> </button> <!-- Overlaid below the button so nothing around it moves. --> <span role="status" data-copied class="pointer-events-none absolute end-0 top-full mt-1 rounded bg-foreground px-2 py-0.5 text-xs whitespace-nowrap text-background opacity-0 transition-opacity motion-reduce:transition-none">Copied</span> </div><script type="module">function e(){for(let e of document.querySelectorAll(`[data-share-button]`)){if(e.dataset.ready)continue;e.dataset.ready=`true`;let t=e.parentElement?.querySelector(`[data-copied]`),n=t?.textContent??``,r;e.addEventListener(`click`,async()=>{let e=location.href.split(`#`)[0];try{await navigator.clipboard.writeText(e)}catch{await navigator.share?.({url:e,title:document.title}).catch(()=>{});return}t&&(t.textContent=``,t.textContent=n,t.classList.remove(`opacity-0`),clearTimeout(r),r=setTimeout(()=>t.classList.add(`opacity-0`),1500))})}}document.addEventListener(`astro:page-load`,e);</script> </div> <aside role="note" class="mt-4 rounded border-s-4 border-accent bg-muted/50 px-4 py-3 text-sm" data-pagefind-ignore> <p> This article was machine-translated from the  <a href="/posts/pitfalls-in-evaluation/" lang="ja" hreflang="ja" class="underline underline-offset-4 hover:text-accent">Japanese original</a>  using an LLM. If anything differs, the original takes precedence. </p>  </aside> <div class="relative"> <aside class="absolute top-0 right-full hidden h-full w-52 pe-8 lg:block" data-pagefind-ignore> <nav id="post-toc" aria-label="Table of contents" hidden class="group sticky top-[calc(57px+2rem)] flex max-h-[calc(100svh-57px-4rem)] gap-3"> <ul class="min-w-0 flex-1 [scrollbar-width:none] overflow-y-auto overscroll-contain text-[0.8125rem] leading-snug [&amp;::-webkit-scrollbar]:hidden"></ul> <!-- Scrollbar for the list, shown on hover when it overflows. --> <div aria-hidden="true" data-track class="invisible relative w-1 shrink-0 rounded-full bg-foreground/10 opacity-0 transition-opacity group-hover:opacity-100"> <div data-thumb class="absolute inset-x-0 rounded-full bg-foreground/35"></div> </div> </nav> </aside> <div id="post-toc-mobile" hidden data-pagefind-ignore class="pointer-events-none invisible fixed inset-x-0 top-[57px] z-10 -translate-y-2 border-b border-foreground/10 bg-background opacity-0 transition-[opacity,translate] duration-200 motion-reduce:transition-none lg:hidden"> <button type="button" aria-expanded="false" aria-controls="post-toc-mobile-list" class="focus-outline flex w-full items-center gap-2 px-4 py-2.5 text-start text-[0.8125rem]"> <span class="sr-only">Table of contents:</span> <span data-current class="min-w-0 flex-1 truncate text-foreground/60"></span> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-5 shrink-0 -rotate-90 opacity-70 transition-transform motion-reduce:transition-none" aria-hidden="true" data-chevron="true"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 6l-6 6l6 6" /></svg> </button> <nav id="post-toc-mobile-list" aria-label="Table of contents" hidden class="pointer-events-none relative max-h-[60svh] overflow-y-auto overscroll-contain px-4 pb-2"> <!-- Starts on the bar's row; the right side stays free for the toggle. --><ul class="pointer-events-auto me-8 text-[0.8125rem] leading-snug"></ul> </nav> </div><script type="module">var e=new Set([`footnote-label`]),t=57,n=96;function r(e){let t=e.cloneNode(!0);return t.querySelectorAll(`.katex-mathml, .heading-link`).forEach(e=>e.remove()),t.textContent?.replace(/\s+/g,` `).trim()??``}function i(){let i=document.querySelector(`#post-toc`),a=i?.querySelector(`ul`),o=i?.querySelector(`[data-track]`),s=i?.querySelector(`[data-thumb]`),c=document.querySelector(`#article`);if(!i||!a||!o||!s||!c||i.dataset.ready)return;i.dataset.ready=`true`;let l=[...c.querySelectorAll(`h2[id], h3[id]`)].filter(t=>!e.has(t.id));if(l.length<2)return;let u=l.map(r),d=(e,t,n,r)=>{let i=l.map((r,i)=>{let a=document.createElement(`a`);a.href=`#${encodeURIComponent(r.id)}`,a.textContent=u[i],a.className=`block ${t} ${n} transition-colors hover:text-accent `+(r.tagName===`H3`?`ps-3`:``);let o=document.createElement(`li`);return o.append(a),e.append(o),a});return{items:i,mark:(e,t)=>i[e]?.classList.replace(t?n:r,t?r:n)}},f=d(a,`py-1`,`text-foreground/45`,`text-foreground`),p=f.items;i.hidden=!1;let m=document.querySelector(`#post-toc-mobile`),h=m?.querySelector(`button`),g=m?.querySelector(`nav`),_=g?.querySelector(`ul`),v=m?.querySelector(`[data-current]`),y=m?.querySelector(`[data-chevron]`),b=_?d(_,`py-2.5`,`text-foreground/40`,`text-foreground/85`):void 0,x=b?.items??[];m&&(m.hidden=!1);let S=-1,C=e=>{if(!h||!g)return;h.setAttribute(`aria-expanded`,String(e)),g.hidden=!e,v?.classList.toggle(`invisible`,e),g.style.marginTop=e?`-${h.offsetHeight}px`:``,y?.classList.toggle(`-rotate-90`,!e),y?.classList.toggle(`rotate-90`,e);let t=x[S];e&&t&&(g.scrollTop=t.offsetTop-g.clientHeight/3)};h?.addEventListener(`click`,()=>C(h.getAttribute(`aria-expanded`)!==`true`)),x.forEach(e=>e.addEventListener(`click`,()=>C(!1)));let w=e=>{m&&!m.contains(e.target)&&C(!1)},T=e=>{e.key===`Escape`&&g&&!g.hidden&&(C(!1),h?.focus())};document.addEventListener(`click`,w),document.addEventListener(`keydown`,T);let E=()=>{if(!m)return;let e=c.getBoundingClientRect(),n=e.top<=t&&e.bottom>177;for(let e of[`pointer-events-none`,`invisible`,`-translate-y-2`,`opacity-0`])m.classList.toggle(e,!n);n||C(!1)},D=()=>{let e=c.getBoundingClientRect().top+scrollY;i.style.marginTop=`${Math.max(0,innerHeight-e-n)}px`};D();let O=0,k=()=>{O=0,E();let e=0;if(l.forEach((t,n)=>{t.getBoundingClientRect().top<=137&&(e=n)}),e!==S){f.mark(S,!1),p[S]?.removeAttribute(`aria-current`),f.mark(e,!0),p[e].setAttribute(`aria-current`,`location`),b?.mark(S,!1),b?.mark(e,!0),v&&(v.textContent=u[e]),S=e;let t=p[e],n=t.offsetTop-a.offsetTop;(n<a.scrollTop||n+t.offsetHeight>a.scrollTop+a.clientHeight)&&a.scrollTo({top:n-a.clientHeight/3,behavior:`smooth`})}},A=()=>{let{scrollTop:e,scrollHeight:t,clientHeight:n}=a,r=t>n+8;o.classList.toggle(`invisible`,!r),r&&(s.style.height=`${n/t*100}%`,s.style.top=`${e/t*100}%`)};a.addEventListener(`scroll`,A,{passive:!0});let j=()=>{O||=requestAnimationFrame(k)};window.addEventListener(`scroll`,j,{passive:!0});let M=()=>{D(),j(),A()};window.addEventListener(`resize`,M),document.addEventListener(`astro:before-swap`,()=>{window.removeEventListener(`scroll`,j),window.removeEventListener(`resize`,M),document.removeEventListener(`click`,w),document.removeEventListener(`keydown`,T)},{once:!0}),k(),A()}document.addEventListener(`astro:page-load`,i);</script> <article id="article" class="app-prose mx-auto mt-10 max-w-app prose-pre:bg-(--shiki-light-bg) dark:prose-pre:bg-(--shiki-dark-bg)"> <p>Benchmarks are widely used to compare the capabilities of models quantitatively.
+However, evaluation scores change with many factors, such as the prompt and the inference settings, and model evaluation is full of pitfalls.
+When you evaluate other models as baselines for your proposed method, comparing them without drawing out each model’s full capability leads to an unfair comparison and can lead to wrong conclusions.
+It can also create a gap between officially reported performance and your own evaluation results.</p>
+<p>In this post, I organize the factors that affect evaluation scores and summarize what to watch out for to avoid these pitfalls.</p>
+<h2 id="llms">LLMs</h2>
+<h3 id="prompts">Prompts</h3>
+<p>Changes in the prompt can affect the score.
+Few-shot prompts and CoT prompts used to be common, and it was well known that scores varied with the number of shots and the choice of examples.
+Zero-shot prompts are now the norm, but even small rephrasings or differences in how the output format is specified can cause non-negligible differences in scores.</p>
+<p>When comparing against other models, the basic rule is to use the same prompt for all models, but you should also check whether that prompt favors or disfavors particular models.</p>
+<h3 id="max_new_tokens">max_new_tokens</h3>
+<p>If max_new_tokens, the upper limit on the number of generated tokens, is too small, answers may be cut off midway and judged as incorrect.
+Reasoning models in particular generate long thinking tokens before the final answer, so a small limit cuts generation off in the middle of reasoning, and the model fails problems it could otherwise solve.
+When evaluating a model, it is important to set max_new_tokens large enough.</p>
+<p>In addition, by recording why each sample’s generation finished and checking the fraction of samples that were cut off by the limit, you can check whether generation stopped in the middle of reasoning.
+However, if those samples are just the same sentence repeated over and over, increasing max_new_tokens will not lead to a correct answer, so they are not a problem.</p>
+<h3 id="inference-parameters">Inference parameters</h3>
+<p>In LLM text generation, the generated text changes with the inference parameters.
+Examples include temperature, top_p, and repetition penalty.
+Since they change the generated text, they naturally affect the score as well.
+In general, the safe choice is to use the recommended settings from the official model card or similar documentation.</p>
+<p>For example, the <a href="https://huggingface.co/Qwen/Qwen3.5-4B">Qwen3.5-4B model card</a> explicitly lists recommended inference settings such as temperature and top_p.
+For some models, temperature=0 (greedy decoding) is discouraged, so choosing greedy decoding “to make it deterministic” can lower the score and fail to draw out the model’s real performance.</p>
+<p>Note that when temperature is not 0, the outputs change from run to run, so you should run the evaluation multiple times and report the mean and std.</p>
+<h3 id="floating-point-precision">Floating-point precision</h3>
+<p>An LLM computes the next-token prediction distribution by repeating computations such as matrix multiplications and activation functions, and then generates tokens.
+Changing the floating-point precision can change this distribution through numerical errors, which may change the generated token sequence.
+To draw out the model’s performance, it is best to run inference at the recommended precision.</p>
+<h3 id="inference-engines">Inference engines</h3>
+<p>Scores can also change depending on which inference engine you use, such as HF Transformers, vLLM, or SGLang.
+Since implementations can differ between engines, the same model with the same settings does not always produce exactly the same output.
+Behavior can also change between versions of the same engine.</p>
+<h3 id="api-providers">API providers</h3>
+<p>When you use open-weight models through services such as OpenRouter, the score can change depending on the provider.
+Each provider serves models differently, so different providers may return different responses.
+Even the same provider may change its internal implementation over time.
+OpenRouter lets you specify the provider, so it is best to pin the provider during evaluation.</p>
+<h2 id="grading">Grading</h2>
+<p>Grading model answers also requires care.</p>
+<p>With rule-based grading using regular expressions and the like, small differences in wording can cause a correct answer to fail to match and be marked as incorrect.</p>
+<p>To address this problem with rule-based grading, LLM-as-a-Judge gives an LLM the model’s output and the reference answer and grades more flexibly.
+On the other hand, LLM-as-a-Judge has problems such as:</p>
+<ul>
+<li>Grading results can change from run to run</li>
+<li><a href="https://arxiv.org/abs/2306.05685">The judge model has biases</a></li>
+<li>A weak judge model lowers grading quality</li>
+</ul>
+<p>It is best to use as strong a model as possible for grading and, if possible, to check its agreement with human grading.
+You should also report the name of the model used as the judge.</p>
+<h2 id="vlms">VLMs</h2>
+<p>Evaluating VLMs adds pitfalls that come from image inputs, on top of the ones for text.</p>
+<h3 id="image-format">Image format</h3>
+<p>When you pass an image to a VLM through SGLang, the OpenAI API, or similar, the image is first encoded, for example as base64.
+If the image is re-encoded as JPEG (lossy compression) or resized along the way, the pixel values change, and so does the input to the model.
+For document images with fine text, this degradation from compression can affect the score.
+As a countermeasure, figure out where and how images are transformed in your evaluation pipeline, and avoid unintended degradation, for example by passing images in lossless PNG format.</p>
+<h3 id="number-of-soft-tokens-per-image">Number of soft tokens per image</h3>
+<p>A VLM converts an image into soft tokens with a vision encoder and feeds them to the LLM, and many models have a parameter that controls the number of soft tokens per image.
+For example, <a href="https://huggingface.co/google/gemma-4-12B-it">Gemma 4 12B</a> lets you change the maximum number of soft tokens per image.</p>
+<p>In general, for tasks that require reading fine details, such as PDF images, increasing the number of tokens per image improves performance.
+Conversely, with fewer tokens the effective resolution of the image drops, and information that could have been read is lost.
+If a model scores low when evaluated with the default settings, the problem may be the settings rather than the model’s capability.</p>
+<h2 id="agents">Agents</h2>
+<p>Evaluating LLM agents involves many components besides the model, so there are even more factors that affect the score.</p>
+<h3 id="harnesses">Harnesses</h3>
+<p>The harness, which defines things like context management and tool definitions for an LLM agent, leaves a lot of freedom in its implementation.
+There are many harnesses today, such as <a href="https://opencode.ai/">OpenCode</a>, <a href="https://github.com/laude-institute/harbor">Terminus</a>, and <a href="https://github.com/swe-agent/mini-swe-agent">mini-swe-agent</a>, and they differ in their system prompts, available tools, context compression methods, how they present code to the agent, and more.
+For example, the <a href="https://arxiv.org/abs/2601.11868">Terminal-Bench</a> evaluation shows that the same model can perform very differently with different harnesses.
+It is important to understand that scores reported on agent benchmarks reflect the combination of the model and the harness.</p>
+<h3 id="execution-environment">Execution environment</h3>
+<p>The agent’s execution environment also leaves room for choice.
+Scores change depending on settings such as how much compute you give the agent, how you set the time limit, and whether you allow network access.
+For example, if the time limit is too short, the agent is cut off while still working on a task and fails tasks it could have solved.
+As a result, you end up unfairly underestimating the agent’s performance.
+Also, in search benchmarks, agents may use external search engines to gather information, but search results change over time, so the information an agent can obtain for the same task depends on when it runs.</p>
+<h2 id="summary">Summary</h2>
+<p>In this post, I organized the many factors that affect evaluation scores.
+From inference settings to grading methods and execution environments, pitfalls lurk everywhere in the evaluation pipeline.</p>
+<p>What matters throughout is looking at the actual data.
+Instead of stopping at the evaluation score, look at the model’s outputs and the grading results.
+Are answers being cut off midway? Are correct answers being marked as incorrect? Is the agent behaving in unexpected ways?
+Many of the pitfalls described in this post can be found by looking at the data.</p>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://epoch.ai/gradient-updates/why-benchmarking-is-hard">https://epoch.ai/gradient-updates/why-benchmarking-is-hard</a>
+<ul>
+<li>A more detailed explanation of evaluation pitfalls than this post, with many real examples. A must-read.</li>
+</ul>
+</li>
+<li><a href="https://epoch.ai/publications/what-skills-does-swe-bench-verified-evaluate">https://epoch.ai/publications/what-skills-does-swe-bench-verified-evaluate</a>
+<ul>
+<li>Useful if you want to learn about pitfalls in evaluation datasets, not just evaluation methods.</li>
+</ul>
+</li>
+<li><a href="https://www.jasonwei.net/blog/evals">https://www.jasonwei.net/blog/evals</a>
+<ul>
+<li>Explains the conditions that successful benchmarks meet.</li>
+</ul>
+</li>
+</ul> </article> </div> </main> <footer class="w-full border-t border-border mt-auto"> <div class="mx-auto flex max-w-5xl flex-col items-center justify-between px-4 py-6 sm:flex-row-reverse sm:py-4"> <div class="flex-wrap justify-center gap-1 flex"> <a href="https://github.com/speed1313" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="speed1313 Blog on GitHub">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" /></svg> <span class="sr-only">speed1313 Blog on GitHub</span>  </a><a href="https://x.com/strayer_13" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="speed1313 Blog on X">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 4l11.733 16h4.267l-11.733 -16z" /><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" /></svg> <span class="sr-only">speed1313 Blog on X</span>  </a><a href="https://www.linkedin.com/in/speed1313/" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="speed1313 Blog on LinkedIn">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M8 11v5" /><path d="M8 8v.01" /><path d="M12 16v-5" /><path d="M16 16v-3a2 2 0 1 0 -4 0" /><path d="M3 7a4 4 0 0 1 4 -4h10a4 4 0 0 1 4 4v10a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4z" /></svg> <span class="sr-only">speed1313 Blog on LinkedIn</span>  </a><a href="https://huggingface.co/speed" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="speed1313 Blog on Hugging Face">  <svg role="img" viewBox="0 0 24 24" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><title>Hugging Face</title><path d="M12.025 1.13c-5.77 0-10.449 4.647-10.449 10.378 0 1.112.178 2.181.503 3.185.064-.222.203-.444.416-.577a.96.96 0 0 1 .524-.15c.293 0 .584.124.84.284.278.173.48.408.71.694.226.282.458.611.684.951v-.014c.017-.324.106-.622.264-.874s.403-.487.762-.543c.3-.047.596.06.787.203s.31.313.4.467c.15.257.212.468.233.542.01.026.653 1.552 1.657 2.54.616.605 1.01 1.223 1.082 1.912.055.537-.096 1.059-.38 1.572.637.121 1.294.187 1.967.187.657 0 1.298-.063 1.921-.178-.287-.517-.44-1.041-.384-1.581.07-.69.465-1.307 1.081-1.913 1.004-.987 1.647-2.513 1.657-2.539.021-.074.083-.285.233-.542.09-.154.208-.323.4-.467a1.08 1.08 0 0 1 .787-.203c.359.056.604.29.762.543s.247.55.265.874v.015c.225-.34.457-.67.683-.952.23-.286.432-.52.71-.694.257-.16.547-.284.84-.285a.97.97 0 0 1 .524.151c.228.143.373.388.43.625l.006.04a10.3 10.3 0 0 0 .534-3.273c0-5.731-4.678-10.378-10.449-10.378M8.327 6.583a1.5 1.5 0 0 1 .713.174 1.487 1.487 0 0 1 .617 2.013c-.183.343-.762-.214-1.102-.094-.38.134-.532.914-.917.71a1.487 1.487 0 0 1 .69-2.803m7.486 0a1.487 1.487 0 0 1 .689 2.803c-.385.204-.536-.576-.916-.71-.34-.12-.92.437-1.103.094a1.487 1.487 0 0 1 .617-2.013 1.5 1.5 0 0 1 .713-.174m-10.68 1.55a.96.96 0 1 1 0 1.921.96.96 0 0 1 0-1.92m13.838 0a.96.96 0 1 1 0 1.92.96.96 0 0 1 0-1.92M8.489 11.458c.588.01 1.965 1.157 3.572 1.164 1.607-.007 2.984-1.155 3.572-1.164.196-.003.305.12.305.454 0 .886-.424 2.328-1.563 3.202-.22-.756-1.396-1.366-1.63-1.32q-.011.001-.02.006l-.044.026-.01.008-.03.024q-.018.017-.035.036l-.032.04a1 1 0 0 0-.058.09l-.014.025q-.049.088-.11.19a1 1 0 0 1-.083.116 1.2 1.2 0 0 1-.173.18q-.035.029-.075.058a1.3 1.3 0 0 1-.251-.243 1 1 0 0 1-.076-.107c-.124-.193-.177-.363-.337-.444-.034-.016-.104-.008-.2.022q-.094.03-.216.087-.06.028-.125.063l-.13.074q-.067.04-.136.086a3 3 0 0 0-.135.096 3 3 0 0 0-.26.219 2 2 0 0 0-.12.121 2 2 0 0 0-.106.128l-.002.002a2 2 0 0 0-.09.132l-.001.001a1.2 1.2 0 0 0-.105.212q-.013.036-.024.073c-1.139-.875-1.563-2.317-1.563-3.203 0-.334.109-.457.305-.454m.836 10.354c.824-1.19.766-2.082-.365-3.194-1.13-1.112-1.789-2.738-1.789-2.738s-.246-.945-.806-.858-.97 1.499.202 2.362c1.173.864-.233 1.45-.685.64-.45-.812-1.683-2.896-2.322-3.295s-1.089-.175-.938.647 2.822 2.813 2.562 3.244-1.176-.506-1.176-.506-2.866-2.567-3.49-1.898.473 1.23 2.037 2.16c1.564.932 1.686 1.178 1.464 1.53s-3.675-2.511-4-1.297c-.323 1.214 3.524 1.567 3.287 2.405-.238.839-2.71-1.587-3.216-.642-.506.946 3.49 2.056 3.522 2.064 1.29.33 4.568 1.028 5.713-.624m5.349 0c-.824-1.19-.766-2.082.365-3.194 1.13-1.112 1.789-2.738 1.789-2.738s.246-.945.806-.858.97 1.499-.202 2.362c-1.173.864.233 1.45.685.64.451-.812 1.683-2.896 2.322-3.295s1.089-.175.938.647-2.822 2.813-2.562 3.244 1.176-.506 1.176-.506 2.866-2.567 3.49-1.898-.473 1.23-2.037 2.16c-1.564.932-1.686 1.178-1.464 1.53s3.675-2.511 4-1.297c.323 1.214-3.524 1.567-3.287 2.405.238.839 2.71-1.587 3.216-.642.506.946-3.49 2.056-3.522 2.064-1.29.33-4.568 1.028-5.713-.624" /></svg> <span class="sr-only">speed1313 Blog on Hugging Face</span>  </a><a href="https://scholar.google.com/citations?user=717QdNoAAAAJ" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="speed1313 Blog on Google Scholar">  <svg role="img" viewBox="0 0 24 24" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"><title>Google Scholar</title><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z" /></svg> <span class="sr-only">speed1313 Blog on Google Scholar</span>  </a><a href="/cv.pdf" class="group inline-block hover:text-accent p-2 hover:rotate-6 sm:p-1" title="speed1313 Blog CV">  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+  <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+  <path d="M11 12.5a1.5 1.5 0 0 0 -3 0v3a1.5 1.5 0 0 0 3 0" />
+  <path d="M13 11l1.5 6l1.5 -6" />
+</svg> <span class="sr-only">speed1313 Blog CV</span>  </a> </div> <div class="my-2 flex flex-col items-center whitespace-nowrap sm:flex-row"> <span>speed1313 &#169; 2026</span> <span class="hidden sm:inline">&nbsp;|&nbsp;</span> <span>
+Built with <a href="https://astro.build" class="underline">Astro</a> · Theme
+<a href="https://github.com/satnaing/astro-paper" class="underline">astro-paper</a> </span> </div> </div> </footer>  </body> </html> <script data-astro-rerun>
+  /** Attaches links to headings in the document,
+   *  allowing sharing of sections easily */
+  function addHeadingLinks() {
+    const headings = Array.from(
+      document.querySelectorAll("h2, h3, h4, h5, h6")
+    );
+    for (const heading of headings) {
+      heading.classList.add("group");
+      const link = document.createElement("a");
+      link.className =
+        "heading-link ms-2 no-underline opacity-75 md:opacity-0 md:group-hover:opacity-100 md:focus:opacity-100";
+      link.href = "#" + heading.id;
+
+      const span = document.createElement("span");
+      span.ariaHidden = "true";
+      span.innerText = "#";
+      link.appendChild(span);
+      heading.appendChild(link);
+    }
+  }
+  addHeadingLinks();
+
+  /** Attaches copy buttons to code blocks in the document,
+   * allowing users to copy code easily. */
+  function attachCopyButtons() {
+    const copyButtonLabel = "Copy";
+    const codeBlocks = Array.from(document.querySelectorAll("pre"));
+
+    for (const codeBlock of codeBlocks) {
+      const wrapper = document.createElement("div");
+      wrapper.style.position = "relative";
+
+      // Check if --file-name-offset custom property exists
+      const computedStyle = getComputedStyle(codeBlock);
+      const hasFileNameOffset =
+        computedStyle.getPropertyValue("--file-name-offset").trim() !== "";
+
+      // Determine the top positioning class
+      const topClass = hasFileNameOffset
+        ? "top-(--file-name-offset)"
+        : "-top-3";
+
+      const copyButton = document.createElement("button");
+      copyButton.className = `copy-code absolute end-3 ${topClass} rounded bg-muted border border-muted px-2 py-1 text-xs leading-4 text-foreground font-medium`;
+      copyButton.innerHTML = copyButtonLabel;
+      codeBlock.setAttribute("tabindex", "0");
+      codeBlock.appendChild(copyButton);
+
+      // wrap codebock with relative parent element
+      codeBlock?.parentNode?.insertBefore(wrapper, codeBlock);
+      wrapper.appendChild(codeBlock);
+
+      copyButton.addEventListener("click", async () => {
+        await copyCode(codeBlock, copyButton);
+      });
+    }
+
+    async function copyCode(block, button) {
+      const code = block.querySelector("code");
+      const text = code?.innerText;
+
+      await navigator.clipboard.writeText(text ?? "");
+
+      // visual feedback that task is completed
+      button.innerText = "Copied";
+
+      setTimeout(() => {
+        button.innerText = copyButtonLabel;
+      }, 700);
+    }
+  }
+  attachCopyButtons();
+
+  /* Go to page start after page swap */
+  document.addEventListener("astro:after-swap", () =>
+    window.scrollTo({ left: 0, top: 0, behavior: "instant" })
+  );
+</script>
