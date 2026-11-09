@@ -1,0 +1,124 @@
+---
+// Search opened from the header's search button, like openai.com: it
+// replaces everything under the header without leaving the page, and the
+// button turns into a close (X) button. Pagefind is loaded the first time
+// it opens.
+import "@pagefind/default-ui/css/ui.css";
+---
+
+<div
+  id="search-panel"
+  role="dialog"
+  aria-label="Search"
+  hidden
+  class="fixed inset-x-0 top-[57px] bottom-0 z-20 overflow-y-auto overscroll-contain bg-background"
+>
+  <div class="mx-auto max-w-app px-4 pt-10 pb-16">
+    <div id="search-panel-ui" class="pagefind-theme"></div>
+  </div>
+</div>
+
+<script>
+  type SearchUI = { triggerSearch(term: string): void };
+  let PagefindUI: (new (options: object) => SearchUI) | undefined;
+
+  function initSearchPanel() {
+    const panel = document.querySelector<HTMLElement>("#search-panel");
+    const mount = document.querySelector<HTMLElement>("#search-panel-ui");
+    const toggles = [
+      ...document.querySelectorAll<HTMLElement>("[data-search-toggle]"),
+    ];
+    if (!panel || !mount || panel.dataset.ready) return;
+    panel.dataset.ready = "true";
+
+    let opener: HTMLElement | undefined;
+    let ui: SearchUI | undefined;
+    const isOpen = () => !panel.hidden;
+
+    const load = async () => {
+      if (mount.childElementCount) return;
+      if (import.meta.env.DEV) {
+        mount.innerHTML = `<p class="rounded bg-muted/75 p-4">Search works after a build: run <code>npm run build</code> and <code>npm run preview</code>.</p>`;
+        return;
+      }
+      // @ts-expect-error: no types for @pagefind/default-ui.
+      PagefindUI ??= (await import("@pagefind/default-ui")).PagefindUI;
+      ui = new PagefindUI!({
+        element: mount,
+        showSubResults: true,
+        showImages: false,
+        // Loaded with the UI, not with every page.
+        translations: (
+          await import("@/utils/pagefindTranslations")
+        ).pagefindTranslations(),
+      });
+    };
+
+    const setOpen = async (open: boolean) => {
+      panel.hidden = !open;
+      toggles.forEach(toggle => {
+        toggle.setAttribute("aria-expanded", String(open));
+        toggle.setAttribute("aria-label", open ? "Close search" : "Search");
+      });
+      if (!open) {
+        opener?.focus();
+        return;
+      }
+      // The mobile menu would otherwise stay open under the panel.
+      document
+        .querySelector<HTMLElement>('#menu-btn[aria-expanded="true"]')
+        ?.click();
+      await load();
+      panel.querySelector<HTMLInputElement>("input")?.focus();
+    };
+
+    toggles.forEach(toggle =>
+      toggle.addEventListener("click", event => {
+        // Without JavaScript the toggle is a link to the search page.
+        event.preventDefault();
+        opener = toggle;
+        setOpen(!isOpen());
+      })
+    );
+
+    const onKeydown = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && isOpen()) {
+        setOpen(false);
+        return;
+      }
+      // "/" or Cmd/Ctrl+K opens it, unless typing somewhere.
+      const target = event.target as HTMLElement;
+      const typing =
+        target.isContentEditable ||
+        /^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName);
+      const shortcut =
+        (event.key === "/" && !typing) ||
+        (event.key.toLowerCase() === "k" && (event.metaKey || event.ctrlKey));
+      if (shortcut && !isOpen()) {
+        event.preventDefault();
+        opener = toggles.find(toggle => toggle.offsetParent) ?? toggles[0];
+        setOpen(true);
+      }
+    };
+    document.addEventListener("keydown", onKeydown);
+
+    // The old search page (/search/?q=...) redirects to /#search?q=...:
+    // open the window, run the query, and tidy the URL.
+    if (location.hash === "#search") {
+      const url = new URL(location.href);
+      const query = url.searchParams.get("q");
+      url.hash = "";
+      url.searchParams.delete("q");
+      history.replaceState(history.state, "", url);
+      opener = toggles.find(toggle => toggle.offsetParent) ?? toggles[0];
+      setOpen(true).then(() => query && ui?.triggerSearch(query));
+    }
+    document.addEventListener(
+      "astro:before-swap",
+      () => document.removeEventListener("keydown", onKeydown),
+      { once: true }
+    );
+  }
+
+  document.addEventListener("astro:page-load", initSearchPanel);
+</script>

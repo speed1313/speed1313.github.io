@@ -1,0 +1,25 @@
+---
+import type { Lang } from "@/content.config";
+import { LANG_LABELS } from "@/utils/translations";
+
+export interface Props {
+  /** The other language and the page to switch to. */
+  lang: Lang;
+  href: string;
+}
+
+const { lang, href } = Astro.props;
+---
+
+<!--
+  Names the language it switches to, written in that language. The fixed
+  width keeps the header from shifting between "English" and "日本語".
+-->
+<a
+  href={href}
+  lang={lang}
+  hreflang={lang}
+  class="focus-outline flex w-16 justify-center px-2 py-2 text-sm font-medium whitespace-nowrap hover:text-accent sm:w-14 sm:px-1 sm:py-1"
+>
+  {LANG_LABELS[lang]}
+</a>

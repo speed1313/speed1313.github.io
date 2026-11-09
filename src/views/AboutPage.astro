@@ -1,0 +1,238 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import Publication from "@/components/about/Publication.astro";
+import LinkBadge from "@/components/about/LinkBadge.astro";
+import Section from "@/components/about/Section.astro";
+import Socials from "@/components/Socials.astro";
+import { SITE } from "@/config";
+import {
+  profile,
+  education,
+  experience,
+  peerReviewed,
+  preprints,
+  domestic,
+  models,
+  certifications,
+  awards,
+  fellowships,
+  sortLinks,
+} from "@/data/about";
+import type { Lang } from "@/content.config";
+import { localePath, otherLang } from "@/utils/translations";
+import { slugifyStr } from "@/utils/slugify";
+
+export interface Props {
+  locale: Lang;
+}
+
+// The About page is written in English; both languages show the same page
+// so the header and its links stay in the reader's language.
+const { locale } = Astro.props;
+const other = otherLang(locale);
+
+// Inline links look like the article's: underlined, in the text color.
+const prose =
+  "[&_a]:underline [&_a]:decoration-foreground/30 [&_a]:underline-offset-4 [&_a:hover]:decoration-foreground";
+const row = "flex flex-col gap-x-6 gap-y-1 sm:flex-row sm:items-baseline";
+const period = "shrink-0 text-sm tabular-nums opacity-60 sm:w-40";
+const subhead = "mb-4 text-sm opacity-60";
+
+// Section titles, in order, for the links at the top.
+const SECTIONS = [
+  "Research",
+  "Education",
+  "Experience",
+  "Publications",
+  "Awards",
+  "Models and systems",
+  "Certifications",
+];
+---
+
+<Layout
+  title={`About | ${SITE.title}`}
+  lang="en"
+  canonicalURL={new URL("/about/", Astro.site).href}
+>
+  <Header alternate={{ lang: other, href: localePath(other, "/about/") }} />
+  <main id="main-content" class="mx-auto mb-24 w-full max-w-5xl px-4">
+    <section
+      class="mt-12 flex max-w-none flex-col gap-6 px-0 sm:mt-20 sm:flex-row sm:items-center sm:gap-10"
+    >
+      <img
+        src={profile.image}
+        alt={`${profile.name} profile picture`}
+        width="144"
+        height="144"
+        loading="eager"
+        class="size-28 shrink-0 rounded-full border border-foreground/10 object-cover sm:size-36"
+      />
+      <div>
+        <h1 class="text-4xl sm:text-5xl">{profile.name}</h1>
+        <p class="mt-4 text-lg opacity-80">{profile.intro}</p>
+        <p class="mt-1 text-lg opacity-80">{profile.tagline}</p>
+        <div class="-ms-2 mt-4">
+          <Socials />
+        </div>
+      </div>
+    </section>
+
+    <nav
+      aria-label="On this page"
+      class="mt-12 flex flex-wrap gap-x-6 gap-y-2 text-sm"
+    >
+      {
+        SECTIONS.map(title => (
+          <a
+            href={`#${slugifyStr(title)}`}
+            class="text-foreground/60 hover:text-foreground"
+          >
+            {title}
+          </a>
+        ))
+      }
+    </nav>
+
+    <Section title="Research">
+      <div class={prose}>
+        <p>{profile.researchIntro}</p>
+        <ul class="my-3 list-disc space-y-1 ps-6">
+          {profile.researchBullets.map(b => <li set:html={b} />)}
+        </ul>
+      </div>
+    </Section>
+
+    <Section title="Education">
+      <ul class="space-y-6">
+        {
+          education.map(e => (
+            <li class={row}>
+              <span class={period}>{e.period}</span>
+              <div class="min-w-0">
+                <p class="font-medium">{e.degree}</p>
+                <p class="text-sm">
+                  {e.institution}
+                  {e.gpa && ` · GPA ${e.gpa}`}
+                </p>
+                <p class="text-sm opacity-60">{e.program}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </Section>
+
+    <Section title="Experience">
+      <ul class="space-y-6">
+        {
+          experience.map(x => (
+            <li class={row}>
+              <span class={period}>{x.period}</span>
+              <div class="min-w-0">
+                <p class="font-medium">
+                  {x.position}
+                  <span class="font-normal opacity-60">
+                    {" "}
+                    · {x.organization}
+                  </span>
+                </p>
+                <p class="mt-1 text-sm opacity-80">{x.description}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </Section>
+
+    <Section title="Publications">
+      <h3 class={subhead}>Peer-reviewed</h3>
+      <ul class="space-y-6">
+        {peerReviewed.map((p, i) => <Publication {...p} num={i + 1} />)}
+      </ul>
+
+      <h3 class:list={[subhead, "mt-10"]}>Preprints</h3>
+      <ul class="space-y-6">
+        {preprints.map((p, i) => <Publication {...p} num={i + 1} />)}
+      </ul>
+
+      <h3 class:list={[subhead, "mt-10"]}>
+        Domestic conferences (non-refereed)
+      </h3>
+      <ul class="space-y-6">
+        {domestic.map((p, i) => <Publication {...p} num={i + 1} />)}
+      </ul>
+    </Section>
+
+    <Section title="Awards">
+      {
+        [
+          { heading: "Honors", items: awards },
+          { heading: "Fellowships and scholarships", items: fellowships },
+        ].map(({ heading, items }, i) => (
+          <>
+            <h3 class:list={[subhead, { "mt-10": i > 0 }]}>{heading}</h3>
+            <ul class="space-y-5">
+              {items.map(a => (
+                <li class={row}>
+                  <span class={period}>{a.date}</span>
+                  <div class="min-w-0">
+                    <p class="font-medium">
+                      {a.title}
+                      {a.rank && (
+                        <span class="font-normal opacity-60"> ({a.rank})</span>
+                      )}
+                    </p>
+                    <p class="mt-0.5 text-sm opacity-80">{a.work}</p>
+                    <p class="text-sm opacity-60">{a.venue}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </>
+        ))
+      }
+    </Section>
+
+    <Section title="Models and systems">
+      <ul class="space-y-6">
+        {
+          models.map((m, i) => (
+            <li class="flex gap-3">
+              <span class="w-5 shrink-0 text-sm tabular-nums opacity-40">
+                {i + 1}
+              </span>
+              <div class="min-w-0 flex-1">
+                <p class="font-medium">{m.title}</p>
+                <p class="mt-1 text-sm opacity-80">{m.description}</p>
+                {m.links && m.links.length > 0 && (
+                  <div class="mt-2 flex flex-wrap gap-1.5">
+                    {sortLinks(m.links).map(l => (
+                      <LinkBadge label={l.label} href={l.href} />
+                    ))}
+                  </div>
+                )}
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </Section>
+
+    <Section title="Certifications">
+      <ul class="space-y-3">
+        {
+          certifications.map(c => (
+            <li class={row}>
+              <span class={period}>{c.date}</span>
+              <span class:list={["min-w-0 text-sm", prose]} set:html={c.text} />
+            </li>
+          ))
+        }
+      </ul>
+    </Section>
+  </main>
+  <Footer />
+</Layout>

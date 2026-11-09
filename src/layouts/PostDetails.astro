@@ -1,0 +1,256 @@
+---
+import { render } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import Tag from "@/components/Tag.astro";
+import Datetime from "@/components/Datetime.astro";
+import EditPost from "@/components/EditPost.astro";
+import ShareButton from "@/components/ShareButton.astro";
+import TranslationNotice from "@/components/TranslationNotice.astro";
+import TableOfContents from "@/components/TableOfContents.astro";
+import { slugifyStr } from "@/utils/slugify";
+import { SITE } from "@/config";
+import { LANGS, type Lang } from "@/content.config";
+import {
+  getVersion,
+  localePath,
+  otherLang,
+  postHref,
+  type LocalizedPost,
+} from "@/utils/translations";
+
+export interface Props {
+  /** The post as shown in `locale`. */
+  post: LocalizedPost;
+  locale: Lang;
+}
+
+const { post, locale } = Astro.props;
+const { original, translations, translation } = post;
+
+const {
+  author,
+  ogImage: initOgImage,
+  canonicalURL,
+  pubDatetime,
+  modDatetime,
+  timezone,
+  tags,
+  hideEditPost,
+} = original.data;
+
+const { title, description, lang } = post.data;
+const pageUrl = (l: Lang) => `${postHref(original, l)}/`;
+
+// Languages with real content (not the default language's fallback).
+const languages = LANGS.filter(
+  l => getVersion(original, translations, l)?.fallback === false
+);
+const isFallback = !languages.includes(locale);
+// Search indexes each language's real pages (not fallbacks). Pagefind
+// splits the index by <html lang>, so a search finds posts in the page's
+// language.
+
+const alternates =
+  languages.length > 1
+    ? [
+        ...languages.map(l => ({ lang: l, href: pageUrl(l) })),
+        { lang: "x-default", href: pageUrl(original.data.lang) },
+      ]
+    : [];
+
+// Switch to the same post in the other language, or that language's home.
+const other = otherLang(locale);
+const alternate = {
+  lang: other,
+  href: languages.includes(other) ? pageUrl(other) : localePath(other, "/"),
+};
+
+const editTarget = translation
+  ? { ...original, filePath: translation.entry.filePath }
+  : original;
+
+const { Content, headings } = await render(translation?.entry ?? original);
+
+// Same headings the table of contents lists (it skips the footnotes label).
+const hasToc =
+  headings.filter(
+    ({ depth, slug }) =>
+      (depth === 2 || depth === 3) && slug !== "footnote-label"
+  ).length >= 2;
+
+let ogImageUrl: string | undefined;
+
+// Determine OG image source
+if (typeof initOgImage === "string") {
+  ogImageUrl = initOgImage; // Remote OG image (absolute URL)
+} else if (initOgImage?.src) {
+  ogImageUrl = initOgImage.src; // Local asset
+}
+
+// Use dynamic OG image if enabled and no remote|local ogImage
+if (!ogImageUrl && SITE.dynamicOgImage) {
+  // In the page's language, so English pages get the English title.
+  ogImageUrl = `${postHref(original, locale)}/index.png`;
+}
+
+// Resolve OG image URL (or fallback to SITE.ogImage / default `og.png`)
+const ogImage = ogImageUrl
+  ? new URL(ogImageUrl, Astro.url.origin).href
+  : undefined;
+
+const layoutProps = {
+  title: `${title} | ${SITE.title}`,
+  author,
+  description,
+  pubDatetime,
+  modDatetime,
+  // A fallback page repeats the original, so point search engines to it.
+  canonicalURL: isFallback
+    ? new URL(pageUrl(original.data.lang), Astro.site).href
+    : translation
+      ? undefined
+      : canonicalURL,
+  ogImage,
+  scrollSmooth: true,
+  lang,
+  alternates,
+};
+---
+
+<Layout {...layoutProps}>
+  <Header {alternate} />
+  <main
+    id="main-content"
+    class:list={[
+      "relative mx-auto mt-12 w-full max-w-app px-4 pb-16 sm:mt-20",
+      // Leave room for the sidebar ToC; stays centered when there is space.
+      { "lg:ms-[max(15rem,calc((100%-48rem)/2))]": hasToc },
+    ]}
+    data-pagefind-body={isFallback ? undefined : true}
+  >
+    <!-- Like the OpenAI blog: date and tags above a large centered title. -->
+    <header class="text-center">
+      <div
+        data-pagefind-ignore
+        class="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-sm"
+      >
+        <Datetime lang={locale} {pubDatetime} {modDatetime} {timezone} />
+        {
+          tags.length > 0 && (
+            <ul class="flex flex-wrap justify-center gap-x-4">
+              {tags.map(tag => (
+                <Tag tag={slugifyStr(tag)} tagName={tag} lang={locale} />
+              ))}
+            </ul>
+          )
+        }
+      </div>
+      <h1
+        transition:name={slugifyStr(title)}
+        class="mt-5 text-3xl leading-tight text-balance sm:text-5xl sm:leading-tight"
+      >
+        {title}
+      </h1>
+    </header>
+    <div
+      data-pagefind-ignore
+      class="mt-12 flex items-center justify-between gap-4 border-t border-foreground/10 pt-4 sm:mt-16"
+    >
+      <EditPost {hideEditPost} post={editTarget} />
+      <ShareButton {lang} class="ms-auto shrink-0" />
+    </div>
+    {translation && <TranslationNotice post={original} {translation} />}
+    <div class="relative">
+      {hasToc && <TableOfContents />}
+      <article
+        id="article"
+        class="app-prose mx-auto mt-10 max-w-app prose-pre:bg-(--shiki-light-bg) dark:prose-pre:bg-(--shiki-dark-bg)"
+      >
+        <Content />
+      </article>
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<script is:inline data-astro-rerun>
+  /** Attaches links to headings in the document,
+   *  allowing sharing of sections easily */
+  function addHeadingLinks() {
+    const headings = Array.from(
+      document.querySelectorAll("h2, h3, h4, h5, h6")
+    );
+    for (const heading of headings) {
+      heading.classList.add("group");
+      const link = document.createElement("a");
+      link.className =
+        "heading-link ms-2 no-underline opacity-75 md:opacity-0 md:group-hover:opacity-100 md:focus:opacity-100";
+      link.href = "#" + heading.id;
+
+      const span = document.createElement("span");
+      span.ariaHidden = "true";
+      span.innerText = "#";
+      link.appendChild(span);
+      heading.appendChild(link);
+    }
+  }
+  addHeadingLinks();
+
+  /** Attaches copy buttons to code blocks in the document,
+   * allowing users to copy code easily. */
+  function attachCopyButtons() {
+    const copyButtonLabel = "Copy";
+    const codeBlocks = Array.from(document.querySelectorAll("pre"));
+
+    for (const codeBlock of codeBlocks) {
+      const wrapper = document.createElement("div");
+      wrapper.style.position = "relative";
+
+      // Check if --file-name-offset custom property exists
+      const computedStyle = getComputedStyle(codeBlock);
+      const hasFileNameOffset =
+        computedStyle.getPropertyValue("--file-name-offset").trim() !== "";
+
+      // Determine the top positioning class
+      const topClass = hasFileNameOffset
+        ? "top-(--file-name-offset)"
+        : "-top-3";
+
+      const copyButton = document.createElement("button");
+      copyButton.className = `copy-code absolute end-3 ${topClass} rounded bg-muted border border-muted px-2 py-1 text-xs leading-4 text-foreground font-medium`;
+      copyButton.innerHTML = copyButtonLabel;
+      codeBlock.setAttribute("tabindex", "0");
+      codeBlock.appendChild(copyButton);
+
+      // wrap codebock with relative parent element
+      codeBlock?.parentNode?.insertBefore(wrapper, codeBlock);
+      wrapper.appendChild(codeBlock);
+
+      copyButton.addEventListener("click", async () => {
+        await copyCode(codeBlock, copyButton);
+      });
+    }
+
+    async function copyCode(block, button) {
+      const code = block.querySelector("code");
+      const text = code?.innerText;
+
+      await navigator.clipboard.writeText(text ?? "");
+
+      // visual feedback that task is completed
+      button.innerText = "Copied";
+
+      setTimeout(() => {
+        button.innerText = copyButtonLabel;
+      }, 700);
+    }
+  }
+  attachCopyButtons();
+
+  /* Go to page start after page swap */
+  document.addEventListener("astro:after-swap", () =>
+    window.scrollTo({ left: 0, top: 0, behavior: "instant" })
+  );
+</script>

@@ -1,0 +1,379 @@
+---
+import Card from "@/components/Card.astro";
+import IconAdjustments from "@/assets/icons/IconAdjustments.svg";
+import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
+import IconX from "@/assets/icons/IconX.svg";
+import { SITE } from "@/config";
+import getUniqueTags from "@/utils/getUniqueTags";
+import type { LocalizedPost } from "@/utils/translations";
+
+export interface Props {
+  posts: LocalizedPost[];
+  title: string;
+  /** Id of the heading, so tag links can jump to the list. */
+  id?: string;
+  /** Posts shown at first; "Load more" reveals `step` more at a time. */
+  initial?: number;
+  step?: number;
+  variant?: "h2" | "h3";
+}
+
+const {
+  posts,
+  title,
+  id = "posts",
+  initial = SITE.postPerPage,
+  step = SITE.postPerPage,
+  variant = "h2",
+} = Astro.props;
+
+const tags = getUniqueTags(posts);
+
+const menuButton =
+  "group focus-outline flex items-center gap-1.5 rounded-full px-3 py-1.5 hover:bg-surface aria-expanded:bg-surface";
+// Aligned to the right edge of the list. Above the post rows' links
+// (z-10), below the fixed header (z-20).
+const menuPanel =
+  "absolute end-3 top-full z-[15] mt-2 max-w-[calc(100vw-2rem)] rounded-xl bg-surface p-5 shadow-lg";
+const option =
+  "flex cursor-pointer items-center gap-3 rounded px-2 py-1.5 hover:bg-foreground/5";
+---
+
+<!-- All posts are in the HTML; without JavaScript every post is shown. -->
+<div data-post-list data-initial={initial} data-step={step}>
+  <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+    <h2 {id} class="text-3xl sm:text-4xl">{title}</h2>
+    <div data-controls hidden class="relative -me-3 flex items-center text-sm">
+      <div>
+        <button
+          type="button"
+          data-menu-button
+          aria-expanded="false"
+          aria-controls={`${id}-filter`}
+          class={menuButton}
+        >
+          <span data-filter-label>Filter</span>
+          <IconAdjustments
+            aria-hidden="true"
+            class="size-4 group-aria-expanded:hidden"
+          />
+          <IconX
+            aria-hidden="true"
+            class="hidden size-4 group-aria-expanded:block"
+          />
+        </button>
+        <div
+          id={`${id}-filter`}
+          data-menu
+          hidden
+          class={`${menuPanel} w-[34rem]`}
+        >
+          <fieldset>
+            <legend class="mb-3 text-sm opacity-60">Tags</legend>
+            <div class="grid gap-x-6 sm:grid-cols-2">
+              {
+                tags.map(({ tag, tagName }) => (
+                  <label class={option}>
+                    <input
+                      type="checkbox"
+                      name="tag"
+                      value={tag}
+                      data-name={tagName}
+                      class="size-4 accent-foreground"
+                    />
+                    <span>{tagName}</span>
+                  </label>
+                ))
+              }
+            </div>
+          </fieldset>
+          <div
+            class="mt-4 flex justify-end gap-2 border-t border-foreground/10 pt-4"
+          >
+            <!-- "Clear all" while tags are selected, "Cancel" otherwise. -->
+            <button
+              type="button"
+              data-filter-action
+              class="focus-outline rounded-full px-3 py-1.5 hover:bg-foreground/5"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+      <div>
+        <button
+          type="button"
+          data-menu-button
+          aria-expanded="false"
+          aria-controls={`${id}-sort`}
+          class={menuButton}
+        >
+          Sort
+          <IconChevronLeft
+            aria-hidden="true"
+            class="size-4 -rotate-90 transition-transform group-aria-expanded:rotate-90 motion-reduce:transition-none"
+          />
+        </button>
+        <div
+          id={`${id}-sort`}
+          data-menu
+          hidden
+          class={`${menuPanel} w-48 !p-3`}
+        >
+          <fieldset>
+            <legend class="sr-only">Sort posts</legend>
+            <label class={option}>
+              <input
+                type="radio"
+                name="sort"
+                value="newest"
+                checked
+                class="size-4 accent-foreground"
+              />
+              Newest
+            </label>
+            <label class={option}>
+              <input
+                type="radio"
+                name="sort"
+                value="oldest"
+                class="size-4 accent-foreground"
+              />
+              Oldest
+            </label>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Selected tags, each removable. -->
+  <ul data-chips hidden class="mt-4 flex flex-wrap items-center gap-2 text-sm">
+  </ul>
+  <template data-chip>
+    <li>
+      <button
+        type="button"
+        class="focus-outline flex items-center gap-1 rounded-full border border-border py-1 ps-3 pe-2 hover:border-foreground/60"
+      >
+        <span></span>
+        <IconX aria-hidden="true" class="size-3.5" />
+      </button>
+    </li>
+  </template>
+
+  <ul data-posts>
+    {posts.map((post, i) => <Card {...post} {variant} more={i >= initial} />)}
+  </ul>
+  <p data-empty hidden class="my-8 opacity-80">No posts with these tags.</p>
+  <p data-status role="status" class="sr-only"></p>
+  {
+    posts.length > initial && (
+      <div class="my-8 text-center">
+        <button
+          type="button"
+          data-load-more
+          hidden
+          class="focus-outline rounded-full bg-foreground px-5 py-2 text-sm font-medium text-background transition-opacity hover:opacity-80 motion-reduce:transition-none"
+        >
+          Load more
+        </button>
+      </div>
+    )
+  }
+  <noscript>
+    <style>
+      [data-more] {
+        display: list-item !important;
+      }
+    </style>
+  </noscript>
+</div>
+
+<script>
+  function initPostList(root: HTMLElement) {
+    const list = root.querySelector<HTMLElement>("[data-posts]");
+    const controls = root.querySelector<HTMLElement>("[data-controls]");
+    const chips = root.querySelector<HTMLElement>("[data-chips]");
+    const chip = root.querySelector<HTMLTemplateElement>("[data-chip]");
+    const label = root.querySelector<HTMLElement>("[data-filter-label]");
+    const empty = root.querySelector<HTMLElement>("[data-empty]");
+    const status = root.querySelector<HTMLElement>("[data-status]");
+    const more = root.querySelector<HTMLButtonElement>("[data-load-more]");
+    const action = root.querySelector<HTMLButtonElement>(
+      "[data-filter-action]"
+    );
+    if (!list || !controls || !chips || !chip || root.dataset.ready) return;
+    root.dataset.ready = "true";
+    controls.hidden = false;
+
+    const initial = Number(root.dataset.initial) || 8;
+    const step = Number(root.dataset.step) || 8;
+    const items = [...list.querySelectorAll<HTMLElement>(":scope > li")];
+    const boxes = [
+      ...root.querySelectorAll<HTMLInputElement>('input[name="tag"]'),
+    ];
+    const sorts = [
+      ...root.querySelectorAll<HTMLInputElement>('input[name="sort"]'),
+    ];
+
+    // Restore the state from the URL, e.g. /?tag=vlm&tag=llm&sort=oldest.
+    const params = new URLSearchParams(location.search);
+    const wanted = new Set(params.getAll("tag"));
+    boxes.forEach(box => (box.checked = wanted.has(box.value)));
+    const sortParam = params.get("sort") === "oldest" ? "oldest" : "newest";
+    sorts.forEach(radio => (radio.checked = radio.value === sortParam));
+
+    let shown = initial;
+
+    const selected = () => boxes.filter(box => box.checked);
+    const matching = () => {
+      const tags = new Set(selected().map(box => box.value));
+      return [...list.children].filter(
+        (item): item is HTMLElement =>
+          !tags.size ||
+          (item as HTMLElement).dataset.tags
+            ?.split(" ")
+            .some(tag => tags.has(tag)) === true
+      );
+    };
+
+    const saveUrl = () => {
+      const url = new URL(location.href);
+      url.searchParams.delete("tag");
+      url.searchParams.delete("sort");
+      selected().forEach(box => url.searchParams.append("tag", box.value));
+      if (sorts.find(r => r.checked)?.value === "oldest") {
+        url.searchParams.set("sort", "oldest");
+      }
+      history.replaceState(history.state, "", url);
+    };
+
+    const render = () => {
+      const oldest = sorts.find(r => r.checked)?.value === "oldest";
+      list.append(...(oldest ? [...items].reverse() : items));
+
+      const posts = matching();
+      items.forEach(item => (item.hidden = true));
+      posts.slice(0, shown).forEach(item => (item.hidden = false));
+      if (more) more.hidden = posts.length <= shown;
+      if (empty) empty.hidden = posts.length > 0;
+
+      const on = selected();
+      if (label) {
+        label.textContent = on.length
+          ? `${on.length} filter${on.length === 1 ? "" : "s"}`
+          : "Filter";
+      }
+      chips.replaceChildren(
+        ...on.map(box => {
+          const li = chip.content.firstElementChild!.cloneNode(
+            true
+          ) as HTMLElement;
+          const button = li.querySelector("button")!;
+          button.querySelector("span")!.textContent = box.dataset.name ?? "";
+          button.setAttribute("aria-label", `Remove ${box.dataset.name}`);
+          button.addEventListener("click", () => {
+            box.checked = false;
+            update();
+            (chips.querySelector("button") ?? list).focus();
+          });
+          return li;
+        })
+      );
+      chips.hidden = on.length === 0;
+      if (action) action.textContent = on.length ? "Clear all" : "Cancel";
+      return posts.length;
+    };
+
+    const update = () => {
+      shown = initial;
+      const n = render();
+      saveUrl();
+      if (status) {
+        status.textContent = `${n} post${n === 1 ? "" : "s"}`;
+      }
+    };
+
+    [...boxes, ...sorts].forEach(input =>
+      input.addEventListener("change", update)
+    );
+    // Close after a pointer choice; arrow keys also "click" radios.
+    sorts.forEach(radio =>
+      radio.addEventListener("click", event => {
+        if (event.detail) closeMenus(true);
+      })
+    );
+
+    action?.addEventListener("click", () => {
+      if (selected().length) {
+        boxes.forEach(box => (box.checked = false));
+        update();
+        boxes[0]?.focus();
+      } else {
+        closeMenus(true);
+      }
+    });
+
+    more?.addEventListener("click", () => {
+      const shownBefore = matching().filter(item => !item.hidden).length;
+      shown += step;
+      render();
+      // Continue from the first newly shown post for keyboard users.
+      matching()
+        [shownBefore]?.querySelector("a")
+        ?.focus({ preventScroll: true });
+    });
+
+    // Filter and Sort menus.
+    const buttons = [
+      ...root.querySelectorAll<HTMLButtonElement>("[data-menu-button]"),
+    ];
+    const menuOf = (button: HTMLButtonElement) =>
+      document.getElementById(button.getAttribute("aria-controls") ?? "");
+    const closeMenus = (refocus = false) => {
+      buttons.forEach(button => {
+        const menu = menuOf(button);
+        if (menu && !menu.hidden && refocus) button.focus();
+        button.setAttribute("aria-expanded", "false");
+        if (menu) menu.hidden = true;
+      });
+    };
+    buttons.forEach(button =>
+      button.addEventListener("click", () => {
+        const open = button.getAttribute("aria-expanded") !== "true";
+        closeMenus();
+        button.setAttribute("aria-expanded", String(open));
+        const menu = menuOf(button);
+        if (!menu) return;
+        menu.hidden = !open;
+        if (open) menu.querySelector("input")?.focus();
+      })
+    );
+    const onDocClick = (event: MouseEvent) => {
+      if (!controls.contains(event.target as Node)) closeMenus();
+    };
+    const onKeydown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") closeMenus(true);
+    };
+    document.addEventListener("click", onDocClick);
+    document.addEventListener("keydown", onKeydown);
+    document.addEventListener(
+      "astro:before-swap",
+      () => {
+        document.removeEventListener("click", onDocClick);
+        document.removeEventListener("keydown", onKeydown);
+      },
+      { once: true }
+    );
+
+    render();
+  }
+
+  document.addEventListener("astro:page-load", () =>
+    document
+      .querySelectorAll<HTMLElement>("[data-post-list]")
+      .forEach(initPostList)
+  );
+</script>

@@ -1,0 +1,20 @@
+---
+// The search page was replaced by the search window in the header. Send
+// old links (including /search/?q=...) to the home page with it open.
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href="https://speed1313.github.io/" />
+    <meta http-equiv="refresh" content="0;url=/#search" />
+    <script is:inline>
+      const query = new URLSearchParams(location.search).get("q");
+      location.replace(
+        "/" + (query ? "?q=" + encodeURIComponent(query) : "") + "#search"
+      );
+    </script>
+  </head>
+</html>

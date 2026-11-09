@@ -1,0 +1,17 @@
+---
+import { SITE } from "@/config";
+import { getLocalizedPosts } from "@/utils/translations";
+
+// The post list moved to the home page; /posts/ and the old paginated
+// /posts/<n>/ URLs redirect there.
+export async function getStaticPaths() {
+  const posts = await getLocalizedPosts("ja");
+  const pages = Math.ceil(posts.length / SITE.postPerPage);
+  return [
+    undefined,
+    ...Array.from({ length: pages - 1 }, (_, i) => `${i + 2}`),
+  ].map(page => ({ params: { page } }));
+}
+
+return Astro.redirect("/", 301);
+---

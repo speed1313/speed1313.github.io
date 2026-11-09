@@ -1,0 +1,200 @@
+% cv_sugiura.sty: Issa Sugiura CV
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{cv_sugiura}[2026/06/07]
+
+\RequirePackage{geometry}
+\geometry{a4paper, top=14mm, bottom=14mm, left=18mm, right=18mm}
+% Inter, the website's font; SemiBold for bold so emphasis stays light.
+\RequirePackage{fontspec}
+\setmainfont{Inter}[
+  Extension=.otf, UprightFont=*-Regular, BoldFont=*-SemiBold,
+  ItalicFont=*-Italic, BoldItalicFont=*-SemiBoldItalic]
+\newfontfamily\cvlight{Inter}[Extension=.otf, UprightFont=*-Light]
+\RequirePackage{xcolor}
+\RequirePackage{hyperref}
+\RequirePackage{enumitem}
+\RequirePackage{amssymb}
+\RequirePackage{microtype}
+\RequirePackage{fontawesome5}
+\RequirePackage{academicons}
+\RequirePackage{graphicx}
+\RequirePackage{needspace}
+
+% ── Palette: black and grays, like the website ───────────────────
+\definecolor{cvblue}{HTML}{1D1D1F}   % text
+\definecolor{cvrule}{HTML}{6B6B6B}   % icons and markers
+\definecolor{cvgray}{HTML}{6B6B6B}   % secondary text
+\definecolor{cvline}{HTML}{D9D9D9}   % rules
+
+\hypersetup{colorlinks, urlcolor=cvblue, linkcolor=cvblue,
+  pdfauthor={Issa Sugiura}, pdftitle={CV -- Issa Sugiura}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+
+% ── Date column width (single place to tune) ─────────────────────
+\newlength{\cvdw}
+\setlength{\cvdw}{3.6cm}
+
+% ── Publication counter (reset per subsection) ───────────────────
+\newcounter{pubnum}
+\newcounter{awardnum}
+\newlength{\pubindent}\setlength{\pubindent}{1.8em}
+
+% ── First-item spacing suppressor ───────────────────────────────
+% \cvsection sets \cvfirsttrue; the first entry macro in the section
+% swallows its own leading \cvgap so the title→content gap stays the
+% same for every section (text or item based).
+\newif\ifcvfirst
+\newcommand{\cvgap}[1]{\ifcvfirst\global\cvfirstfalse\else\vspace{#1}\fi}
+
+% ── Icon shorthands ─────────────────────────────────────────────
+\newcommand{\iconmail}{\textcolor{cvgray}{\faEnvelope}}
+\newcommand{\icongithub}{\textcolor{cvgray}{\faGithub}}
+\newcommand{\iconglobe}{\textcolor{cvgray}{\faGlobe}}
+\newcommand{\icontwitter}{\textcolor{cvgray}{\faTwitter}}
+\newcommand{\iconlinkedin}{\textcolor{cvgray}{\faLinkedin}}
+\newcommand{\icondatabase}{\textcolor{cvgray}{\faDatabase}}
+\newcommand{\iconscholar}{\raisebox{-0.14em}{\includegraphics[height=0.95em]{gs-logo.pdf}}}
+\newcommand{\iconaward}{\textcolor{cvrule}{\faTrophy}}
+
+% Hugging Face logo (gray), scaled to the surrounding text.
+\newcommand{\hflogo}{\raisebox{-0.14em}{\includegraphics[height=0.95em]{hf-logo.pdf}}}
+\newcommand{\iconhf}{\hflogo}
+
+% Article icon (Tabler article, matches the About page), gray.
+\newcommand{\articlelogo}{\raisebox{-0.16em}{\includegraphics[height=1em]{article-icon.pdf}}}
+
+% Paper icon (Tabler file-text, matches the About page), gray.
+\newcommand{\paperlogo}{\raisebox{-0.16em}{\includegraphics[height=1em]{paper-icon.pdf}}}
+
+\newcommand{\self}[1]{\textbf{\textcolor{cvblue}{#1}}}
+
+% Resource link: gray icon + dark label.
+% \unskip cancels any source-newline space so every gap is a uniform 0.6em,
+% whether the link follows the "|" divider or another link.
+% \publink{icon}{Label}{url}
+\newcommand{\publink}[3]{%
+  \unskip\hspace{0.6em}\href{#3}{\textcolor{cvrule}{#1}\hspace{0.22em}\textcolor{cvblue}{\footnotesize #2}}%
+}
+
+% ── Header ──────────────────────────────────────────────────────
+% Name large and light, the role in gray, then the contact links.
+\newcommand{\cvheader}[3]{%
+  {\fontsize{28}{32}\selectfont\cvlight\color{cvblue} #1}\par
+  \vspace{5pt}{\color{cvgray} #2}\par
+  \vspace{7pt}{\small #3}\par
+  \vspace{10pt}{\color{cvline}\rule{\linewidth}{0.5pt}}\vspace{2pt}%
+}
+
+% ── Section ─────────────────────────────────────────────────────
+% Title in sentence case over a thin light rule.
+\newcommand{\cvsection}[2][]{%
+  % Never leave a title alone at the bottom of a page.
+  \needspace{4\baselineskip}%
+  \vspace{12pt}\setcounter{pubnum}{0}\setcounter{awardnum}{0}%
+  {\color{cvblue}\large\bfseries
+    \ifx\\#1\\\else{\normalsize #1}\enspace\fi
+    #2}%
+  \par\vspace{-3pt}%
+  {\color{cvline}\rule{\linewidth}{0.5pt}}%
+  \nobreak\vspace{2pt}\global\cvfirsttrue
+}
+
+% ── Subsection label ────────────────────────────────────────────
+\newcommand{\cvsubsection}[1]{%
+  \cvgap{6pt}\setcounter{pubnum}{0}%
+  {\color{cvgray}\small #1}\par\nobreak\vspace{2pt}%
+}
+
+% ── Right-aligned text after a title ─────────────────────────────
+% Stays on the title's line when it fits; otherwise the whole of it moves
+% to the next line, still right-aligned, instead of breaking inside.
+\newcommand{\cvright}[1]{%
+  \unskip\nobreak\hfil\penalty50\hskip1em\hbox{}\nobreak\hfil
+  \mbox{#1}{\parfillskip=0pt\par}}
+
+% ── Education entry ─────────────────────────────────────────────
+% Row 1: [date box]  Degree (bold)    Institution (gray, right)
+% Row 2: [indent]    Program (gray italic)
+% No table — pure paragraph with makebox + hspace for alignment.
+% \cvedu{date}{Degree}{Institution}{Program}
+\newcommand{\cvedu}[4]{%
+  \cvgap{5pt}%
+  \noindent\makebox[\cvdw][l]{\small\color{cvgray}\mbox{#1}}%
+  {\small\bfseries #2}\cvright{\small\color{cvgray}#3}\vspace{0pt}%
+  {\hangindent\cvdw\hangafter0\noindent
+    \footnotesize\color{cvgray}#4\par}%
+}
+
+% ── Experience entry ────────────────────────────────────────────
+% Row 1: [date box]  Role (bold)      Organization (gray, right)
+% Row 2: [indent]    Description (gray)
+% \cvexp{date}{Role}{Organization}{Description}
+\newcommand{\cvexp}[4]{%
+  \cvgap{5pt}%
+  \noindent\makebox[\cvdw][l]{\small\color{cvgray}\mbox{#1}}%
+  {\small\bfseries #2}\cvright{\small\color{cvgray}#3}\vspace{0pt}%
+  {\hangindent\cvdw\hangafter0\noindent
+    \footnotesize\color{cvgray}#4\par}%
+}
+
+% ── Publication ─────────────────────────────────────────────────
+% \cvpub[Highlight]{Title}{Authors}{Venue}{links}
+% Optional [Highlight] adds a one-line impact note (e.g. a metric) below.
+\newcommand{\cvpub}[5][]{%
+  \cvgap{5.5pt}\refstepcounter{pubnum}%
+  \begingroup\leftskip=\pubindent
+  % Title — number hangs into the left margin
+  {\small\noindent\llap{\textcolor{cvgray}{\thepubnum.}\hspace{0.4em}}\textbf{#2}\par}\vspace{0pt}%
+  {\footnotesize\noindent\color{cvgray}#3\par}\vspace{0pt}%
+  {\footnotesize\noindent\textit{#4}%
+    \def\cvlinks{#5}\def\cvlinksempty{}%
+    \ifx\cvlinks\cvlinksempty\else\kern0.4em#5\fi\par}%
+  \def\cvhl{#1}\def\cvhlempty{}%
+  \ifx\cvhl\cvhlempty\else
+    {\footnotesize\noindent\textcolor{cvgray}{$\rightarrow$}\,{\color{cvblue}#1}\par}\fi%
+  \endgroup
+}
+
+% ── Model / dataset highlight entry ──────────────────────────────
+% \cvmodel{Name}{One-line impact note}{links}
+\newcommand{\cvmodel}[3]{%
+  \cvgap{6pt}\refstepcounter{pubnum}%
+  \begingroup\leftskip=\pubindent
+  {\small\noindent\llap{\textcolor{cvgray}{\thepubnum.}\hspace{0.4em}}\textbf{#1}%
+    \def\cvlinks{#3}\def\cvlinksempty{}%
+    \ifx\cvlinks\cvlinksempty\else\kern0.4em#3\fi\par}%
+  {\footnotesize\noindent\color{cvgray}#2\par}%
+  \endgroup
+}
+
+% ── Award rank badge (used inside the Prize field of \cvaward) ───
+% \cvrank{3/789, top 0.4%}
+\newcommand{\cvrank}[1]{%
+  \enspace{\normalfont\footnotesize\color{cvgray}(#1)}%
+}
+
+% ── Award entry ─────────────────────────────────────────────────
+% \cvaward{Prize}{Work title}{Venue, Year}
+\newcommand{\cvaward}[3]{%
+  \cvgap{5pt}\refstepcounter{awardnum}%
+  \begingroup\leftskip=\pubindent
+  {\small\noindent\llap{\textcolor{cvgray}{\theawardnum.}\hspace{0.4em}}%
+    \textbf{#1}\cvright{\color{cvgray}#3}}%
+  {\footnotesize\noindent\color{cvgray}#2\par}%
+  \endgroup
+}
+
+% ── Skills row ──────────────────────────────────────────────────
+% \cvskill{Category}{Items}
+\newcommand{\cvskill}[2]{%
+  \cvgap{3pt}%
+  \noindent\makebox[\cvdw][l]{\small\bfseries #1}{\small #2}\par%
+}
+
+% ── Itemize ─────────────────────────────────────────────────────
+\setlist[itemize]{
+  leftmargin=1.4em, itemsep=2pt, topsep=3pt, parsep=0pt,
+  label={\color{cvgray}\small$\bullet$}
+}

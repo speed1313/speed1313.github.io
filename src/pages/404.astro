@@ -1,0 +1,32 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import LinkButton from "@/components/LinkButton.astro";
+import IconBird from "@/assets/icons/IconBird.svg";
+import { SITE } from "@/config";
+---
+
+<Layout title={`404 Not Found | ${SITE.title}`} noindex>
+  {/* Shared by both languages; offer the English site. */}
+  <Header alternate={{ lang: "en", href: "/en/" }} />
+
+  <main
+    id="main-content"
+    class="mx-auto flex max-w-app flex-1 items-center justify-center"
+  >
+    <div class="mb-14 flex flex-col items-center justify-center">
+      <IconBird aria-hidden="true" class="h-24 w-auto text-accent" />
+      <h1 class="mt-6 text-7xl font-bold">404</h1>
+      <p class="mt-4 text-2xl sm:text-3xl">Page Not Found</p>
+      <LinkButton
+        href="/"
+        class="my-6 text-lg underline decoration-dashed underline-offset-8"
+      >
+        Go back home
+      </LinkButton>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>

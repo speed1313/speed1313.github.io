@@ -1,0 +1,22 @@
+---
+// Tag pages were replaced by the tag filter on the home page. Each tag and
+// its old page numbers (/tags/<tag>/<n>/) redirect to the filtered list.
+import getUniqueTags from "@/utils/getUniqueTags";
+import getPostsByTag from "@/utils/getPostsByTag";
+import { SITE } from "@/config";
+import { getLocalizedPosts } from "@/utils/translations";
+
+export async function getStaticPaths() {
+  const posts = await getLocalizedPosts("ja");
+  return getUniqueTags(posts).flatMap(({ tag }) => {
+    const pages = Math.ceil(
+      getPostsByTag(posts, tag).length / SITE.postPerPage
+    );
+    return Array.from({ length: pages }, (_, i) => ({
+      params: { tag, page: i ? String(i + 1) : undefined },
+    }));
+  });
+}
+
+return Astro.redirect(`/?tag=${Astro.params.tag}#posts`, 301);
+---

@@ -1,0 +1,69 @@
+---
+import IconCopyLink from "@/assets/icons/IconCopyLink.svg";
+import type { Lang } from "@/content.config";
+
+export interface Props {
+  /** Language of the "copied" message. */
+  lang: Lang;
+  class?: string;
+}
+
+const { lang, class: className = "" } = Astro.props;
+const copied = lang === "ja" ? "コピーしました" : "Copied";
+---
+
+<div class:list={["relative", className]}>
+  <button
+    type="button"
+    data-share-button
+    class="focus-outline flex items-center gap-x-2 text-sm opacity-80 hover:text-accent hover:opacity-100 sm:text-base"
+  >
+    <IconCopyLink aria-hidden="true" class="size-6" />
+    <span>Share</span>
+  </button>
+  <!-- Overlaid below the button so nothing around it moves. -->
+  <span
+    role="status"
+    data-copied
+    class="pointer-events-none absolute end-0 top-full mt-1 rounded bg-foreground px-2 py-0.5 text-xs whitespace-nowrap text-background opacity-0 transition-opacity motion-reduce:transition-none"
+    >{copied}</span
+  >
+</div>
+
+<script>
+  function initShareButtons() {
+    for (const button of document.querySelectorAll<HTMLButtonElement>(
+      "[data-share-button]"
+    )) {
+      if (button.dataset.ready) continue;
+      button.dataset.ready = "true";
+
+      const message =
+        button.parentElement?.querySelector<HTMLElement>("[data-copied]");
+      const text = message?.textContent ?? "";
+      let timer: ReturnType<typeof setTimeout> | undefined;
+
+      button.addEventListener("click", async () => {
+        const url = location.href.split("#")[0];
+        try {
+          await navigator.clipboard.writeText(url);
+        } catch {
+          // Clipboard access can be blocked; fall back to the share sheet.
+          await navigator
+            .share?.({ url, title: document.title })
+            .catch(() => {});
+          return;
+        }
+        if (!message) return;
+        // Re-set the text so screen readers announce it again.
+        message.textContent = "";
+        message.textContent = text;
+        message.classList.remove("opacity-0");
+        clearTimeout(timer);
+        timer = setTimeout(() => message.classList.add("opacity-0"), 1500);
+      });
+    }
+  }
+
+  document.addEventListener("astro:page-load", initShareButtons);
+</script>

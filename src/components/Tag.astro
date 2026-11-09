@@ -1,0 +1,22 @@
+---
+import type { Lang } from "@/content.config";
+import { DEFAULT_LANG, localePath } from "@/utils/translations";
+
+export interface Props {
+  tag: string;
+  tagName: string;
+  /** Language of the list to link to. */
+  lang?: Lang;
+}
+
+const { tag, tagName, lang = DEFAULT_LANG } = Astro.props;
+---
+
+<li>
+  <a
+    href={localePath(lang, `/?tag=${tag}#posts`)}
+    class="text-foreground/60 underline-offset-4 hover:text-foreground hover:underline"
+  >
+    {tagName}
+  </a>
+</li>

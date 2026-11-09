@@ -1,0 +1,34 @@
+---
+import PostDetails from "@/layouts/PostDetails.astro";
+import { getPath } from "@/utils/getPath";
+import {
+  getLocalizedPosts,
+  postHref,
+  type LocalizedPost,
+} from "@/utils/translations";
+
+export interface Props {
+  post: LocalizedPost;
+  redirect?: string;
+}
+
+export async function getStaticPaths() {
+  const posts = await getLocalizedPosts("ja", { all: true });
+  return posts.flatMap(post => {
+    const slug = getPath(post.id, post.filePath, false);
+    return [
+      { params: { slug }, props: { post } },
+      // Translations used to be served at /posts/<slug>/<lang>/.
+      ...post.translations.map(({ lang }) => ({
+        params: { slug: `${slug}/${lang}` },
+        props: { post, redirect: `${postHref(post.original, lang)}/` },
+      })),
+    ];
+  });
+}
+
+const { post, redirect } = Astro.props;
+if (redirect) return Astro.redirect(redirect, 301);
+---
+
+<PostDetails {post} locale="ja" />

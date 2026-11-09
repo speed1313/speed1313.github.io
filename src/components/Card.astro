@@ -1,0 +1,77 @@
+---
+import { slugifyAll, slugifyStr } from "@/utils/slugify";
+import type { CollectionEntry } from "astro:content";
+import { getPath } from "@/utils/getPath";
+import Datetime from "./Datetime.astro";
+import { splitLocale } from "@/utils/translations";
+
+export interface Props extends CollectionEntry<"blog"> {
+  variant?: "h2" | "h3";
+  /** Link target; defaults to the post's own path. */
+  href?: string;
+  /** Rendered hidden until "Load more" reveals it. */
+  more?: boolean;
+}
+
+const { variant = "h2", data, id, filePath, href, more = false } = Astro.props;
+
+const { title, description, pubDatetime, modDatetime, timezone, lang, tags } =
+  data;
+
+// Dates are written in the language of the list.
+const { lang: locale } = splitLocale(Astro.url.pathname);
+
+const headerProps = {
+  style: { viewTransitionName: slugifyStr(title) },
+  class: "text-lg sm:text-xl",
+};
+---
+
+<!--
+  Like the OpenAI blog: tags and date on the left, title and description on
+  the right (stacked on narrow screens). The whole row is clickable; its
+  bottom line darkens on hover.
+-->
+<li
+  class="relative flex flex-col gap-y-2 border-b border-foreground/10 py-7 transition-colors hover:border-foreground/60 motion-reduce:transition-none sm:grid sm:grid-cols-[minmax(0,1fr)_minmax(0,3fr)] sm:gap-x-8"
+  hidden={more}
+  data-more={more ? "" : undefined}
+  data-tags={slugifyAll(tags).join(" ")}
+>
+  <div class="min-w-0 sm:col-start-2 sm:row-start-1">
+    <a
+      href={href ?? getPath(id, filePath)}
+      lang={lang}
+      class="inline-block text-foreground after:absolute after:inset-0 after:z-10"
+    >
+      {
+        variant === "h2" ? (
+          <h2 {...headerProps}>{title}</h2>
+        ) : (
+          <h3 {...headerProps}>{title}</h3>
+        )
+      }
+    </a>
+    <p lang={lang} class="mt-2 line-clamp-2 opacity-80">{description}</p>
+  </div>
+  <div
+    class="order-first flex flex-wrap gap-x-3 text-sm sm:order-none sm:col-start-1 sm:row-start-1 sm:flex-col sm:gap-y-2 sm:pt-1"
+  >
+    {
+      tags.length > 0 && (
+        <ul class="flex flex-wrap gap-x-2 [&>li+li]:before:me-2 [&>li+li]:before:content-['·']">
+          {tags.map(tag => (
+            <li>{tag}</li>
+          ))}
+        </ul>
+      )
+    }
+    <Datetime
+      lang={locale}
+      {pubDatetime}
+      {modDatetime}
+      {timezone}
+      class="opacity-60"
+    />
+  </div>
+</li>

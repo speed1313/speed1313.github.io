@@ -1,0 +1,26 @@
+---
+// A section of the About page: title on the left and content on the right
+// on wide screens, stacked on narrow ones, with a line above. On wide
+// screens the title stays in view while its section scrolls by.
+import { slugifyStr } from "@/utils/slugify";
+
+export interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<section
+  id={slugifyStr(title)}
+  class="mt-14 max-w-none border-t border-foreground/10 px-0 pt-8 sm:grid sm:grid-cols-[12rem_minmax(0,1fr)] sm:gap-x-10"
+>
+  <h2
+    class="mb-5 text-xl sm:sticky sm:top-[calc(57px+2rem)] sm:mb-0 sm:self-start"
+  >
+    {title}
+  </h2>
+  <div class="min-w-0">
+    <slot />
+  </div>
+</section>

@@ -1,0 +1,35 @@
+---
+// Badge-style external link: an outlined pill with an icon and a label.
+import IconGitHub from "@/assets/icons/IconGitHubBrand.svg";
+import IconHuggingFace from "@/assets/icons/IconHuggingFace.svg";
+import IconPaper from "@/assets/icons/IconPaper.svg";
+import IconArticle from "@/assets/icons/IconArticle.svg";
+import IconLink from "@/assets/icons/IconLink.svg";
+
+interface Props {
+  label: string;
+  href: string;
+}
+
+const { label, href } = Astro.props;
+const l = label.toLowerCase();
+
+// Monochrome icons in the text color; falls back to a link icon.
+let Icon = IconLink;
+if (l.includes("model") || l.includes("dataset") || l.includes("waon"))
+  Icon = IconHuggingFace;
+else if (l.includes("code")) Icon = IconGitHub;
+else if (l.includes("paper") || l.includes("poster") || l.includes("slide"))
+  Icon = IconPaper;
+else if (l.includes("blog")) Icon = IconArticle;
+---
+
+<a
+  href={href}
+  target="_blank"
+  rel="noopener noreferrer"
+  class="inline-flex items-center gap-1.5 rounded-full border border-foreground/15 px-2.5 py-1 text-xs no-underline transition-colors hover:border-foreground/50"
+>
+  <Icon aria-hidden="true" class="size-3.5 shrink-0" />
+  {label}
+</a>

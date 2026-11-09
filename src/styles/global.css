@@ -1,0 +1,150 @@
+@import "tailwindcss";
+@import "@fontsource-variable/inter";
+@import "./typography.css";
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+:root,
+html[data-theme="light"] {
+  --background: #fdfdfd;
+  --foreground: #282728;
+  --accent: #2f7d32; /* the bird's green, darkened for contrast (5.0:1) */
+  --muted: #e6e6e6;
+  --surface: #f3f3f3;
+  --border: #ece9e9;
+}
+
+html[data-theme="dark"] {
+  --background: #212737;
+  --foreground: #eaedf3;
+  --accent: #9bd65a; /* the bird's green (8.6:1) */
+  --muted: #343f60;
+  --surface: #2a3143;
+  --border: #3b4356;
+}
+
+@theme {
+  /* Inter for Latin text, then each OS's standard Japanese gothic. */
+  --font-sans:
+    "Inter Variable", "Hiragino Sans", "Hiragino Kaku Gothic ProN",
+    "Yu Gothic UI", "Noto Sans JP", Meiryo, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji";
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-muted: var(--muted);
+  --color-surface: var(--surface);
+  --color-border: var(--border);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-accent/75;
+    scrollbar-width: auto;
+    scrollbar-color: color-mix(
+        in srgb,
+        var(--color-foreground) 40%,
+        transparent
+      )
+      transparent;
+  }
+  html {
+    /* 15px by default; a percentage keeps the reader's browser setting. */
+    font-size: 93.75%;
+    /* Keep anchor targets clear of the fixed header (57px). */
+    scroll-padding-top: calc(57px + 1.5rem);
+    @apply overflow-y-scroll scroll-smooth;
+  }
+  body {
+    @apply flex min-h-svh flex-col bg-background font-sans tracking-[-0.01em] text-foreground selection:bg-accent/75 selection:text-background;
+  }
+  a,
+  button {
+    @apply outline-offset-1 outline-accent focus-visible:no-underline focus-visible:outline-2 focus-visible:outline-dashed;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  section {
+    @apply mx-auto max-w-app px-4;
+  }
+}
+
+@utility max-w-app {
+  @apply max-w-3xl;
+}
+
+.active-nav {
+  @apply underline decoration-accent decoration-wavy decoration-2 underline-offset-4;
+}
+
+/* Source: https://piccalil.li/blog/a-more-modern-css-reset/ */
+/* Anything that has been anchored to should have extra scroll margin */
+:target {
+  scroll-margin-block: 1rem;
+}
+
+/* Pagefind search UI (search window and search page), in the site's colors. */
+.pagefind-theme {
+  --pagefind-ui-font: var(--font-sans);
+  --pagefind-ui-text: var(--foreground);
+  --pagefind-ui-background: var(--background);
+  --pagefind-ui-border: color-mix(in srgb, var(--foreground) 15%, transparent);
+  --pagefind-ui-primary: var(--foreground);
+  --pagefind-ui-tag: var(--surface);
+  --pagefind-ui-border-radius: 0.75rem;
+  --pagefind-ui-border-width: 1px;
+
+  form::before {
+    background-color: var(--foreground);
+  }
+
+  input {
+    font-weight: 400;
+  }
+
+  input:focus-visible {
+    outline: 1px solid var(--foreground);
+  }
+
+  .pagefind-ui__result-title a {
+    color: var(--foreground);
+    outline-offset: 1px;
+    outline-color: var(--accent);
+  }
+
+  .pagefind-ui__result-title a:focus-visible,
+  .pagefind-ui__search-clear:focus-visible {
+    text-decoration-line: none;
+    outline-width: 2px;
+    outline-style: dashed;
+  }
+
+  /* Matches are shaded gray instead of yellow. */
+  .pagefind-ui mark {
+    background-color: color-mix(in srgb, var(--foreground) 12%, transparent);
+    color: inherit;
+  }
+
+  /* Long unbroken strings (URLs, tables) wrap instead of widening it. */
+  .pagefind-ui .pagefind-ui__result-inner {
+    min-width: 0;
+  }
+  .pagefind-ui .pagefind-ui__result-title,
+  .pagefind-ui .pagefind-ui__result-excerpt {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .pagefind-ui__result:last-of-type {
+    border-bottom: 0;
+  }
+
+  .pagefind-ui__result-nested .pagefind-ui__result-link:before {
+    font-family: system-ui;
+  }
+}

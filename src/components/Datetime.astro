@@ -1,0 +1,41 @@
+---
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+import { SITE } from "@/config";
+import type { Lang } from "@/content.config";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
+export interface Props {
+  /** Language the date is written in. */
+  lang: Lang;
+  class?: string;
+  timezone: string | undefined;
+  pubDatetime: string | Date;
+  modDatetime: string | Date | undefined | null;
+}
+
+const {
+  lang,
+  pubDatetime,
+  modDatetime,
+  class: className = "",
+  timezone: postTimezone,
+} = Astro.props;
+
+const isModified = modDatetime && modDatetime > pubDatetime;
+
+const datetime = dayjs(isModified ? modDatetime : pubDatetime).tz(
+  postTimezone || SITE.timezone
+);
+
+// e.g. "2026年3月22日" or "Mar 22, 2026"
+const date = datetime.format(lang === "ja" ? "YYYY年M月D日" : "MMM D, YYYY");
+const updated = lang === "ja" ? "更新 " : "Updated ";
+---
+
+<time class={className} datetime={datetime.toISOString()}
+  >{isModified && updated}{date}</time
+>

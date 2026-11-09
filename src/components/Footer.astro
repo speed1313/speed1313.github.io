@@ -1,0 +1,32 @@
+---
+import Socials from "./Socials.astro";
+import { SITE } from "@/config";
+
+const currentYear = new Date().getFullYear();
+
+export interface Props {
+  noMarginTop?: boolean;
+}
+
+const { noMarginTop = false } = Astro.props;
+---
+
+<footer
+  class:list={["w-full border-t border-border", { "mt-auto": !noMarginTop }]}
+>
+  <div
+    class="mx-auto flex max-w-5xl flex-col items-center justify-between px-4 py-6 sm:flex-row-reverse sm:py-4"
+  >
+    <Socials centered />
+    <div class="my-2 flex flex-col items-center whitespace-nowrap sm:flex-row">
+      <span>{SITE.author} &#169; {currentYear}</span>
+      <span class="hidden sm:inline">&nbsp;|&nbsp;</span>
+      <span>
+        Built with <a href="https://astro.build" class="underline">Astro</a> · Theme
+        <a href="https://github.com/satnaing/astro-paper" class="underline"
+          >astro-paper</a
+        >
+      </span>
+    </div>
+  </div>
+</footer>

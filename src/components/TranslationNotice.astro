@@ -1,0 +1,65 @@
+---
+import type { CollectionEntry } from "astro:content";
+import type { Lang } from "@/content.config";
+import { postHref, type Translation } from "@/utils/translations";
+
+export interface Props {
+  post: CollectionEntry<"blog">;
+  translation: Translation;
+}
+
+const { post, translation } = Astro.props;
+
+const originalLang = post.data.lang;
+const currentLang = translation.lang;
+const originalPath = `${postHref(post, originalLang)}/`;
+
+const isOutdated =
+  post.data.modDatetime &&
+  post.data.modDatetime > translation.entry.data.translatedDatetime;
+
+// Language names as written in each display language.
+const LANG_NAMES: Record<Lang, Record<Lang, string>> = {
+  en: { ja: "Japanese", en: "English" },
+  ja: { ja: "日本語", en: "英語" },
+};
+
+const NOTICE: Record<Lang, { before: string; link: string; after: string }> = {
+  en: {
+    before: "This article was machine-translated from the ",
+    link: `${LANG_NAMES.en[originalLang]} original`,
+    after: " using an LLM. If anything differs, the original takes precedence.",
+  },
+  ja: {
+    before: "この記事は",
+    link: `${LANG_NAMES.ja[originalLang]}の原文`,
+    after:
+      "をLLMで機械翻訳したものです。内容に相違がある場合は原文を優先してください。",
+  },
+};
+
+const OUTDATED: Record<Lang, string> = {
+  en: "The original has been updated since this translation was made.",
+  ja: "この翻訳の作成後に原文が更新されています。",
+};
+
+const notice = NOTICE[currentLang];
+---
+
+<aside
+  role="note"
+  class="mt-4 rounded border-s-4 border-accent bg-muted/50 px-4 py-3 text-sm"
+  data-pagefind-ignore
+>
+  <p>
+    {notice.before}
+    <a
+      href={originalPath}
+      lang={originalLang}
+      hreflang={originalLang}
+      class="underline underline-offset-4 hover:text-accent">{notice.link}</a
+    >
+    {notice.after}
+  </p>
+  {isOutdated && <p class="mt-1">{OUTDATED[currentLang]}</p>}
+</aside>

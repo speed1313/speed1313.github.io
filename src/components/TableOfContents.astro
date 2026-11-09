@@ -1,0 +1,279 @@
+---
+// Sticky table of contents shown left of the article body on wide screens.
+// It spans only the body, so it scrolls in with the first section and
+// scrolls away with the last one.
+// Built from the rendered headings so math and heading links render as
+// they appear in the article. Narrow screens get a bar under the header
+// with the current section that expands into the list.
+import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
+---
+
+<aside
+  class="absolute top-0 right-full hidden h-full w-52 pe-8 lg:block"
+  data-pagefind-ignore
+>
+  <nav
+    id="post-toc"
+    aria-label="Table of contents"
+    hidden
+    class="group sticky top-[calc(57px+2rem)] flex max-h-[calc(100svh-57px-4rem)] gap-3"
+  >
+    <ul
+      class="min-w-0 flex-1 [scrollbar-width:none] overflow-y-auto overscroll-contain text-[0.8125rem] leading-snug [&::-webkit-scrollbar]:hidden"
+    >
+    </ul>
+    <!-- Scrollbar for the list, shown on hover when it overflows. -->
+    <div
+      aria-hidden="true"
+      data-track
+      class="invisible relative w-1 shrink-0 rounded-full bg-foreground/10 opacity-0 transition-opacity group-hover:opacity-100"
+    >
+      <div data-thumb class="absolute inset-x-0 rounded-full bg-foreground/35">
+      </div>
+    </div>
+  </nav>
+</aside>
+
+<div
+  id="post-toc-mobile"
+  hidden
+  data-pagefind-ignore
+  class="pointer-events-none invisible fixed inset-x-0 top-[57px] z-10 -translate-y-2 border-b border-foreground/10 bg-background opacity-0 transition-[opacity,translate] duration-200 motion-reduce:transition-none lg:hidden"
+>
+  <button
+    type="button"
+    aria-expanded="false"
+    aria-controls="post-toc-mobile-list"
+    class="focus-outline flex w-full items-center gap-2 px-4 py-2.5 text-start text-[0.8125rem]"
+  >
+    <span class="sr-only">Table of contents:</span>
+    <span data-current class="min-w-0 flex-1 truncate text-foreground/60"
+    ></span>
+    <IconChevronLeft
+      aria-hidden="true"
+      data-chevron
+      class="size-5 shrink-0 -rotate-90 opacity-70 transition-transform motion-reduce:transition-none"
+    />
+  </button>
+  <nav
+    id="post-toc-mobile-list"
+    aria-label="Table of contents"
+    hidden
+    class="pointer-events-none relative max-h-[60svh] overflow-y-auto overscroll-contain px-4 pb-2"
+  >
+    <!-- Starts on the bar's row; the right side stays free for the toggle. -->
+    <ul class="pointer-events-auto me-8 text-[0.8125rem] leading-snug"></ul>
+  </nav>
+</div>
+
+<script>
+  const SKIP = new Set(["footnote-label"]);
+  const HEADER = 57;
+  // How much of the list peeks above the bottom of the window on load.
+  const PEEK = 96;
+
+  function headingText(heading: Element) {
+    const clone = heading.cloneNode(true) as Element;
+    clone
+      .querySelectorAll(".katex-mathml, .heading-link")
+      .forEach(e => e.remove());
+    return clone.textContent?.replace(/\s+/g, " ").trim() ?? "";
+  }
+
+  function initToc() {
+    const nav = document.querySelector<HTMLElement>("#post-toc");
+    const list = nav?.querySelector("ul");
+    const track = nav?.querySelector<HTMLElement>("[data-track]");
+    const thumb = nav?.querySelector<HTMLElement>("[data-thumb]");
+    const article = document.querySelector<HTMLElement>("#article");
+    if (!nav || !list || !track || !thumb || !article || nav.dataset.ready) {
+      return;
+    }
+    nav.dataset.ready = "true";
+
+    const headings = [
+      ...article.querySelectorAll<HTMLElement>("h2[id], h3[id]"),
+    ].filter(h => !SKIP.has(h.id));
+    if (headings.length < 2) return;
+
+    const texts = headings.map(headingText);
+    // `dim` for other sections, `strong` for the current one.
+    const makeLinks = (
+      target: Element,
+      padding: string,
+      dim: string,
+      strong: string
+    ) => {
+      const items = headings.map((heading, i) => {
+        const link = document.createElement("a");
+        link.href = `#${encodeURIComponent(heading.id)}`;
+        link.textContent = texts[i];
+        link.className =
+          `block ${padding} ${dim} transition-colors hover:text-accent ` +
+          (heading.tagName === "H3" ? "ps-3" : "");
+        const item = document.createElement("li");
+        item.append(link);
+        target.append(item);
+        return link;
+      });
+      const mark = (i: number, on: boolean) =>
+        items[i]?.classList.replace(on ? dim : strong, on ? strong : dim);
+      return { items, mark };
+    };
+    const desktop = makeLinks(
+      list,
+      "py-1",
+      "text-foreground/45",
+      "text-foreground"
+    );
+    const links = desktop.items;
+    nav.hidden = false;
+
+    const mobile = document.querySelector<HTMLElement>("#post-toc-mobile");
+    const mobileButton = mobile?.querySelector("button");
+    const mobilePanel = mobile?.querySelector<HTMLElement>("nav");
+    const mobileList = mobilePanel?.querySelector("ul");
+    const mobileCurrent = mobile?.querySelector("[data-current]");
+    const chevron = mobile?.querySelector("[data-chevron]");
+    const mobileSet = mobileList
+      ? makeLinks(
+          mobileList,
+          "py-2.5",
+          "text-foreground/40",
+          "text-foreground/85"
+        )
+      : undefined;
+    const mobileLinks = mobileSet?.items ?? [];
+    if (mobile) mobile.hidden = false;
+
+    let active = -1;
+
+    const setOpen = (open: boolean) => {
+      if (!mobileButton || !mobilePanel) return;
+      mobileButton.setAttribute("aria-expanded", String(open));
+      mobilePanel.hidden = !open;
+      // The list replaces the bar's label instead of repeating it.
+      mobileCurrent?.classList.toggle("invisible", open);
+      mobilePanel.style.marginTop = open
+        ? `-${mobileButton.offsetHeight}px`
+        : "";
+      chevron?.classList.toggle("-rotate-90", !open);
+      chevron?.classList.toggle("rotate-90", open);
+      const current = mobileLinks[active];
+      if (open && current) {
+        mobilePanel.scrollTop =
+          current.offsetTop - mobilePanel.clientHeight / 3;
+      }
+    };
+    mobileButton?.addEventListener("click", () =>
+      setOpen(mobileButton.getAttribute("aria-expanded") !== "true")
+    );
+    mobileLinks.forEach(link =>
+      link.addEventListener("click", () => setOpen(false))
+    );
+    const onDocClick = (event: MouseEvent) => {
+      if (mobile && !mobile.contains(event.target as Node)) setOpen(false);
+    };
+    const onKeydown = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && mobilePanel && !mobilePanel.hidden) {
+        setOpen(false);
+        mobileButton?.focus();
+      }
+    };
+    document.addEventListener("click", onDocClick);
+    document.addEventListener("keydown", onKeydown);
+
+    // Show the bar only while reading the body.
+    const updateMobile = () => {
+      if (!mobile) return;
+      const rect = article.getBoundingClientRect();
+      const show = rect.top <= HEADER && rect.bottom > HEADER + 120;
+      for (const c of [
+        "pointer-events-none",
+        "invisible",
+        "-translate-y-2",
+        "opacity-0",
+      ]) {
+        mobile.classList.toggle(c, !show);
+      }
+      if (!show) setOpen(false);
+    };
+
+    // Start low so only the top of the list shows at first; it then
+    // scrolls up with the page until it sticks under the header.
+    const place = () => {
+      const articleTop = article.getBoundingClientRect().top + scrollY;
+      nav.style.marginTop = `${Math.max(0, innerHeight - articleTop - PEEK)}px`;
+    };
+    place();
+
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      updateMobile();
+
+      // The section whose heading was passed last.
+      let current = 0;
+      headings.forEach((heading, i) => {
+        if (heading.getBoundingClientRect().top <= HEADER + 80) current = i;
+      });
+      if (current !== active) {
+        desktop.mark(active, false);
+        links[active]?.removeAttribute("aria-current");
+        desktop.mark(current, true);
+        links[current].setAttribute("aria-current", "location");
+        mobileSet?.mark(active, false);
+        mobileSet?.mark(current, true);
+        if (mobileCurrent) mobileCurrent.textContent = texts[current];
+        active = current;
+
+        // Keep the current item visible when the list itself scrolls.
+        const link = links[current];
+        const top = link.offsetTop - list.offsetTop;
+        if (
+          top < list.scrollTop ||
+          top + link.offsetHeight > list.scrollTop + list.clientHeight
+        ) {
+          list.scrollTo({
+            top: top - list.clientHeight / 3,
+            behavior: "smooth",
+          });
+        }
+      }
+    };
+
+    const updateThumb = () => {
+      const { scrollTop, scrollHeight, clientHeight } = list;
+      const scrollable = scrollHeight > clientHeight + 8;
+      track.classList.toggle("invisible", !scrollable);
+      if (!scrollable) return;
+      thumb.style.height = `${(clientHeight / scrollHeight) * 100}%`;
+      thumb.style.top = `${(scrollTop / scrollHeight) * 100}%`;
+    };
+    list.addEventListener("scroll", updateThumb, { passive: true });
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    window.addEventListener("scroll", schedule, { passive: true });
+    const onResize = () => {
+      place();
+      schedule();
+      updateThumb();
+    };
+    window.addEventListener("resize", onResize);
+    document.addEventListener(
+      "astro:before-swap",
+      () => {
+        window.removeEventListener("scroll", schedule);
+        window.removeEventListener("resize", onResize);
+        document.removeEventListener("click", onDocClick);
+        document.removeEventListener("keydown", onKeydown);
+      },
+      { once: true }
+    );
+    update();
+    updateThumb();
+  }
+
+  document.addEventListener("astro:page-load", initToc);
+</script>

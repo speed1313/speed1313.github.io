@@ -1,0 +1,21 @@
+---
+import PostDetails from "@/layouts/PostDetails.astro";
+import { getPath } from "@/utils/getPath";
+import { getLocalizedPosts, type LocalizedPost } from "@/utils/translations";
+
+export interface Props {
+  post: LocalizedPost;
+}
+
+export async function getStaticPaths() {
+  const posts = await getLocalizedPosts("en", { all: true });
+  return posts.map(post => ({
+    params: { slug: getPath(post.id, post.filePath, false) },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+---
+
+<PostDetails {post} locale="en" />

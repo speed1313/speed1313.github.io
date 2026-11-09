@@ -1,0 +1,271 @@
+% !TEX program = xelatex
+%% ════════════════════════════════════════════════════════════════
+%%  Curriculum Vitae — Issa Sugiura
+%%  Compile:  xelatex cv_sugiura.tex  (×2)
+%% ════════════════════════════════════════════════════════════════
+\documentclass[10pt, a4paper]{article}
+\usepackage{fontspec}
+\newfontfamily\jpfont{Hiragino Sans}[Scale=0.92]
+\usepackage{cv_sugiura}
+\pagestyle{empty}
+
+\begin{document}
+
+% ─────────────────────────────────────────────────────────────────
+%  LAST UPDATED
+% ─────────────────────────────────────────────────────────────────
+\hfill{\footnotesize\color{cvgray}Last updated: Oct 2026}\par\vspace{-6pt}
+
+% ─────────────────────────────────────────────────────────────────
+%  HEADER
+% ─────────────────────────────────────────────────────────────────
+\cvheader
+  {Issa Sugiura}
+  {PhD Student, Institute of Science Tokyo}
+  {%
+    \iconmail\enspace\href{mailto:sugiura.i.d1a6@m.isct.ac.jp}{sugiura.i.d1a6@m.isct.ac.jp}
+    \enspace\textcolor{cvgray}{|}\enspace
+    \iconglobe\enspace\href{https://speed1313.github.io}{speed1313.github.io}
+    \enspace\textcolor{cvgray}{|}\enspace
+    \icongithub\enspace\href{https://github.com/speed1313}{speed1313}
+    \enspace\textcolor{cvgray}{|}\enspace
+    \iconscholar\enspace\href{https://scholar.google.com/citations?user=717QdNoAAAAJ}{Scholar}
+    \enspace\textcolor{cvgray}{|}\enspace
+    \iconlinkedin\enspace\href{https://www.linkedin.com/in/speed1313}{speed1313}
+  }
+
+% ─────────────────────────────────────────────────────────────────
+%  RESEARCH INTERESTS
+% ─────────────────────────────────────────────────────────────────
+\cvsection{Research Interests}
+
+{\small
+My research focuses on building \textbf{data resources}, namely training datasets
+and benchmarks, and on using them to develop \textbf{vision-language models (VLMs)}
+and to \textbf{benchmark LLM agents} on economically valuable, long-horizon tasks
+beyond coding and math.
+}
+
+% ─────────────────────────────────────────────────────────────────
+%  EDUCATION
+% ─────────────────────────────────────────────────────────────────
+\cvsection{Education}
+
+%  \cvedu{date}{Degree}{Institution}{Program}
+\cvedu{Apr 2026 -- present}{Doctor of Engineering}{Institute of Science Tokyo, Japan}%
+  {Course of Artificial Intelligence, Dept.\ of Computer Science, School of Computing (Expected)}
+
+\cvedu{Apr 2024 -- Mar 2026}{Master of Informatics}{Kyoto University, Japan}%
+  {Course of Communications and Computer Engineering, Graduate School of Informatics}
+
+\cvedu{Apr 2020 -- Mar 2024}{Bachelor of Engineering}{Osaka University, Japan}%
+  {Software Science Course, Dept.\ of Information and Computer Sciences, School of Engineering Science \quad GPA\,3.57/4.00}
+
+% ─────────────────────────────────────────────────────────────────
+%  EXPERIENCE
+% ─────────────────────────────────────────────────────────────────
+\cvsection{Experience}
+
+%  \cvexp{date}{Role}{Organization}{Description}
+\cvexp{Apr 2026 -- present}{Research Assistant}{Institute of Science Tokyo, Japan}%
+  {Research on vision-language models.}
+
+\cvexp{Dec 2024 -- present}{Student Intern}{Sakana AI, Japan}%
+  {Building benchmarks with domain experts to evaluate LLM agents on economically valuable, long-horizon tasks,
+   including financial analysis (EDINET-Bench, ICLR 2026) and multi-agent economies (CoffeeBench, NeurIPS 2026).}
+
+\cvexp{Feb 2024 -- present}{Research Assistant}{National Institute of Informatics, Japan}%
+  {Developing Japanese vision-language models across the full pipeline: large-scale dataset construction
+   (WAON, Jagle), evaluation benchmark design (JAMMEval, HakushoBench), and model training (LLM-jp-4-VL).}
+
+% ─────────────────────────────────────────────────────────────────
+%  PUBLICATIONS
+% ─────────────────────────────────────────────────────────────────
+\cvsection{Publications}
+
+\cvsubsection{Peer-Reviewed Publications}
+
+\cvpub
+  {CoffeeBench: Benchmarking Long-Horizon LLM Agents in Heterogeneous Multi-Agent Economies}
+  {\self{I. Sugiura}, D. Hattori, K. Araragi, K. Ogawa, S. Onose, T. Makino, T. Usuki, T. Ishida}
+  {NeurIPS 2026 Evaluations and Datasets Track}
+  {\publink{\paperlogo}{Paper}{https://arxiv.org/abs/2606.16613}
+   \publink{\faGithub}{Code}{https://github.com/SakanaAI/CoffeeBench}
+   \publink{\articlelogo}{Blog}{https://pub.sakana.ai/coffeebench/index.html}}
+
+\cvpub
+  {Harbor Adapters and Harbor-Index: Infrastructure and a Curated Meta-Dataset for Large-Scale Agentic Evaluation}
+  {L. Shi et al. (incl.\ \self{I. Sugiura}; 126 authors)}
+  {NeurIPS 2026 Evaluations and Datasets Track}
+  {\publink{\paperlogo}{Paper}{https://arxiv.org/abs/2609.04298}}
+
+\cvpub
+  {HakushoBench: A Japanese Chart and Table VQA Benchmark from Governmental White Papers}
+  {\self{I. Sugiura}, S. Kurita, Y. Oda, N. Okazaki}
+  {AACL-IJCNLP 2026 Findings}
+  {\publink{\paperlogo}{Paper}{https://arxiv.org/abs/2606.01132}
+   \publink{\faGithub}{Code}{https://github.com/llm-jp/simple-evals-mm}
+   \publink{\hflogo}{Dataset}{https://huggingface.co/datasets/llm-jp/HakushoBench}}
+
+\cvpub[Largest-scale Japanese image-text dataset (155M pairs)]
+  {WAON: A Large-Scale Japanese Image-Text Dataset for Cultural Adaptation in Contrastive VLMs}
+  {\self{I. Sugiura}, S. Kurita, Y. Oda, D. Kawahara, Y. Okabe, N. Okazaki}
+  {AACL-IJCNLP 2026 Findings}
+  {\publink{\paperlogo}{Paper}{https://arxiv.org/abs/2510.22276}
+   \publink{\faGithub}{Code}{https://github.com/llm-jp/WAON}
+   \publink{\hflogo}{Dataset}{https://huggingface.co/datasets/llm-jp/WAON}}
+
+\cvpub[Largest-scale Japanese multimodal post-training dataset (9.2M examples)]
+  {Jagle: Building a Large-Scale Japanese Multimodal Post-Training Dataset for VLMs}
+  {\self{I. Sugiura}, K. Sasagawa, K. Nakao, K. Maeda, Z. Yin, Z. Yang, S. Kurita, Y. Oda, R. Tokuhisa, D. Kawahara, N. Okazaki}
+  {COLM 2026}
+  {\publink{\paperlogo}{Paper}{https://arxiv.org/abs/2604.02048}
+   \publink{\faGithub}{Code}{https://github.com/llm-jp/llm-jp-4-vl}
+   \publink{\hflogo}{Dataset}{https://huggingface.co/datasets/llm-jp/Jagle}
+   \publink{\hflogo}{Model}{https://huggingface.co/collections/llm-jp/jagle}}
+
+\cvpub
+  {Cross-Task Evaluation and Empirical Analysis of Japanese Visual Language Models}
+  {K. Maeda, \self{I. Sugiura}, Y. Oda, S. Kurita, N. Okazaki}
+  {Journal of Natural Language Processing, June 2026}
+  {\publink{\paperlogo}{Paper}{https://www.jstage.jst.go.jp/article/jnlp/33/2/33_509/_article/-char/en}
+   \publink{\faGithub}{Code}{https://github.com/llm-jp/llm-jp-eval-mm}}
+
+\cvpub
+  {EDINET-Bench: Evaluating LLMs on Complex Financial Tasks using Japanese Financial Statements}
+  {\self{I. Sugiura}, T. Ishida, T. Makino, C. Tazuke, T. Nakagawa, K. Nakago, D. Ha}
+  {ICLR 2026}
+  {\publink{\paperlogo}{Paper}{https://arxiv.org/abs/2506.08762}
+   \publink{\faGithub}{Code}{https://github.com/SakanaAI/EDINET-Bench}
+   \publink{\hflogo}{Dataset}{https://huggingface.co/datasets/SakanaAI/EDINET-Bench}}
+
+\cvpub
+  {Removing Mislabeled Data from Trained Models via Machine Unlearning}
+  {\self{I. Sugiura}, S. Okamura, N. Yanai}
+  {IEICE Transactions on Information and Systems, Aug 2025}
+  {\publink{\paperlogo}{Paper}{https://www.jstage.jst.go.jp/article/transinf/E108.D/8/E108.D_2024DAT0002/_article/-char/en}
+   \publink{\faGithub}{Code}{https://github.com/speed1313/mislabel-unlearning}}
+
+\cvpub
+  {Developing Japanese CLIP Models Leveraging an Open-weight LLM for Large-scale Dataset Translation}
+  {\self{I. Sugiura}, S. Kurita, Y. Oda, D. Kawahara, N. Okazaki}
+  {NAACL 2025 Student Research Workshop}
+  {\publink{\paperlogo}{Paper}{https://aclanthology.org/2025.naacl-srw.15/}
+   \publink{\faGithub}{Code}{https://github.com/speed1313/clip-eval}}
+
+\cvpub
+  {Constructing Multimodal Datasets from Scratch for Rapid Development of a Japanese Visual Language Model}
+  {K. Sasagawa, K. Maeda, \self{I. Sugiura}, S. Kurita, N. Okazaki, D. Kawahara}
+  {NAACL 2025 Demo Track}
+  {\publink{\paperlogo}{Paper}{https://aclanthology.org/2025.naacl-demo.38/}
+   \publink{\hflogo}{Model}{https://huggingface.co/llm-jp/llm-jp-3-vila-14b}}
+
+\cvpub
+  {A Comprehensive Analysis of Memorization in Large Language Models}
+  {H. Kiyomaru$^*$, \self{I. Sugiura}$^*$, D. Kawahara, S. Kurohashi \enspace{\footnotesize($^*$equal contribution)}}
+  {INLG 2024}
+  {\publink{\paperlogo}{Paper}{https://aclanthology.org/2024.inlg-main.45/}
+   \publink{\faGithub}{Code}{https://github.com/speed1313/fast-near-duplicate-matching}}
+
+\cvsubsection{Preprints}
+
+\cvpub
+  {QD-Rec: Open-Ended Evolution of Recommendations via Quality-Diversity}
+  {T. Ishida, T. Makino, \self{I. Sugiura}}
+  {arXiv, Oct 2026}
+  {\publink{\paperlogo}{Paper}{https://arxiv.org/abs/2610.23470}
+   \publink{\faGithub}{Code}{https://github.com/SakanaAI/qd-rec}}
+
+\cvpub
+  {JAMMEval: A Refined Collection of Japanese Benchmarks for Reliable VLM Evaluation}
+  {\self{I. Sugiura}, K. Maeda, S. Kurita, Y. Oda, D. Kawahara, N. Okazaki}
+  {arXiv, Apr 2026}
+  {\publink{\paperlogo}{Paper}{https://arxiv.org/abs/2604.00909}
+   \publink{\faGithub}{Code}{https://github.com/llm-jp/simple-evals-mm}
+   \publink{\hflogo}{Dataset}{https://huggingface.co/datasets/llm-jp/JAMMEval}}
+
+\cvpub
+  {Llama-Mimi: Speech Language Models with Interleaved Semantic and Acoustic Tokens}
+  {\self{I. Sugiura}, S. Kurita, Y. Oda, R. Higashinaka}
+  {arXiv, Sep 2025}
+  {\publink{\paperlogo}{Paper}{https://arxiv.org/abs/2509.14882}
+   \publink{\faGithub}{Code}{https://github.com/llm-jp/llama-mimi}
+   \publink{\hflogo}{Model}{https://huggingface.co/llm-jp/Llama-Mimi-1.3B}}
+
+\cvpub
+  {llm-jp-modernbert: A ModernBERT Model Trained on a Large-Scale Japanese Corpus with Long Context Length}
+  {\self{I. Sugiura}, K. Nakayama, Y. Oda}
+  {arXiv, Apr 2025}
+  {\publink{\paperlogo}{Paper}{https://arxiv.org/abs/2504.15544}
+   \publink{\faGithub}{Code}{https://github.com/llm-jp/llm-jp-modernbert}
+   \publink{\hflogo}{Model}{https://huggingface.co/llm-jp/llm-jp-modernbert-base}}
+
+\cvpub
+  {LLM-jp: A Cross-organizational Project for the Research and Development of Fully Open Japanese LLMs}
+  {LLM-jp (incl.\ \self{I. Sugiura}; 80 authors, alphabetical order)}
+  {arXiv, Jul 2024}
+  {\publink{\paperlogo}{Paper}{https://arxiv.org/abs/2407.03963}}
+
+% ─────────────────────────────────────────────────────────────────
+%  MODELS / SYSTEMS
+% ─────────────────────────────────────────────────────────────────
+\cvsection{Models / Systems}
+
+\cvmodel{LLM-jp-4-VL 9B series}%
+  {\publink{\hflogo}{Model}{https://huggingface.co/llm-jp/llm-jp-4-vl-9b}
+   \publink{\hflogo}{Dataset}{https://huggingface.co/datasets/llm-jp/RefinedVision}
+   \publink{\articlelogo}{Blog}{https://llm-jp.nii.ac.jp/blog/llm-jp-4-vl-9b/}}%
+{9B Japanese vision-language model extending the Japanese LLM LLM-jp-4 8B Thinking; built with Jagle (largest-scale Japanese multimodal dataset) and RefinedVision (FineVision refined for license \& quality issues)}
+
+\cvmodel{simple-evals-mm}%
+  {\publink{\faGithub}{Code}{https://github.com/llm-jp/simple-evals-mm}
+   \publink{\faGlobe}{Project Page}{https://llm-jp.github.io/simple-evals-mm}}%
+{Simple and extensible VLM evaluation framework extending OpenAI's simple-evals, supporting Japanese and English multimodal benchmarks}
+
+% ─────────────────────────────────────────────────────────────────
+%  AWARDS & HONORS
+% ─────────────────────────────────────────────────────────────────
+\cvsection{Awards \& Honors}
+
+\cvaward{JSAI Annual Conference Award}%
+  {Jagle: Building a Large-Scale Japanese Multimodal Post-Training Dataset for VLMs}%
+  {JSAI2026, Jun 2026}
+
+\cvaward{Best Paper Award\cvrank{3/789, top 0.4\%}}%
+  {Llama-Mimi: Speech Language Models with Interleaved Semantic and Acoustic Tokens}%
+  {NLP2026, Mar 2026}
+
+\cvaward{Special Committee Award\cvrank{32/748, top 4.3\%}}%
+  {WAON: Large-Scale and High-Quality Japanese Image-Text Pair Dataset for VLMs}%
+  {NLP2026, Mar 2026}
+
+\cvaward{Special Committee Award\cvrank{32/726, top 4.4\%}}%
+  {LLM-jp-3 VILA: Building a Japanese Multimodal Dataset and a Strong Japanese Multimodal Model}%
+  {NLP2025, Mar 2025}
+
+\cvaward{LINE Yahoo Sponsor Award\cvrank{1/420, top 0.24\%}}%
+  {Improving Generalization of Trained Models via Unlearning of Mislabeled Data}%
+  {DEIM2024, Feb 2024}
+
+% ─────────────────────────────────────────────────────────────────
+%  FELLOWSHIPS & SCHOLARSHIPS
+% ─────────────────────────────────────────────────────────────────
+\cvsection{Fellowships \& Scholarships}
+
+\cvaward{Full Repayment Exemption for Outstanding Achievement}%
+  {JASSO graduate scholarship}%
+  {Japan Student Services Organization, Jul 2026}
+
+\cvaward{Science Tokyo Support Program for Doctoral Students}%
+  {Doctoral research fellowship (JST SPRING)}%
+  {Institute of Science Tokyo, Apr 2026}
+
+% ─────────────────────────────────────────────────────────────────
+%  SKILLS
+% ─────────────────────────────────────────────────────────────────
+\cvsection{Skills}
+
+\cvskill{Research}{Dataset \& benchmark construction, benchmarking, VLM/LLM training}
+\cvskill{Languages}{Japanese (native), English (TOEIC L\&R 845, Oct 2025)}
+
+\end{document}

@@ -1,0 +1,48 @@
+---
+import type { Publication } from "@/data/about";
+import { sortLinks } from "@/data/about";
+import IconTrophy from "@/assets/icons/IconTrophy.svg";
+import LinkBadge from "./LinkBadge.astro";
+
+type Props = Publication & { num?: number };
+
+const { title, venue, date, authors, links = [], award, num } = Astro.props;
+const orderedLinks = sortLinks(links);
+---
+
+<li class="flex gap-3">
+  {
+    num != null && (
+      <span class="w-5 shrink-0 text-sm tabular-nums opacity-40">{num}</span>
+    )
+  }
+  <div class="min-w-0 flex-1">
+    <div class="flex items-start justify-between gap-2">
+      <p class="font-medium">{title}</p>
+      {
+        award && (
+          <span class="mt-0.5 inline-flex shrink-0 items-center gap-1 rounded-full border border-foreground/20 px-2 py-0.5 text-xs">
+            <IconTrophy class="size-3" />
+            {award}
+          </span>
+        )
+      }
+    </div>
+    <p
+      class="mt-1 text-sm opacity-80 [&_u]:font-semibold [&_u]:no-underline [&_u]:opacity-100"
+      set:html={authors}
+    />
+    <p class="text-sm leading-relaxed opacity-60">
+      <span class="italic">{venue}</span>, {date}
+    </p>
+    {
+      orderedLinks.length > 0 && (
+        <div class="mt-2 flex flex-wrap gap-1.5">
+          {orderedLinks.map(l => (
+            <LinkBadge label={l.label} href={l.href} />
+          ))}
+        </div>
+      )
+    }
+  </div>
+</li>

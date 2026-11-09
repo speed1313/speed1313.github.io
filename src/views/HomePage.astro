@@ -1,0 +1,94 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import Socials from "@/components/Socials.astro";
+import Card from "@/components/Card.astro";
+import PostList from "@/components/PostList.astro";
+import IconRss from "@/assets/icons/IconRss.svg";
+import { SOCIALS } from "@/constants";
+import type { Lang } from "@/content.config";
+import {
+  getLocalizedPosts,
+  listAlternates,
+  localePath,
+  otherLang,
+} from "@/utils/translations";
+
+export interface Props {
+  locale: Lang;
+}
+
+const { locale } = Astro.props;
+
+const sortedPosts = await getLocalizedPosts(locale);
+const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
+const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
+const other = otherLang(locale);
+---
+
+<Layout lang={locale} alternates={listAlternates("/")}>
+  <Header alternate={{ lang: other, href: localePath(other, "/") }} />
+  <!-- As wide as the About page, for the two-column post list. -->
+  <main id="main-content" class="mx-auto w-full max-w-5xl px-4">
+    <section id="hero" class="max-w-none px-0 pt-8 pb-6">
+      <h1 class="my-4 inline-block text-2xl font-bold sm:my-6 sm:text-3xl">
+        speed1313
+      </h1>
+      <a
+        target="_blank"
+        href={localePath(locale, "/rss.xml")}
+        class="inline-block"
+        aria-label="rss feed"
+        title="RSS Feed"
+      >
+        <IconRss
+          width={20}
+          height={20}
+          class="scale-125 stroke-accent stroke-3 rtl:-rotate-90"
+        />
+        <span class="sr-only">RSS Feed</span>
+      </a>
+
+      <p>
+        I am a first year PhD student at Institute of Science Tokyo, majoring in
+        Computer Science. I like to learn by building things.
+      </p>
+      {
+        // only display if at least one social link is enabled
+        SOCIALS.length > 0 && (
+          <div class="mt-4 flex flex-col sm:flex-row sm:items-center">
+            <Socials />
+          </div>
+        )
+      }
+    </section>
+
+    <hr class="border-foreground/10" />
+
+    {
+      featuredPosts.length > 0 && (
+        <>
+          <section id="featured" class="max-w-none px-0 pt-12 pb-6">
+            <h2 class="text-2xl font-semibold tracking-wide">Featured</h2>
+            <ul>
+              {featuredPosts.map(data => (
+                <Card variant="h3" {...data} />
+              ))}
+            </ul>
+          </section>
+          {recentPosts.length > 0 && <hr class="border-foreground/10" />}
+        </>
+      )
+    }
+
+    {
+      recentPosts.length > 0 && (
+        <section id="recent-posts" class="max-w-none px-0 pt-12 pb-6">
+          <PostList posts={recentPosts} title="Posts" variant="h3" />
+        </section>
+      )
+    }
+  </main>
+  <Footer />
+</Layout>
