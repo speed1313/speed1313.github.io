@@ -55,13 +55,20 @@ Japanese pages are served at `/posts/<slug>/` and English pages at `/en/posts/<s
 
 ## Publishing
 
-`main` is protected, so every change goes through a pull request:
+The site is served by GitHub Pages from the `gh-pages` branch, which holds only the built files. `main` is protected, so every change goes through a pull request:
 
 1. Create a branch, make the change, and check it with `npm run dev`.
 2. Run `npm run lint`, `npm run format`, and `npm run build`.
 3. Open a pull request and merge it.
 
-Merging to `main` runs [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml), which builds the site and deploys it to GitHub Pages. It can also be run manually from the Actions tab.
+Merging to `main` runs [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml), which builds the site and pushes it to `gh-pages`. To publish without GitHub Actions, run this on an up-to-date `main` instead:
+
+```sh
+git switch main && git pull
+npm run deploy
+```
+
+[`scripts/deploy.sh`](scripts/deploy.sh) builds the site and pushes it to `gh-pages`; GitHub Pages publishes it about a minute later. It only deploys commits that are on `origin/main` and stops if there are uncommitted changes or untracked files under `public/` or `src/`.
 
 ## About page and CV
 
