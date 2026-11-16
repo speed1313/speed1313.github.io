@@ -303,6 +303,10 @@ export const preprints: Publication[] = [
         label: "Dataset",
         href: "https://huggingface.co/datasets/SakanaAI/JFinBench",
       },
+      {
+        label: "Project Page",
+        href: "https://pub.sakana.ai/jfinbench/",
+      },
     ],
   },
   {
