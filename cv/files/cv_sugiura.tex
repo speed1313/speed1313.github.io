@@ -7,6 +7,7 @@
 \usepackage{fontspec}
 \newfontfamily\jpfont{Hiragino Sans}[Scale=0.92]
 \usepackage{cv_sugiura}
+\geometry{top=12mm, bottom=12mm}
 \pagestyle{empty}
 
 \begin{document}
@@ -14,7 +15,7 @@
 % ─────────────────────────────────────────────────────────────────
 %  LAST UPDATED
 % ─────────────────────────────────────────────────────────────────
-\hfill{\footnotesize\color{cvgray}Last updated: Oct 2026}\par\vspace{-6pt}
+\hfill{\footnotesize\color{cvgray}Last updated: Nov 2026}\par\vspace{-6pt}
 
 % ─────────────────────────────────────────────────────────────────
 %  HEADER
@@ -72,7 +73,8 @@ beyond coding and math.
 
 \cvexp{Dec 2024 -- present}{Student Intern}{Sakana AI, Japan}%
   {Building benchmarks with domain experts to evaluate LLM agents on economically valuable, long-horizon tasks,
-   including financial analysis (EDINET-Bench, ICLR 2026) and multi-agent economies (CoffeeBench, NeurIPS 2026).}
+   including financial analysis (EDINET-Bench, ICLR 2026), Japanese financial certification exams (JFinBench),
+   and multi-agent economies (CoffeeBench, NeurIPS 2026).}
 
 \cvexp{Feb 2024 -- present}{Research Assistant}{National Institute of Informatics, Japan}%
   {Developing Japanese vision-language models across the full pipeline: large-scale dataset construction
@@ -168,6 +170,16 @@ beyond coding and math.
    \publink{\faGithub}{Code}{https://github.com/speed1313/fast-near-duplicate-matching}}
 
 \cvsubsection{Preprints}
+
+\cvpub
+  {JFinBench: A Continuously Refreshable Japanese Financial Benchmark from the Latest Certification Exams}
+  {\self{I. Sugiura}, T. Makino, T. Ishida}
+  {arXiv, Nov 2026}
+  {\publink{\paperlogo}{Paper}{https://arxiv.org/abs/2611.18130}
+   \publink{\faGithub}{Code}{https://github.com/SakanaAI/JFinBench}
+   \publink{\hflogo}{Dataset}{https://huggingface.co/datasets/SakanaAI/JFinBench}
+   \publink{\articlelogo}{Blog}{https://sakana.ai/jfinbench/}
+   \publink{\faGlobe}{Project Page}{https://pub.sakana.ai/jfinbench/}}
 
 \cvpub
   {QD-Rec: Open-Ended Evolution of Recommendations via Quality-Diversity}
