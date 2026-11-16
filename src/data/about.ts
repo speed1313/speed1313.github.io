@@ -307,6 +307,7 @@ export const preprints: Publication[] = [
         label: "Project Page",
         href: "https://pub.sakana.ai/jfinbench/",
       },
+      { label: "Blog", href: "https://sakana.ai/jfinbench/" },
     ],
   },
   {
