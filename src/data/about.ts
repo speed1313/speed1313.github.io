@@ -63,7 +63,7 @@ export const profile = {
   researchBullets: [
     'constructing large-scale training datasets and reliable benchmarks (e.g., <a href="https://speed1313.github.io/WAON">WAON</a>, <a href="https://speed1313.github.io/Jagle">Jagle</a>, <a href="https://speed1313.github.io/JAMMEval">JAMMEval</a>, <a href="https://huggingface.co/datasets/llm-jp/HakushoBench">HakushoBench</a>)',
     'developing vision-language models with these resources (e.g., <a href="https://huggingface.co/llm-jp/llm-jp-4-vl-9b">LLM-jp-4-VL 9B</a>)',
-    'benchmarking LLM agents on economically valuable, long-horizon tasks (e.g., <a href="https://arxiv.org/abs/2606.16613">CoffeeBench</a>, <a href="https://arxiv.org/abs/2506.08762">EDINET-Bench</a>)',
+    'benchmarking LLM agents on economically valuable, long-horizon tasks (e.g., <a href="https://arxiv.org/abs/2606.16613">CoffeeBench</a>, <a href="https://arxiv.org/abs/2506.08762">EDINET-Bench</a>, <a href="https://arxiv.org/abs/2611.18130">JFinBench</a>)',
   ],
   tagline: "I like to learn by building things.",
 };
@@ -105,7 +105,7 @@ export const experience: ExperienceEntry[] = [
     organization: "Sakana AI, Japan",
     position: "Student Intern",
     description:
-      "Building benchmarks with domain experts to evaluate LLM agents on economically valuable, long-horizon tasks, including financial analysis (EDINET-Bench, ICLR 2026) and multi-agent economies (CoffeeBench, NeurIPS 2026).",
+      "Building benchmarks with domain experts to evaluate LLM agents on economically valuable, long-horizon tasks, including financial analysis (EDINET-Bench, ICLR 2026), Japanese financial certification exams (JFinBench), and multi-agent economies (CoffeeBench, NeurIPS 2026).",
   },
   {
     period: "Feb 2024 – present",
@@ -290,6 +290,21 @@ export const peerReviewed: Publication[] = [
 ];
 
 export const preprints: Publication[] = [
+  {
+    title:
+      "JFinBench: A Continuously Refreshable Japanese Financial Benchmark from the Latest Certification Exams",
+    venue: "arXiv",
+    date: "Nov 2026",
+    authors: "<u>Issa Sugiura</u>, Taro Makino, Takashi Ishida",
+    links: [
+      { label: "Paper", href: "https://arxiv.org/abs/2611.18130" },
+      { label: "Code", href: "https://github.com/SakanaAI/JFinBench" },
+      {
+        label: "Dataset",
+        href: "https://huggingface.co/datasets/SakanaAI/JFinBench",
+      },
+    ],
+  },
   {
     title:
       "QD-Rec: Open-Ended Evolution of Recommendations via Quality-Diversity",
