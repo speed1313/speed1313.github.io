@@ -104,7 +104,7 @@ export const experience: ExperienceEntry[] = [
     organization: "Sakana AI, Japan",
     position: "Student Intern",
     description:
-      "Building benchmarks with domain experts to evaluate LLM agents on economically valuable, long-horizon tasks, including financial analysis (EDINET-Bench, ICLR 2026), Japanese financial certification exams (JFinBench), and multi-agent economies (CoffeeBench, NeurIPS 2026).",
+      "Building benchmarks for tasks that frontier models are expected to take on, including financial analysis (EDINET-Bench, ICLR 2026), Japanese financial certification exams (JFinBench), and running a business honestly among other firms (CoffeeBench, NeurIPS 2026).",
   },
   {
     period: "Feb 2024 – present",
