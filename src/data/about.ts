@@ -674,6 +674,7 @@ export const awards: Award[] = [
     rank: "1/420, top 0.24%",
     work: "Improving Generalization of Trained Models via Unlearning of Mislabeled Data",
     venue: "DEIM2024",
+    url: "https://pub.confit.atlas.jp/ja/event/deim2024/content/awards",
   },
 ];
 
