@@ -6,8 +6,21 @@ import LinkBadge from "./LinkBadge.astro";
 
 type Props = Publication & { num?: number };
 
-const { title, venue, date, authors, links = [], award, num } = Astro.props;
+const {
+  title,
+  venue,
+  date,
+  authors,
+  links = [],
+  award,
+  acceptanceRate,
+  note,
+  num,
+} = Astro.props;
 const orderedLinks = sortLinks(links);
+// " (acceptance rate 27%), Apr 2026"; kept in one expression so no space
+// appears before the comma.
+const venueSuffix = `${acceptanceRate ? ` (acceptance rate ${acceptanceRate})` : ""}, ${date}`;
 ---
 
 <li class="flex gap-3">
@@ -33,8 +46,16 @@ const orderedLinks = sortLinks(links);
       set:html={authors}
     />
     <p class="text-sm leading-relaxed opacity-60">
-      <span class="italic">{venue}</span>, {date}
+      <span class="italic">{venue}</span>{venueSuffix}
     </p>
+    {
+      note && (
+        <p
+          class="text-sm opacity-80 [&_a]:underline [&_a]:decoration-foreground/30 [&_a]:underline-offset-4"
+          set:html={`→ ${note}`}
+        />
+      )
+    }
     {
       orderedLinks.length > 0 && (
         <div class="mt-2 flex flex-wrap gap-1.5">

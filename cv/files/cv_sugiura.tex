@@ -11,6 +11,7 @@
 \pagestyle{empty}
 
 \begin{document}
+\emergencystretch=2em
 
 % ─────────────────────────────────────────────────────────────────
 %  LAST UPDATED
@@ -47,6 +48,19 @@ that frontier models are expected to take on}, such as financial analysis and ru
 }
 
 % ─────────────────────────────────────────────────────────────────
+%  HIGHLIGHTS
+% ─────────────────────────────────────────────────────────────────
+\cvsection{Highlights}
+
+\begin{cvhighlights}
+  \item \textbf{First-author papers at ICLR, COLM, and NeurIPS (E\&D) 2026}, plus two at AACL 2026 Findings.
+  \item \textbf{Best Paper Award at NLP2026} (3/789, top 0.4\%) and four other awards.
+  \item \textbf{Open datasets and models with 85K+ Hugging Face downloads}; WAON, Jagle, and WAON-Bench are used by
+        \href{https://zenn.dev/noetra_techblog/articles/0cea39ce67d2c2}{Noetra} to build its multimodal foundation model.
+  \item \textbf{252 citations, h-index 8} (Google Scholar, Nov 2026).
+\end{cvhighlights}
+
+% ─────────────────────────────────────────────────────────────────
 %  EDUCATION
 % ─────────────────────────────────────────────────────────────────
 \cvsection{Education}
@@ -70,14 +84,29 @@ that frontier models are expected to take on}, such as financial analysis and ru
 \cvexp{Apr 2026 -- present}{Research Assistant}{Institute of Science Tokyo, Japan}%
   {Research on vision-language models.}
 
-\cvexp{Dec 2024 -- present}{Student Intern}{Sakana AI, Japan}%
-  {Building benchmarks for tasks that frontier models are expected to take on, including financial analysis
-   (EDINET-Bench, ICLR 2026), Japanese financial certification exams (JFinBench), and running a business honestly
-   among other firms (CoffeeBench, NeurIPS 2026).}
+\cvexpb{Dec 2024 -- present}{Student Intern}{Sakana AI, Japan}{%
+  \item \textbf{Led EDINET-Bench} (ICLR 2026), a benchmark of fraud detection, earnings forecasting, and industry
+        classification built from 10 years of Japanese annual reports; frontier LLMs barely beat logistic regression.
+  \item \textbf{Led CoffeeBench} (NeurIPS 2026 E\&D), where LLM agents run a business among other firms for 90 simulated
+        days; it exposed failure modes such as idle drift and, under revenue targets, circular trades that inflate revenue.
+  \item \textbf{Led JFinBench}, 321 questions from the 2026 editions of six Japanese certification exams in accounting,
+        tax, financial planning, and banking, built with a human-in-the-loop coding-agent pipeline so it can be
+        refreshed with each new exam.
+  \item Co-authored QD-Rec, open-ended evolution of recommendations via quality-diversity.
+}
 
-\cvexp{Feb 2024 -- present}{Research Assistant}{National Institute of Informatics, Japan}%
-  {Developing Japanese vision-language models across the full pipeline: large-scale dataset construction
-   (WAON, Jagle), evaluation benchmark design (JAMMEval, HakushoBench), and model training (LLM-jp-4-VL).}
+\cvexpb{Feb 2024 -- present}{Research Assistant}{National Institute of Informatics, Japan}{%
+  \item \textbf{Built WAON} (AACL 2026 Findings), the largest native Japanese image-text dataset (155M pairs), and
+        WAON-Bench. \href{https://zenn.dev/noetra_techblog/articles/0cea39ce67d2c2}{Noetra} uses WAON to train its in-house vision encoder and WAON-Bench to evaluate
+        Japanese cultural understanding.
+  \item \textbf{Built Jagle} (COLM 2026; JSAI Annual Conference Award), the largest Japanese multimodal post-training
+        dataset (9.2M examples). A 2.2B model trained on it beats InternVL3.5-2B on ten Japanese tasks, and Noetra
+        uses it to post-train its multimodal LLM.
+  \item \textbf{Developed LLM-jp-4-VL 9B}, whose beta matches Qwen3-VL-8B-Instruct on Japanese tasks.
+  \item \textbf{Built Japanese VLM evaluation}: HakushoBench (AACL 2026 Findings), JAMMEval, and simple-evals-mm,
+        a reproducible and reliable evaluation framework on 50+ benchmarks.
+  \item Trained the speech language model \textbf{Llama-Mimi} (Best Paper Award, NLP2026) and \textbf{llm-jp-modernbert}.
+}
 
 % ─────────────────────────────────────────────────────────────────
 %  PUBLICATIONS
@@ -89,7 +118,7 @@ that frontier models are expected to take on}, such as financial analysis and ru
 \cvpub
   {CoffeeBench: Benchmarking Long-Horizon LLM Agents in Heterogeneous Multi-Agent Economies}
   {\self{I. Sugiura}, D. Hattori, K. Araragi, K. Ogawa, S. Onose, T. Makino, T. Usuki, T. Ishida}
-  {NeurIPS 2026 Evaluations and Datasets Track}
+  {NeurIPS 2026 Evaluations and Datasets Track (acceptance rate 26\%)}
   {\publink{\paperlogo}{Paper}{https://arxiv.org/abs/2606.16613}
    \publink{\faGithub}{Code}{https://github.com/SakanaAI/CoffeeBench}
    \publink{\articlelogo}{Blog}{https://pub.sakana.ai/coffeebench/index.html}}
@@ -108,7 +137,7 @@ that frontier models are expected to take on}, such as financial analysis and ru
    \publink{\faGithub}{Code}{https://github.com/llm-jp/simple-evals-mm}
    \publink{\hflogo}{Dataset}{https://huggingface.co/datasets/llm-jp/HakushoBench}}
 
-\cvpub[Largest-scale Japanese image-text dataset (155M pairs)]
+\cvpub[Largest-scale Japanese image-text dataset (155M pairs)\enspace·\enspace Used by Noetra to train its vision encoder]
   {WAON: A Large-Scale Japanese Image-Text Dataset for Cultural Adaptation in Contrastive VLMs}
   {\self{I. Sugiura}, S. Kurita, Y. Oda, D. Kawahara, Y. Okabe, N. Okazaki}
   {AACL-IJCNLP 2026 Findings}
@@ -116,10 +145,10 @@ that frontier models are expected to take on}, such as financial analysis and ru
    \publink{\faGithub}{Code}{https://github.com/llm-jp/WAON}
    \publink{\hflogo}{Dataset}{https://huggingface.co/datasets/llm-jp/WAON}}
 
-\cvpub[Largest-scale Japanese multimodal post-training dataset (9.2M examples)]
+\cvpub[Largest-scale Japanese multimodal post-training dataset (9.2M examples)\enspace·\enspace Used by Noetra to post-train its multimodal LLM]
   {Jagle: Building a Large-Scale Japanese Multimodal Post-Training Dataset for VLMs}
   {\self{I. Sugiura}, K. Sasagawa, K. Nakao, K. Maeda, Z. Yin, Z. Yang, S. Kurita, Y. Oda, R. Tokuhisa, D. Kawahara, N. Okazaki}
-  {COLM 2026}
+  {COLM 2026 (acceptance rate 29\%)}
   {\publink{\paperlogo}{Paper}{https://arxiv.org/abs/2604.02048}
    \publink{\faGithub}{Code}{https://github.com/llm-jp/llm-jp-4-vl}
    \publink{\hflogo}{Dataset}{https://huggingface.co/datasets/llm-jp/Jagle}
@@ -135,7 +164,7 @@ that frontier models are expected to take on}, such as financial analysis and ru
 \cvpub
   {EDINET-Bench: Evaluating LLMs on Complex Financial Tasks using Japanese Financial Statements}
   {\self{I. Sugiura}, T. Ishida, T. Makino, C. Tazuke, T. Nakagawa, K. Nakago, D. Ha}
-  {ICLR 2026}
+  {ICLR 2026 (acceptance rate 27\%)}
   {\publink{\paperlogo}{Paper}{https://arxiv.org/abs/2506.08762}
    \publink{\faGithub}{Code}{https://github.com/SakanaAI/EDINET-Bench}
    \publink{\hflogo}{Dataset}{https://huggingface.co/datasets/SakanaAI/EDINET-Bench}}
@@ -239,19 +268,19 @@ that frontier models are expected to take on}, such as financial analysis and ru
 \cvsection{Awards \& Honors}
 
 \cvaward{JSAI Annual Conference Award}%
-  {Jagle: Building a Large-Scale Japanese Multimodal Post-Training Dataset for VLMs}%
+  {Jagle: Building a Large-Scale Japanese Multimodal Post-Training Dataset for VLMs\publink{\faLink}{Award list}{https://www.ai-gakkai.or.jp/about/award/jsai_award-conf/}}%
   {JSAI2026, Jun 2026}
 
 \cvaward{Best Paper Award\cvrank{3/789, top 0.4\%}}%
-  {Llama-Mimi: Speech Language Models with Interleaved Semantic and Acoustic Tokens}%
+  {Llama-Mimi: Speech Language Models with Interleaved Semantic and Acoustic Tokens\publink{\faLink}{Award list}{https://www.anlp.jp/nlp2026/award.html\#best}}%
   {NLP2026, Mar 2026}
 
 \cvaward{Special Committee Award\cvrank{32/748, top 4.3\%}}%
-  {WAON: Large-Scale and High-Quality Japanese Image-Text Pair Dataset for VLMs}%
+  {WAON: Large-Scale and High-Quality Japanese Image-Text Pair Dataset for VLMs\publink{\faLink}{Award list}{https://www.anlp.jp/nlp2026/award.html\#committee}}%
   {NLP2026, Mar 2026}
 
 \cvaward{Special Committee Award\cvrank{32/726, top 4.4\%}}%
-  {LLM-jp-3 VILA: Building a Japanese Multimodal Dataset and a Strong Japanese Multimodal Model}%
+  {LLM-jp-3 VILA: Building a Japanese Multimodal Dataset and a Strong Japanese Multimodal Model (co-author)\publink{\faLink}{Award list}{https://www.anlp.jp/nlp2025/award.html\#committee}}%
   {NLP2025, Mar 2025}
 
 \cvaward{LINE Yahoo Sponsor Award\cvrank{1/420, top 0.24\%}}%
@@ -277,6 +306,7 @@ that frontier models are expected to take on}, such as financial analysis and ru
 \cvsection{Skills}
 
 \cvskill{Research}{Dataset \& benchmark construction, benchmarking, VLM/LLM training}
+\cvskill{Engineering}{Multi-node VLM training (16 nodes), web-scale data pipelines (Common Crawl)}
 \cvskill{Languages}{Japanese (native), English (TOEIC L\&R 845, Oct 2025)}
 
 \end{document}

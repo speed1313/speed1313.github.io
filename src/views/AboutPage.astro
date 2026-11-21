@@ -9,6 +9,7 @@ import Socials from "@/components/Socials.astro";
 import { SITE } from "@/config";
 import {
   profile,
+  highlights,
   education,
   experience,
   peerReviewed,
@@ -43,6 +44,7 @@ const subhead = "mb-4 text-sm opacity-60";
 // Section titles, in order, for the links at the top.
 const SECTIONS = [
   "Research",
+  "Highlights",
   "Education",
   "Experience",
   "Publications",
@@ -105,6 +107,12 @@ const SECTIONS = [
       </div>
     </Section>
 
+    <Section title="Highlights">
+      <ul class:list={["list-disc space-y-1.5 ps-6", prose]}>
+        {highlights.map(h => <li set:html={h} />)}
+      </ul>
+    </Section>
+
     <Section title="Education">
       <ul class="space-y-6">
         {
@@ -139,7 +147,21 @@ const SECTIONS = [
                     · {x.organization}
                   </span>
                 </p>
-                <p class="mt-1 text-sm opacity-80">{x.description}</p>
+                {x.description && (
+                  <p class="mt-1 text-sm opacity-80">{x.description}</p>
+                )}
+                {x.bullets && (
+                  <ul
+                    class:list={[
+                      "mt-2 list-disc space-y-1 ps-5 text-sm opacity-90",
+                      prose,
+                    ]}
+                  >
+                    {x.bullets.map(b => (
+                      <li set:html={b} />
+                    ))}
+                  </ul>
+                )}
               </div>
             </li>
           ))
@@ -186,7 +208,22 @@ const SECTIONS = [
                       )}
                     </p>
                     <p class="mt-0.5 text-sm opacity-80">{a.work}</p>
-                    <p class="text-sm opacity-60">{a.venue}</p>
+                    <p class="text-sm opacity-60">
+                      {a.venue}
+                      {a.url && (
+                        <>
+                          {" · "}
+                          <a
+                            href={a.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="underline decoration-foreground/30 underline-offset-4 hover:decoration-foreground"
+                          >
+                            Award list
+                          </a>
+                        </>
+                      )}
+                    </p>
                   </div>
                 </li>
               ))}

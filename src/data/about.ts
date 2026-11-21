@@ -36,6 +36,10 @@ export interface Publication {
   authors: string;
   links?: PubLink[];
   award?: string;
+  /** e.g. "27%" */
+  acceptanceRate?: string;
+  /** One-line impact note (HTML), e.g. who uses the work. */
+  note?: string;
 }
 
 export interface EducationEntry {
@@ -50,7 +54,9 @@ export interface ExperienceEntry {
   period: string;
   organization: string;
   position: string;
-  description: string;
+  description?: string;
+  /** Results, strongest first (HTML strings). */
+  bullets?: string[];
 }
 
 export const profile = {
@@ -66,6 +72,14 @@ export const profile = {
   ],
   tagline: "I like to learn by building things.",
 };
+
+// The strongest evidence, for skimming. Counts as of the date given.
+export const highlights: string[] = [
+  "<strong>First-author papers at ICLR, COLM, and NeurIPS (E&amp;D) 2026</strong>, plus two at AACL 2026 Findings.",
+  "<strong>Best Paper Award at NLP2026</strong> (3/789, top 0.4%) and four other awards.",
+  '<strong>Open datasets and models with 85K+ Hugging Face downloads</strong>; WAON, Jagle, and WAON-Bench are used by <a href="https://zenn.dev/noetra_techblog/articles/0cea39ce67d2c2">Noetra</a> to build its multimodal foundation model.',
+  '<strong>252 citations, h-index 8</strong> (<a href="https://scholar.google.com/citations?user=717QdNoAAAAJ">Google Scholar</a>, Nov 2026).',
+];
 
 export const education: EducationEntry[] = [
   {
@@ -104,14 +118,27 @@ export const experience: ExperienceEntry[] = [
     organization: "Sakana AI, Japan",
     position: "Student Intern",
     description:
-      "Building benchmarks for tasks that frontier models are expected to take on, including financial analysis (EDINET-Bench, ICLR 2026), Japanese financial certification exams (JFinBench), and running a business honestly among other firms (CoffeeBench, NeurIPS 2026).",
+      "Building benchmarks for tasks that frontier models are expected to take on.",
+    bullets: [
+      "<strong>Led EDINET-Bench</strong> (ICLR 2026), a benchmark of fraud detection, earnings forecasting, and industry classification built from 10 years of Japanese annual reports; frontier LLMs barely beat logistic regression.",
+      "<strong>Led CoffeeBench</strong> (NeurIPS 2026 E&amp;D), where LLM agents run a business among other firms for 90 simulated days; it exposed failure modes such as idle drift and, under revenue targets, circular trades that inflate revenue.",
+      "<strong>Led JFinBench</strong>, 321 questions from the 2026 editions of six Japanese certification exams in accounting, tax, financial planning, and banking, built with a human-in-the-loop coding-agent pipeline so it can be refreshed with each new exam.",
+      "Co-authored QD-Rec, open-ended evolution of recommendations via quality-diversity.",
+    ],
   },
   {
     period: "Feb 2024 – present",
     organization: "National Institute of Informatics, Japan",
     position: "Research Assistant",
     description:
-      "Developing Japanese vision-language models across the full pipeline: large-scale dataset construction (WAON, Jagle), evaluation benchmark design (JAMMEval, HakushoBench), and model training (LLM-jp-4-VL).",
+      "Developing Japanese VLMs through the whole process, from data to training and evaluation.",
+    bullets: [
+      '<strong>Built WAON</strong> (AACL 2026 Findings), the largest native Japanese image-text dataset (155M pairs), and WAON-Bench. <a href="https://zenn.dev/noetra_techblog/articles/0cea39ce67d2c2">Noetra</a> uses WAON to train its in-house vision encoder and WAON-Bench to evaluate Japanese cultural understanding.',
+      "<strong>Built Jagle</strong> (COLM 2026; JSAI Annual Conference Award), the largest Japanese multimodal post-training dataset (9.2M examples). A 2.2B model trained on it beats InternVL3.5-2B on ten Japanese tasks, and Noetra uses it to post-train its multimodal LLM.",
+      "<strong>Developed LLM-jp-4-VL 9B</strong>, whose beta matches Qwen3-VL-8B-Instruct on Japanese tasks.",
+      "<strong>Built Japanese VLM evaluation</strong>: HakushoBench (AACL 2026 Findings), JAMMEval, and simple-evals-mm, a reproducible and reliable evaluation framework on 50+ benchmarks.",
+      "Trained the speech language model <strong>Llama-Mimi</strong> (Best Paper Award, NLP2026) and <strong>llm-jp-modernbert</strong>.",
+    ],
   },
 ];
 
@@ -120,6 +147,7 @@ export const peerReviewed: Publication[] = [
     title:
       "CoffeeBench: Benchmarking Long-Horizon LLM Agents in Heterogeneous Multi-Agent Economies",
     venue: "NeurIPS 2026 Evaluations and Datasets Track",
+    acceptanceRate: "26%",
     date: "Dec 2026",
     authors:
       "<u>Issa Sugiura</u>, Daichi Hattori, Kazuo Araragi, Keita Ogawa, Shota Onose, Taro Makino, Teppei Usuki, Takashi Ishida",
@@ -156,6 +184,7 @@ export const peerReviewed: Publication[] = [
     title:
       "WAON: A Large-Scale Japanese Image-Text Dataset for Cultural Adaptation in Contrastive Vision-Language Models",
     venue: "AACL-IJCNLP 2026 Findings",
+    note: 'Used by <a href="https://zenn.dev/noetra_techblog/articles/0cea39ce67d2c2">Noetra</a> to train its vision encoder; WAON-Bench evaluates its Japanese cultural understanding.',
     date: "Nov 2026",
     authors:
       "<u>Issa Sugiura</u>, Shuhei Kurita, Yusuke Oda, Daisuke Kawahara, Yasuo Okabe, Naoaki Okazaki",
@@ -173,6 +202,8 @@ export const peerReviewed: Publication[] = [
     title:
       "Jagle: Building a Large-Scale Japanese Multimodal Post-Training Dataset for Vision-Language Models",
     venue: "COLM 2026",
+    acceptanceRate: "29%",
+    note: 'Used by <a href="https://zenn.dev/noetra_techblog/articles/0cea39ce67d2c2">Noetra</a> to post-train its multimodal LLM.',
     date: "Oct 2026",
     authors:
       "<u>Issa Sugiura</u>, Keito Sasagawa, Keisuke Nakao, Koki Maeda, Ziqi Yin, Zhishen Yang, Shuhei Kurita, Yusuke Oda, Ryoko Tokuhisa, Daisuke Kawahara, Naoaki Okazaki",
@@ -208,6 +239,7 @@ export const peerReviewed: Publication[] = [
     title:
       "EDINET-Bench: Evaluating LLMs on Complex Financial Tasks using Japanese Financial Statements",
     venue: "ICLR 2026",
+    acceptanceRate: "27%",
     date: "Apr 2026",
     authors:
       "<u>Issa Sugiura</u>, Takashi Ishida, Taro Makino, Chieko Tazuke, Takanori Nakagawa, Kosuke Nakago, David Ha",
@@ -600,6 +632,8 @@ export interface Award {
   work: string;
   /** Conference or organization. */
   venue: string;
+  /** Official list of the winners, as evidence. */
+  url?: string;
 }
 
 // Keep in sync with "Awards & Honors" in the CV.
@@ -609,6 +643,7 @@ export const awards: Award[] = [
     title: "JSAI Annual Conference Award",
     work: "Jagle: Building a Large-Scale Japanese Multimodal Post-Training Dataset for VLMs",
     venue: "JSAI2026",
+    url: "https://www.ai-gakkai.or.jp/about/award/jsai_award-conf/",
   },
   {
     date: "Mar 2026",
@@ -616,6 +651,7 @@ export const awards: Award[] = [
     rank: "3/789, top 0.4%",
     work: "Llama-Mimi: Speech Language Models with Interleaved Semantic and Acoustic Tokens",
     venue: "NLP2026",
+    url: "https://www.anlp.jp/nlp2026/award.html#best",
   },
   {
     date: "Mar 2026",
@@ -623,13 +659,15 @@ export const awards: Award[] = [
     rank: "32/748, top 4.3%",
     work: "WAON: Large-Scale and High-Quality Japanese Image-Text Pair Dataset for VLMs",
     venue: "NLP2026",
+    url: "https://www.anlp.jp/nlp2026/award.html#committee",
   },
   {
     date: "Mar 2025",
     title: "Special Committee Award",
     rank: "32/726, top 4.4%",
-    work: "LLM-jp-3 VILA: Building a Japanese Multimodal Dataset and a Strong Japanese Multimodal Model",
+    work: "LLM-jp-3 VILA: Building a Japanese Multimodal Dataset and a Strong Japanese Multimodal Model (co-author)",
     venue: "NLP2025",
+    url: "https://www.anlp.jp/nlp2025/award.html#committee",
   },
   {
     date: "Feb 2024",
