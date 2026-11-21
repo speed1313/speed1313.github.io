@@ -139,6 +139,24 @@
     \footnotesize\color{cvgray}#4\par}%
 }
 
+% ── Experience with bullets ──────────────────────────────────────
+% Like \cvexp, but the description is a list of results in dark text.
+% \cvexpb{date}{Role}{Organization}{\item ... \item ...}
+\newcommand{\cvexpb}[4]{%
+  \cvgap{6pt}%
+  \noindent\makebox[\cvdw][l]{\small\color{cvgray}\mbox{#1}}%
+  {\small\bfseries #2}\cvright{\small\color{cvgray}#3}\vspace{0pt}%
+  \begin{itemize}[leftmargin=\dimexpr\cvdw+1.0em\relax, labelsep=0.5em,
+      topsep=1pt, itemsep=1.5pt, label={\color{cvgray}\footnotesize$\bullet$}]
+    \footnotesize\color{cvblue}#4
+  \end{itemize}%
+}
+
+% ── Highlights: bullets at full width ────────────────────────────
+\newenvironment{cvhighlights}{%
+  \begin{itemize}[leftmargin=1.1em, labelsep=0.5em, topsep=2pt, itemsep=1.5pt,
+      label={\color{cvgray}\small$\bullet$}]\small}{\end{itemize}}
+
 % ── Publication ─────────────────────────────────────────────────
 % \cvpub[Highlight]{Title}{Authors}{Venue}{links}
 % Optional [Highlight] adds a one-line impact note (e.g. a metric) below.
