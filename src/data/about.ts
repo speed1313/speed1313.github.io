@@ -161,7 +161,10 @@ export const peerReviewed: Publication[] = [
     venue: "NeurIPS 2026 Evaluations and Datasets Track",
     date: "Dec 2026",
     authors: "Lin Shi, et al. (incl. <u>Issa Sugiura</u>; 126 authors)",
-    links: [{ label: "Paper", href: "https://arxiv.org/abs/2609.04298" }],
+    links: [
+      { label: "Paper", href: "https://arxiv.org/abs/2609.04298" },
+      { label: "Code", href: "https://github.com/harbor-framework/harbor" },
+    ],
   },
   {
     title:
