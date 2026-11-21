@@ -62,7 +62,7 @@ export const profile = {
     "I work on vision-language models (VLMs) and evaluations (evals).",
   researchBullets: [
     '<strong>VLMs</strong>: developing VLMs through the whole process, from building large-scale training data (<a href="https://speed1313.github.io/WAON">WAON</a>, <a href="https://speed1313.github.io/Jagle">Jagle</a>) to training models (<a href="https://huggingface.co/llm-jp/llm-jp-4-vl-9b">LLM-jp-4-VL 9B</a>) and evaluating them (<a href="https://speed1313.github.io/JAMMEval">JAMMEval</a>, <a href="https://huggingface.co/datasets/llm-jp/HakushoBench">HakushoBench</a>, <a href="https://llm-jp.github.io/simple-evals-mm/">simple-evals-mm</a>).',
-    '<strong>Evals</strong>: building benchmarks for tasks that frontier models are expected to take on, such as financial analysis (<a href="https://arxiv.org/abs/2506.08762">EDINET-Bench</a>, <a href="https://arxiv.org/abs/2611.18130">JFinBench</a>) and long-horizon multi-agent economies (<a href="https://arxiv.org/abs/2606.16613">CoffeeBench</a>).',
+    '<strong>Evals</strong>: building benchmarks for tasks that frontier models are expected to take on, such as financial analysis (<a href="https://arxiv.org/abs/2506.08762">EDINET-Bench</a>, <a href="https://arxiv.org/abs/2611.18130">JFinBench</a>) and running a business honestly (<a href="https://arxiv.org/abs/2606.16613">CoffeeBench</a>).',
   ],
   tagline: "I like to learn by building things.",
 };
