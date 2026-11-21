@@ -18,7 +18,7 @@ function linkRank(label: string): number {
   if (l.includes("model")) return 3;
   if (l.includes("demo")) return 4;
   if (l.includes("blog")) return 5;
-  if (l.includes("project")) return 6;
+  if (l.includes("project") || l.includes("leaderboard")) return 6;
   if (l.includes("poster")) return 7;
   if (l.includes("slide")) return 8;
   return 99;
@@ -78,7 +78,6 @@ export const highlights: string[] = [
   "<strong>First-author papers at ICLR, COLM, and NeurIPS (E&amp;D) 2026</strong>, plus two at AACL 2026 Findings.",
   "<strong>Best Paper Award at NLP2026</strong> (3/789, top 0.4%) and four other awards.",
   '<strong>Open datasets and models with 85K+ Hugging Face downloads</strong>; WAON, Jagle, and WAON-Bench are used by <a href="https://zenn.dev/noetra_techblog/articles/0cea39ce67d2c2">Noetra</a> to build its multimodal foundation model.',
-  '<strong>252 citations, h-index 8</strong> (<a href="https://scholar.google.com/citations?user=717QdNoAAAAJ">Google Scholar</a>, Nov 2026).',
 ];
 
 export const education: EducationEntry[] = [
@@ -121,9 +120,8 @@ export const experience: ExperienceEntry[] = [
       "Building benchmarks for tasks that frontier models are expected to take on.",
     bullets: [
       "<strong>Led EDINET-Bench</strong> (ICLR 2026), a benchmark of fraud detection, earnings forecasting, and industry classification built from 10 years of Japanese annual reports; frontier LLMs barely beat logistic regression.",
-      "<strong>Led CoffeeBench</strong> (NeurIPS 2026 E&amp;D), where LLM agents run a business among other firms for 90 simulated days; it exposed failure modes such as idle drift and, under revenue targets, circular trades that inflate revenue.",
+      "<strong>Led CoffeeBench</strong> (NeurIPS 2026 E&amp;D, with KPMG AZSA), where six LLM coding agents run a coffee supply chain for 90 simulated days. Under a revenue target, GPT-6 Astra proposes circular trades that inflate revenue, and whether they happen depends on the counterparty (Claude Sonnet 5.5 refuses).",
       "<strong>Led JFinBench</strong>, 321 questions from the 2026 editions of six Japanese certification exams in accounting, tax, financial planning, and banking, built with a human-in-the-loop coding-agent pipeline so it can be refreshed with each new exam.",
-      "Co-authored QD-Rec, open-ended evolution of recommendations via quality-diversity.",
     ],
   },
   {
@@ -616,7 +614,7 @@ export const models: ModelEntry[] = [
         href: "https://github.com/llm-jp/simple-evals-mm",
       },
       {
-        label: "Project Page",
+        label: "Leaderboard",
         href: "https://llm-jp.github.io/simple-evals-mm",
       },
     ],
@@ -641,6 +639,7 @@ export const awards: Award[] = [
   {
     date: "Jun 2026",
     title: "JSAI Annual Conference Award",
+    rank: "66/1,376, top 4.8%",
     work: "Jagle: Building a Large-Scale Japanese Multimodal Post-Training Dataset for VLMs",
     venue: "JSAI2026",
     url: "https://www.ai-gakkai.or.jp/about/award/jsai_award-conf/",
