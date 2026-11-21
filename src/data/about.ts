@@ -578,7 +578,7 @@ export const models: ModelEntry[] = [
   {
     title: "simple-evals-mm (2026)",
     description:
-      "Developed a simple and extensible VLM evaluation framework, extending OpenAI's simple-evals to multimodal evaluation with Japanese and English benchmarks.",
+      "Developed a reproducible and reliable evaluation framework for LLMs and VLMs on 50+ English and Japanese benchmarks, used by the LLM-jp Multimodal WG. Each run pins its code, data, settings, and model endpoint so results can be reproduced and compared, and scores are checked against those reported in model cards. Results are shared as a public leaderboard.",
     links: [
       {
         label: "Code",
