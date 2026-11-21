@@ -59,11 +59,10 @@ export const profile = {
   intro:
     "I am a first year PhD student at Institute of Science Tokyo, majoring in Computer Science.",
   researchIntro:
-    "My research focuses on building the resources that drive progress in AI, and on using them to develop and evaluate models:",
+    "I work on vision-language models (VLMs) and evaluations (evals).",
   researchBullets: [
-    'constructing large-scale training datasets and reliable benchmarks (e.g., <a href="https://speed1313.github.io/WAON">WAON</a>, <a href="https://speed1313.github.io/Jagle">Jagle</a>, <a href="https://speed1313.github.io/JAMMEval">JAMMEval</a>, <a href="https://huggingface.co/datasets/llm-jp/HakushoBench">HakushoBench</a>)',
-    'developing vision-language models with these resources (e.g., <a href="https://huggingface.co/llm-jp/llm-jp-4-vl-9b">LLM-jp-4-VL 9B</a>)',
-    'benchmarking LLM agents on economically valuable, long-horizon tasks (e.g., <a href="https://arxiv.org/abs/2606.16613">CoffeeBench</a>, <a href="https://arxiv.org/abs/2506.08762">EDINET-Bench</a>, <a href="https://arxiv.org/abs/2611.18130">JFinBench</a>)',
+    '<strong>VLMs</strong>: developing VLMs through the whole process, from building large-scale training data (<a href="https://speed1313.github.io/WAON">WAON</a>, <a href="https://speed1313.github.io/Jagle">Jagle</a>) to training models (<a href="https://huggingface.co/llm-jp/llm-jp-4-vl-9b">LLM-jp-4-VL 9B</a>) and evaluating them (<a href="https://speed1313.github.io/JAMMEval">JAMMEval</a>, <a href="https://huggingface.co/datasets/llm-jp/HakushoBench">HakushoBench</a>, <a href="https://llm-jp.github.io/simple-evals-mm/">simple-evals-mm</a>).',
+    '<strong>Evals</strong>: building benchmarks for tasks that frontier models are expected to take on, such as financial analysis (<a href="https://arxiv.org/abs/2506.08762">EDINET-Bench</a>, <a href="https://arxiv.org/abs/2611.18130">JFinBench</a>) and long-horizon multi-agent economies (<a href="https://arxiv.org/abs/2606.16613">CoffeeBench</a>).',
   ],
   tagline: "I like to learn by building things.",
 };
@@ -578,7 +577,7 @@ export const models: ModelEntry[] = [
   {
     title: "simple-evals-mm (2026)",
     description:
-      "Developed a reproducible and reliable evaluation framework for LLMs and VLMs on 50+ English and Japanese benchmarks, used by the LLM-jp Multimodal WG. Each run pins its code, data, settings, and model endpoint so results can be reproduced and compared, and scores are checked against those reported in model cards. Results are shared as a public leaderboard.",
+      "Developed a reproducible and reliable evaluation framework for LLMs and VLMs on 50+ English and Japanese benchmarks, used by the LLM-jp Multimodal WG, with a public leaderboard.",
     links: [
       {
         label: "Code",
