@@ -833,7 +833,7 @@ charts.curves = (root, d) => {
   );
   for (const [key, col, [lx, ly], anchor, cx] of shown) {
     const b = d.benchMap.get(key);
-    el(
+    const curve = el(
       "path",
       {
         d: curvePath(x, y, b.D, b.alpha, x.domain),
@@ -842,6 +842,30 @@ charts.curves = (root, d) => {
         "stroke-width": 3,
       },
       svg
+    );
+    // A wider invisible copy makes the curve easy to point at.
+    const hit = el(
+      "path",
+      {
+        d: curve.getAttribute("d"),
+        fill: "none",
+        stroke: "transparent",
+        "stroke-width": 12,
+      },
+      svg
+    );
+    const spread = Math.log(9) / b.alpha;
+    hoverable(
+      hit,
+      tip,
+      [
+        b.label,
+        `D_b ${fmt(b.D)} (score 50%)`,
+        `α_b ${b.alpha.toFixed(3)}`,
+        `Score 10% to 90% from ${fmt(b.D - spread)} to ${fmt(b.D + spread)}`,
+      ],
+      () => curve.setAttribute("stroke-width", 5),
+      () => curve.setAttribute("stroke-width", 3)
     );
     // A label in empty space, joined to its curve by a thin line.
     const cy = sigmoid(b.alpha * (cx - b.D));
