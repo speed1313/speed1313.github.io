@@ -860,7 +860,7 @@ charts.curves = (root, d) => {
       tip,
       [
         b.label,
-        `D_b ${fmt(b.D)} (score 50%)`,
+        `D_b ${fmt(b.D)}`,
         `α_b ${b.alpha.toFixed(3)}`,
         `Score 10% to 90% from ${fmt(b.D - spread)} to ${fmt(b.D + spread)}`,
       ],
@@ -1451,6 +1451,7 @@ const STYLE = `
 .eci-legend i.line{height:.2rem;width:1rem;border-radius:2px}
 .eci-note{margin:.4rem 0 0;opacity:.75;font-size:.78rem;line-height:1.5}
 .eci-tip{position:absolute;z-index:5;pointer-events:none;background:var(--background);border:1px solid var(--border);border-radius:.5rem;padding:.4rem .6rem;box-shadow:0 4px 14px rgb(0 0 0/.15);font-size:.75rem;line-height:1.45;max-width:18rem}
+.eci-chart sub{margin-left:.12em}
 .eci-tip strong{display:block;margin-bottom:.1rem}
 `;
 
