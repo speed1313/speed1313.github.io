@@ -119,7 +119,7 @@ JGraphQA-Refined ($D_b = 29$) は能力の低い AI モデルでも高いスコ�
 <figcaption>ベンチマークの難易度。点は難易度 <i>D</i><sub>b</sub>、帯はスコアが 10% から 90% になる能力の範囲です。</figcaption>
 </figure>
 
-最も難しいのは ZeroBench で、HLE-Diamond (142)、SimpleQA Verified (129) が続きます。反対に、JGraphQA-Refined、RealWorldQA、CountBenchQA は難易度が 30 前後で、今回の AI モデルにとってはほぼ飽和しています。直感ともよく合う結果です。
+最も難しいのは ZeroBench で、HLE-Diamond (142)、SimpleQA Verified (129) が続きます。反対に、JGraphQA-Refined、RealWorldQA、CountBenchQA は難易度が 30 前後で、今回用いた評価対象のモデルにとってはほぼ飽和しています。直感ともよく合う結果です。
 
 IFBench は帯が非常に長く ($\alpha_b$ が小さく)、能力の高い AI モデルでもスコアがあまり伸びません。能力とスコアの関係が弱いベンチマークであることがわかります。
 
