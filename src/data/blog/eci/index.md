@@ -108,7 +108,9 @@ GPT-6 Astra と Claude Opus 5.5 が上位に並び、オープンモデルの中
 <figcaption>4 つのベンチマークの、AI モデルの能力に対するスコア。点は実際のスコア、曲線はフィットした ECI の統計モデルです。</figcaption>
 </figure>
 
-JGraphQA-Refined ($D_b = 29$) は能力の低い AI モデルでも高いスコアを取れる易しいベンチマークで、HakushoBench ($D_b = 67$) はそれより難しいことがわかります。CharXiv Reasoning ($D_b = 68$) は HakushoBench とほぼ同じ難易度で、曲線もほとんど重なっています。ZeroBench ($D_b = 156$) は、最も能力の高い AI モデル (150) でもスコアが 50% に届かない、非常に難しいベンチマークです。
+JGraphQA-Refined と HakushoBench は日本語の図表を読み取るベンチマーク、CharXiv Reasoning は英語の論文の図表を読み取って推論するベンチマーク、ZeroBench はフロンティアの AI モデルでも解けないように作られた、画像を使った推論のベンチマークです。
+
+JGraphQA-Refined ($D_b = 29$) は能力の低い AI モデルでも高いスコアを取れる易しいベンチマークで、HakushoBench ($D_b = 67$) はそれより難しいことがわかります。CharXiv Reasoning ($D_b = 68$) は HakushoBench とほぼ同じ難易度で、曲線もほとんど重なっています。ZeroBench ($D_b = 156$) は、最も能力の高い GPT-6 Astra (150) でもスコアが 50% に届かない、非常に難しいベンチマークです。
 
 すべてのベンチマークの難易度 $D_b$ と傾き $\alpha_b$ を一つの図にまとめると、次のようになります。点が難易度 (スコアが 50% になる能力)、帯はスコアが 10% から 90% に上がる能力の範囲で、帯が短いほど傾きが急です。
 
