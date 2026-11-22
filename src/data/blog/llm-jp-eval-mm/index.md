@@ -6,7 +6,7 @@ slug: llm-jp-eval-mm
 featured: false
 draft: false
 tags:
-  - Benchmarks
+  - Evaluations
 description: "本稿では、Silviaseさんと共同開発している、llm-jp-eval-mmという、視覚言語モデルの日本語性能を評価するツールを紹介します。"
 ---
 

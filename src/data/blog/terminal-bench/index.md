@@ -6,7 +6,7 @@ slug: terminal-bench
 featured: false
 draft: false
 tags:
-  - Benchmarks
+  - Evaluations
 description: "本稿では、現在最も重要なベンチマークの一つである Terminal-Bench と、その評価フレームワークである Harbor について解説します。"
 ---
 
