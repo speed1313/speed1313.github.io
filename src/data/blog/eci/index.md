@@ -97,7 +97,7 @@ $$
 <figcaption>ECI による AI モデルのランキング。平均スコアによる順位と比べられます。</figcaption>
 </figure>
 
-GPT-6 Astra と Claude Opus 5.5 が上位に並び、オープンモデルでは Kimi K3.1 Pro が 136 と、Gemini 3.8 Flash を上回っています。ECI による順位は、平均スコアによる順位とほとんど同じです。
+GPT-6 Astra と Claude Opus 5.5 が上位に並び、オープンモデルの中では Kimi K3.1 Pro が 136 で最も高くなっています。ECI による順位は、平均スコアによる順位とほとんど同じです。
 
 ### ベンチマークの難易度
 
