@@ -1308,8 +1308,8 @@ charts.robustness = (root, d) => {
     yLabel: "Kendall τ with the full mean ranking",
   });
   const series = [
-    ["random", ACCENT, "Missing at random"],
-    ["window", "#4e79a7", "Only benchmarks near the model's level"],
+    ["random", ACCENT, "Random"],
+    ["window", "#4e79a7", "Band"],
   ];
   for (const [scenario, col, name] of series) {
     const rows = d.robustness.filter(r => r.scenario === scenario);
@@ -1368,8 +1368,8 @@ charts.window = (root, d) => {
   toggle(
     ctl,
     [
-      ["window", "Near the model's level"],
-      ["random", "At random"],
+      ["random", "Random"],
+      ["window", "Band"],
     ],
     scenario,
     v => {
