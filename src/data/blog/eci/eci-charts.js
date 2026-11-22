@@ -1346,10 +1346,15 @@ charts.robustness = (root, d) => {
   );
 };
 
-// Which scores the window keeps: models by capability (rows) against
-// benchmarks by difficulty (columns).
+// Which scores are kept, for each way of removing them: models by capability
+// (rows) against benchmarks by difficulty (columns).
 charts.window = (root, d) => {
-  const steps = d.robustness.filter(r => r.scenario === "window");
+  const steps = {
+    window: d.robustness.filter(r => r.scenario === "window"),
+    random: d.robustness.filter(r => r.scenario === "random"),
+  };
+  let scenario = "window",
+    k = 3;
   const models = [...d.settings].sort((a, b) => b.mean - a.mean);
   const benches = [...d.benchmarks].sort((a, b) => a.D - b.D);
   // Same positions as the experiment: 0 (weakest, easiest) to 1.
@@ -1360,6 +1365,18 @@ charts.window = (root, d) => {
     benches.map((b, i) => [b.key, i / (benches.length - 1)])
   );
   const ctl = controls(root);
+  toggle(
+    ctl,
+    [
+      ["window", "Near the model's level"],
+      ["random", "At random"],
+    ],
+    scenario,
+    v => {
+      scenario = v;
+      slide.set(k);
+    }
+  );
   const cell = 15,
     m = { l: 150, t: 34, r: 10, b: 30 };
   const W = m.l + benches.length * cell + m.r,
@@ -1413,30 +1430,62 @@ charts.window = (root, d) => {
       )
     )
   );
-  function draw(k) {
-    const step = steps[k];
-    const w = step.q;
-    models.forEach((s, i) => {
-      const dist = benches.map(b =>
-        Math.abs(posM.get(s.key) - posB.get(b.key))
-      );
-      // A model keeps at least its 4 nearest benchmarks, as in the experiment.
-      const fourth = [...dist].sort((a, b) => a - b)[3];
-      benches.forEach((b, j) => {
-        const keep = dist[j] <= w || dist[j] <= fourth;
+
+  // A small seeded generator, so the random example is the same each time.
+  function rng(seed) {
+    let a = seed >>> 0;
+    return () => {
+      a = (a + 0x6d2b79f5) >>> 0;
+      let t = a;
+      t = Math.imul(t ^ (t >>> 15), t | 1);
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  function keepMask(step) {
+    if (scenario === "window") {
+      return models.map(s => {
+        const dist = benches.map(b =>
+          Math.abs(posM.get(s.key) - posB.get(b.key))
+        );
+        // A model keeps at least its 4 nearest benchmarks, as in the experiment.
+        const fourth = [...dist].sort((a, b) => a - b)[3];
+        return dist.map(x => x <= step.q || x <= fourth);
+      });
+    }
+    const next = rng(1000 + Math.round(step.q * 100));
+    return models.map(() => {
+      const row = benches.map(() => next() >= step.q);
+      // At least 4 benchmarks per model, as in the experiment.
+      while (row.filter(Boolean).length < 4)
+        row[Math.floor(next() * row.length)] = true;
+      return row;
+    });
+  }
+
+  function draw() {
+    const step = steps[scenario][k];
+    keepMask(step).forEach((row, i) =>
+      row.forEach((keep, j) => {
         rects[i][j].setAttribute("fill", keep ? ACCENT : "none");
         rects[i][j].setAttribute("stroke", keep ? "none" : FAINT);
-      });
-    });
-    status.textContent = `${Math.round(step.removed * 100)}% of the scores removed · τ = ${step.eci[0].toFixed(2)}`;
+      })
+    );
+    const tau =
+      scenario === "random"
+        ? `τ = ${step.eci[0].toFixed(2)} (mean of 30 draws)`
+        : `τ = ${step.eci[0].toFixed(2)}`;
+    status.textContent = `${Math.round(step.removed * 100)}% of the scores removed · ${tau}`;
   }
-  slider(
+  const slide = slider(
     ctl,
-    "Window",
-    { min: 0, max: steps.length - 1, step: 1, value: 3 },
-    k => {
-      draw(k);
-      return steps[k].q === 1 ? "all" : `±${steps[k].q}`;
+    "Removed",
+    { min: 0, max: 7, step: 1, value: k },
+    v => {
+      k = v;
+      draw();
+      return "";
     }
   );
 };
