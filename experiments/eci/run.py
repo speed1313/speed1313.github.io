@@ -114,16 +114,31 @@ def main() -> None:
         t = [true_mean[m] for m in complete]
         return float(kendalltau(t, [est[m] for m in complete]).statistic)
 
+    # Baseline: the mean over the benchmarks every model still has, which is
+    # how scores are usually compared. With no shared benchmark it cannot rank
+    # the models at all, which counts as tau = 0 (a random ranking).
+    def common_mean(kept):
+        have = {}
+        for m, b, _ in kept:
+            have.setdefault(m, set()).add(b)
+        shared = set.intersection(*(have.get(m, set()) for m in complete))
+        if not shared:
+            return None, 0
+        return {m: np.mean([score[(m, b)] for b in shared]) for m in complete}, len(shared)
+
+    def summary(xs):
+        return [r(np.mean(xs)), r(np.percentile(xs, 10)), r(np.percentile(xs, 90))]
+
     robustness = []
     for scenario in ("random", "difficulty"):
         for p in [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7]:
-            taus_mean, taus_eci = [], []
+            taus_common, taus_eci, n_shared, ranked = [], [], [], 0
             for _ in range(30 if p > 0 else 1):
                 kept = drop(p, scenario)
-                by_m = {}
-                for m, b, y in kept:
-                    by_m.setdefault(m, []).append(y)
-                taus_mean.append(tau({m: np.mean(v) for m, v in by_m.items()}))
+                est, k = common_mean(kept)
+                taus_common.append(tau(est) if est else 0.0)
+                n_shared.append(k)
+                ranked += est is not None
                 present = sorted({b for _, b, _ in kept}, key=benchmarks.index)
                 anchor = max(present, key=lambda b: sum(1 for _, b2, _ in kept if b2 == b))
                 f = eci.fit(complete, present, kept, anchor)
@@ -132,8 +147,10 @@ def main() -> None:
                 {
                     "scenario": scenario,
                     "p": p,
-                    "mean": [r(np.mean(taus_mean)), r(np.percentile(taus_mean, 10)), r(np.percentile(taus_mean, 90))],
-                    "eci": [r(np.mean(taus_eci)), r(np.percentile(taus_eci, 10)), r(np.percentile(taus_eci, 90))],
+                    "common": summary(taus_common),
+                    "common_ranked": r(ranked / len(taus_common), 3),
+                    "common_benchmarks": r(np.mean(n_shared), 1),
+                    "eci": summary(taus_eci),
                 }
             )
 
