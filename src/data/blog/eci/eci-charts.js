@@ -1074,8 +1074,8 @@ function scatter(
 charts.domains = (root, d) => {
   const rows = d.settings.filter(s => s.text !== null && s.multimodal !== null);
   const W = 640,
-    H = 460,
-    m = { t: 30, b: 20 };
+    H = 320,
+    m = { t: 30, b: 14 };
   const svg = svgRoot(root, W, H);
   const tip = tooltip(root);
   const xs = [250, 390];
@@ -1490,27 +1490,129 @@ charts.window = (root, d) => {
   );
 };
 
-charts.params = (root, d) => {
-  const pts = d.settings
-    .filter(s => s.params_b)
-    .map(s => ({
-      x: s.params_b,
-      y: s.eci,
-      color: ACCENT,
-      tip: [
-        label(s),
-        `${s.params_b >= 100 ? s.params_b.toFixed(0) : s.params_b}B parameters (total)`,
-        `ECI ${fmt(s.eci)}`,
-      ],
-    }));
-  scatter(root, pts, {
-    xDomain: [5, 4000],
-    yDomain: [60, 145],
-    xLog: true,
-    xFmt: t => `${t}B`,
-    xLabel: "Total parameters (log scale)",
-    yLabel: "ECI",
+// Epoch AI's ECI over time: every model, the frontier, and its trend.
+charts.frontier = (root, d) => {
+  const e = d.epoch;
+  const W = 640,
+    H = 380,
+    m = { l: 56, r: 16, t: 14, b: 48 };
+  const svg = svgRoot(root, W, H);
+  const tip = tooltip(root);
+  const t0 = 2023;
+  const t1 = Math.ceil(e.line.at(-1)[0] * 4) / 4;
+  const x = linear([t0, t1], [m.l, W - m.r]);
+  const y = linear([90, 195], [H - m.b, m.t]);
+  const years = [];
+  for (let yr = t0; yr <= t1; yr++) years.push(yr);
+  axes(svg, x, y, {
+    xTicks: years,
+    xFmt: String,
+    xLabel: "Release date",
+    yLabel: "ECI (Epoch AI)",
   });
+  // Data until here; the rest is the extrapolation.
+  const lastT = Math.max(...e.models.map(mm => mm.t));
+  el(
+    "rect",
+    {
+      x: x(lastT),
+      y: m.t,
+      width: x(t1) - x(lastT),
+      height: H - m.b - m.t,
+      fill: FAINT,
+      opacity: 0.5,
+    },
+    svg
+  );
+  el(
+    "text",
+    {
+      x: x(lastT) + 6,
+      y: H - m.b - 8,
+      class: "eci-small",
+      fill: DIM,
+    },
+    svg
+  ).textContent = "Forecast";
+  // Trend and its 95% interval.
+  el(
+    "polygon",
+    {
+      points: e.line
+        .map(([t, , lo]) => `${x(t)},${y(lo)}`)
+        .concat([...e.line].reverse().map(([t, , , hi]) => `${x(t)},${y(hi)}`))
+        .join(" "),
+      fill: ACCENT,
+      opacity: 0.15,
+    },
+    svg
+  );
+  el(
+    "polyline",
+    {
+      points: e.line.map(([t, v]) => `${x(t)},${y(v)}`).join(" "),
+      fill: "none",
+      stroke: ACCENT,
+      "stroke-width": 2,
+      "stroke-dasharray": "6 4",
+    },
+    svg
+  );
+  const inRange = e.models.filter(mm => mm.t >= t0 && mm.eci >= y.domain[0]);
+  for (const mm of inRange.filter(mm => !mm.frontier)) {
+    const c = el(
+      "circle",
+      { cx: x(mm.t), cy: y(mm.eci), r: 3.5, fill: DIM, opacity: 0.45 },
+      svg
+    );
+    hoverable(c, tip, modelTip(mm));
+  }
+  const front = inRange.filter(mm => mm.frontier);
+  el(
+    "polyline",
+    {
+      points: front.map(mm => `${x(mm.t)},${y(mm.eci)}`).join(" "),
+      fill: "none",
+      stroke: FG,
+      "stroke-width": 1,
+      opacity: 0.35,
+    },
+    svg
+  );
+  for (const mm of front) {
+    const c = el("circle", { cx: x(mm.t), cy: y(mm.eci), r: 5, fill: FG }, svg);
+    hoverable(c, tip, modelTip(mm, true));
+  }
+  const end = e.line.at(-1);
+  el(
+    "text",
+    {
+      x: x(end[0]) - 4,
+      y: y(end[1]) + 26,
+      "text-anchor": "end",
+      class: "eci-label",
+      fill: ACCENT,
+    },
+    svg
+  ).textContent = `+${e.slope} per year`;
+
+  function modelTip(mm, frontier = false) {
+    return [
+      mm.name,
+      `${mm.date}${mm.org ? ` · ${mm.org}` : ""}`,
+      `ECI ${mm.eci.toFixed(1)}${mm.lo !== null ? ` (90%: ${mm.lo.toFixed(1)}–${mm.hi.toFixed(1)})` : ""}`,
+      ...(frontier ? ["New frontier at release"] : []),
+    ];
+  }
+  legend(root, [
+    ["New frontier at release", FG],
+    ["Other models", DIM],
+    [
+      `Frontier trend since ${e.trend_from.slice(0, 7)} (95% interval)`,
+      ACCENT,
+      "line",
+    ],
+  ]);
 };
 
 // ---------------------------------------------------------------------------

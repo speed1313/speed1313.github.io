@@ -9,11 +9,13 @@ x 27 benchmarks). The index is anchored at GPT-6 Astra = 150 and
 Qwen3.5-9B = 100, as SEM-ECI on the leaderboard.
 """
 
+import csv
 import json
+from datetime import date
 from pathlib import Path
 
 import numpy as np
-from scipy.stats import kendalltau
+from scipy.stats import kendalltau, t as student_t
 
 import eci
 
@@ -27,10 +29,68 @@ ANCHOR_BENCHMARK = "gpqa"
 HAS_TEXT_QUESTIONS = {"hle_diamond"}
 ANCHORS = {"qwen35-9b__thinking": 100.0, "gpt6-astra__max": 150.0}
 SEED = 0
+EPOCH = HERE / "data" / "epoch_eci_scores.csv"
+EPOCH_RETRIEVED = "2026-11-23"
+# The frontier trend is fitted from the first reasoning model (o1-preview),
+# as Epoch AI's reasoning-era trend; it is extrapolated a year past the data.
+TREND_FROM = "2024-09-12"
 
 
 def r(x, n=3):
     return None if x is None else round(float(x), n)
+
+
+def years(d: str) -> float:
+    y, m, dd = map(int, d.split("-"))
+    start = date(y, 1, 1)
+    return y + (date(y, m, dd) - start).days / (date(y + 1, 1, 1) - start).days
+
+
+def epoch_trend() -> dict:
+    """Epoch AI's ECI over time: the frontier and a linear trend through it."""
+    rows = [row for row in csv.DictReader(EPOCH.open()) if row["eci"] and row["date"]]
+    rows.sort(key=lambda row: (row["date"], -float(row["eci"])))
+    best = -np.inf
+    models = []
+    for row in rows:
+        eci_ = float(row["eci"])
+        # On the frontier: more capable than every model released before it.
+        frontier = eci_ > best
+        best = max(best, eci_)
+        models.append(
+            {
+                "name": row["Display name"] or row["Model"],
+                "date": row["date"],
+                "eci": eci_,
+                "lo": float(row["eci_ci_low"]) if row["eci_ci_low"] else None,
+                "hi": float(row["eci_ci_high"]) if row["eci_ci_high"] else None,
+                "org": row["Organization"],
+                "open": row["Accessibility group"] != "Closed weights",
+                "frontier": frontier,
+            }
+        )
+    fit = [m for m in models if m["frontier"] and m["date"] >= TREND_FROM]
+    x = np.array([years(m["date"]) for m in fit])
+    y = np.array([m["eci"] for m in fit])
+    slope, intercept = np.polyfit(x, y, 1)
+    n = len(x)
+    resid = y - (slope * x + intercept)
+    s2 = resid @ resid / (n - 2)
+    tq = student_t.ppf(0.975, n - 2)
+    end = max(years(m["date"]) for m in models) + 1
+    grid = np.linspace(years(TREND_FROM), end, 60)
+    # 95% interval of the fitted line (the mean), widening away from the data.
+    se = np.sqrt(s2 * (1 / n + (grid - x.mean()) ** 2 / ((x - x.mean()) ** 2).sum()))
+    line = [[r(g, 4), r(slope * g + intercept, 2), r(slope * g + intercept - tq * se_, 2), r(slope * g + intercept + tq * se_, 2)] for g, se_ in zip(grid, se)]
+    return {
+        "retrieved": EPOCH_RETRIEVED,
+        "trend_from": TREND_FROM,
+        "slope": r(slope, 2),
+        "n_fit": n,
+        "last_date": max(m["date"] for m in models),
+        "line": line,
+        "models": [{**m, "t": r(years(m["date"]), 4)} for m in models],
+    }
 
 
 def main() -> None:
@@ -224,6 +284,7 @@ def main() -> None:
         "scores": [[m, b, r(y, 4), r(pred[(m, b)], 4), r(loo[(m, b)], 4)] for m, b, y in obs],
         "frames": frames,
         "robustness": robustness,
+        "epoch": epoch_trend(),
         "robustness_full_tau": r(tau({m: C[m] for m in complete})),
     }
     OUT.parent.mkdir(parents=True, exist_ok=True)

@@ -3,7 +3,8 @@
 The leaderboard (https://llm-jp.github.io/simple-evals-mm/) publishes its
 results as `data.js` and its SEM-ECI fit as `trends.js`. This keeps what the
 experiment needs: one score per (setting, benchmark), the benchmark metadata,
-and SEM-ECI for comparison.
+and SEM-ECI for comparison. It also saves Epoch AI's published ECI scores
+(https://epoch.ai/eci, CC BY 4.0) for the long-run trend.
 
     uv run fetch_data.py
 """
@@ -15,6 +16,9 @@ from pathlib import Path
 
 SITE = "https://llm-jp.github.io/simple-evals-mm"
 OUT = Path(__file__).parent / "data" / "leaderboard.json"
+# Epoch AI's ECI scores (CC BY 4.0), for the long-run trend.
+EPOCH_URL = "https://epoch.ai/data/eci_scores.csv"
+EPOCH_OUT = Path(__file__).parent / "data" / "epoch_eci_scores.csv"
 
 
 def load_js_object(url: str, name: str) -> dict:
@@ -97,6 +101,10 @@ def main() -> None:
         )
         + "\n"
     )
+    with urllib.request.urlopen(EPOCH_URL) as r:
+        EPOCH_OUT.write_bytes(r.read())
+    print(f"Epoch AI ECI scores -> {EPOCH_OUT}")
+
     print(
         f"{len(settings)} settings, {len(tasks)} benchmarks, "
         f"{len(scores)} scores (updated {lb['updated']}) -> {OUT}"

@@ -1,7 +1,7 @@
 ---
 title: "Epoch Capabilities Index (ECI) を理解する"
 author: speed1313
-pubDatetime: 2026-11-22
+pubDatetime: 2026-11-23
 slug: eci
 featured: false
 draft: false
@@ -14,7 +14,7 @@ description: "AI モデルの総合的な能力値を推定する ECI の仕組�
 
 AI モデルの能力が急速に向上する中で、その向上を長期的にトラッキングする指標として、Epoch AI が開発した Epoch Capabilities Index ([ECI](https://epoch.ai/eci)) が注目されています。[OpenAI](https://openai.com/index/research-acceleration-jagged-frontier/) や [Anthropic](https://assets.claude.com/d00db56fa754a1b115b6dd7cb2e3c342ee809620.pdf) も独自の ECI を算出し、モデル開発の加速度合いをモニタリングしています。
 
-この記事では、まず ECI の基本的な方法を解説します。そのうえで、評価フレームワーク [simple-evals-mm](https://llm-jp.github.io/simple-evals-mm/) のリーダーボードのスコアから実際に ECI を算出し、ECI の解釈方法や利用ケースを紹介します。
+この記事では、まず ECI の基本的な方法を解説します。そのうえで、評価ライブラリ [simple-evals-mm](https://llm-jp.github.io/simple-evals-mm/) のリーダーボードのスコアから実際に ECI を算出し、ECI の解釈方法や利用ケースを紹介します。
 
 ## AI モデルの能力の長期的なトレンドをどう追うか
 
@@ -73,7 +73,9 @@ $$
 
 ### データ
 
-評価結果には、基盤モデルの評価ライブラリ simple-evals-mm の[リーダーボード](https://llm-jp.github.io/simple-evals-mm/) (2026 年 11 月 21 日時点) のスコアを使います。具体的には、13 個の AI モデルを 27 個のベンチマーク (日本語と英語の、テキストのみのタスクとマルチモーダルのタスク) で評価した、すべての (モデル, ベンチマーク) の組 (13 × 27 = 351 組) のスコアを使います。簡単のため、各モデルは最も推論の高い設定 (effort) の結果だけを使い、テキスト専用のモデルは除きました。
+評価結果には、[simple-evals-mm](https://github.com/llm-jp/simple-evals-mm) のリーダーボードのスコアを使います。simple-evals-mm は様々な AI モデルを評価できる評価ライブラリで、テキストのみのタスクと画像を含むマルチモーダルのタスクを合わせて 50 以上のタスクがサポートされています。その[リーダーボード](https://llm-jp.github.io/simple-evals-mm/)には、フロンティアの AI モデルから 30B 級、10B 級のオープンモデルまでを、多くのタスクで評価した結果が載っています。
+
+ここでは、2026 年 11 月 21 日時点のリーダーボードから、13 個の AI モデルを 27 個のベンチマークで評価した、すべての (モデル, ベンチマーク) の組 (13 × 27 = 351 組) のスコアを使います。簡単のため、各モデルは最も推論の高い設定 (effort) の結果だけを使い、テキスト専用のモデルは除きました。
 
 推定した能力 $C_m$ は、GPT-6 Astra = 150、Qwen3.5-9B = 100 をアンカー (基準) として線形変換します。
 
@@ -175,7 +177,7 @@ $$
 
 このように、予測と実際のスコアの差を見ると、タスクやドメインへの特化の度合いを定量的に判断できます。ECI の元論文でも、Claude のモデルはコーディングベンチマークの SWE-Bench Verified で予測を上回るといった例が挙げられています。
 
-### テキストとマルチモーダルで能力は違うか
+### テキストとマルチモーダルに分けた ECI
 
 ここまでは、各 AI モデルの能力を一つの値 $C_m$ で表してきました。しかし実際には、テキストのタスクは得意でも画像を含むタスクは苦手、といった AI モデルもあるはずです。
 
@@ -190,45 +192,40 @@ $$
 
 このように、テキストとマルチモーダルのように性質の大きく異なるタスクの間では、能力を一つの値で表す仮定は成り立たないことがあります。ECI による順位を見るときは、どのベンチマークで推定した値なのかを意識する必要があります。
 
-### パラメータ数と能力
-
-オープンモデルについて、総パラメータ数と ECI の関係を見てみます。
-
-<figure>
-<div data-eci-chart="params"></div>
-<figcaption>オープンモデルの総パラメータ数 (対数軸) と ECI。</figcaption>
-</figure>
-
-大きな AI モデルほど能力が高い傾向はありますが、同じ規模でのばらつきが大きく、たとえば 27B の Qwen3.8-27B (111) は 300B を超える GLM-5.3 Flash (109) と同程度です。このように、パラメータ数の割に能力の高い、効率的な AI モデルを見つけるのにも使えます。ただし、推論のコストや速度、MoE の活性パラメータ数は考慮していません。
-
 ### 将来の能力を予測する
 
-ECI の重要な用途の一つは、フロンティアの AI モデルの能力の推移を外挿して、将来を予測することです。元論文では、多くの (モデル, ベンチマーク) の組の結果を使って、数年間の ECI の推移を線形関数でフィットし、それを外挿して将来の AI モデルの能力を予測する例が紹介されています。
+ECI の重要な用途の一つは、フロンティアの AI モデルの能力の推移を外挿して、将来を予測することです。元論文では、リリースした時点で最も能力が高かった AI モデル (フロンティア) の推移を直線でフィットし、それを外挿して今後の能力を予測しています。
 
-今回のデータは 2026 年 3 月から 10 月にリリースされた AI モデルだけで、期間が短く、フロンティアのモデルも少ないため、このような予測には使えません。長い期間にわたる多くのデータがあれば、ECI は予測にも使うことができます。
+今回の simple-evals-mm のデータはリリース時期が 2026 年の数か月に限られるので、ここでは長期間のデータがある Epoch AI の ECI (2026 年 11 月 23 日時点) を使って、同じように描きました。推論モデルが登場した 2024 年 9 月以降のフロンティアの AI モデルに直線をフィットすると、ECI は年に約 16.6 ポイントのペースで伸びています。この直線を外挿すると、1 年後の 2027 年 11 月には 188 程度 (95% 区間 186 から 191) になると予測されます。
+
+<figure>
+<div data-eci-chart="frontier"></div>
+<figcaption>Epoch AI の ECI の推移。黒い点はリリースした時点で最も ECI が高かった AI モデル、破線は 2024 年 9 月以降のそれらの AI モデルにフィットした直線とその外挿 (帯は 95% 区間) です。出典: Epoch AI, <a href="https://epoch.ai/eci">Epoch Capabilities Index</a> のデータ (<a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>) をもとに作成。</figcaption>
+</figure>
+
+OpenAI や Anthropic は、実際の ECI と予測されたトレンドとのずれを見ることで、AI 研究の自動化などによって能力の伸びが加速しているかを確認しています。
 
 ## ECI を解釈するうえでの注意点
 
-ここまでの実験と論文の議論から、ECI を解釈するうえでの注意点をまとめます。
+ECI は AI モデルの能力の推移を追うのに便利なツールである一方、その値を解釈するうえではいくつか注意が必要です。
 
-- **ドメインに特化した能力は測れない**: ECI は AI モデルの能力を一つの数で表すので、GUI 操作のように特化した能力は全体の ECI に表れません。ドメイン別に ECI を推定すれば、ある程度回避できます。
-- **ベンチマークの選び方で結果が変わる**: どのベンチマークを含めるかで順位は変わります。たとえば知識を問うベンチマークを多く含めると、パラメータ数の大きな AI モデルが有利になります。
+- **ECI だけではドメインごとの得意不得意はわからない**: ECI は AI モデルの能力を一つの値で表すので、GUI 操作やコーディングのようなドメインに特化した能力も、ほかの能力とまとめて一つの値になります。そのため、ECI が同じでも、ドメインごとの得意不得意は異なることがあります。ドメイン別に ECI を推定したり、予測と実際のスコアの差を見たりすることで、ある程度把握できます。
+- **ベンチマークの選び方で結果が変わる**: どのベンチマークを含めるかによって、推定される ECI の値や AI モデルの順位が変わります。たとえば知識を問うベンチマークを多く含めると、パラメータ数の大きな AI モデルが有利になります。
 - **難しいベンチマークの不足**: 最も能力の高い AI モデルより難しいベンチマークが少ないと、上位のモデルの差や今後の伸びを測りにくくなります。
-- **差の解釈が難しい**: ECI の差が何を意味するかは自明ではありません。「GPT-4 から GPT-5 への差の何倍」のように既知のモデルの差で解釈する方法や、METR のタスクの時間 (time horizon) に対応付けて解釈する方法が提案されています。
+- **ECI の値の解釈が難しい**: ECI の値は抽象的な尺度で、絶対値には意味がないので、AI モデル間の差で解釈します。しかし、その差がどのような能力の違いを意味するのかも自明ではありません。「GPT-4 から GPT-5 への差の何倍」のように既知のモデルの差で解釈する方法や、[METR のタスクの時間 (time horizon)](https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/) に対応付けて解釈する方法が提案されています。
 
-ほかにも、ECI を解釈するうえでの注意点はいくつもあります。詳しくは、元論文や Epoch AI の [ECI のページ](https://epoch.ai/eci)を参考にしてください。
+ほかにも、ECI を解釈するうえでの注意点はいくつもあります。詳しくは、[元論文](https://arxiv.org/abs/2512.00193)や Epoch AI の [ECI のページ](https://epoch.ai/eci)、ECI の開発者へのインタビュー記事 [The most important number in AI](https://asteriskmag.substack.com/p/the-most-important-number-in-ai) (Asterisk Magazine) を参考にしてください。
 
 ## まとめ
 
-ECI は、ロジスティック関数というシンプルな式で、多くのベンチマークのスコアから AI モデルの能力とベンチマークの難易度を同時に推定する方法でした。この記事では、simple-evals-mm の評価結果に ECI の方法を適用して、その挙動や機能を確かめました。
+この記事では、ECI の仕組みを解説し、simple-evals-mm のリーダーボードに載っているスコアから実際に ECI を算出して、その解釈方法や利用ケースを紹介しました。
 
-ECI は、既存のベンチマークの結果を活用して、AI モデルの能力の長期的なトレンドや各ベンチマークの難易度を見ることができる、とても便利なツールです。[Anthropic](https://assets.claude.com/d00db56fa754a1b115b6dd7cb2e3c342ee809620.pdf) や [OpenAI](https://openai.com/index/research-acceleration-jagged-frontier/) も独自の ECI を算出して、モデル開発の加速度合いをモニタリングしています。今後 ECI を使った分析を読む際に、この記事が参考になれば幸いです。
+ECI は、既存のベンチマークの結果を再利用しながら、AI モデルの能力の長期的なトレンドを追える便利なツールです。[Anthropic](https://assets.claude.com/d00db56fa754a1b115b6dd7cb2e3c342ee809620.pdf) や [OpenAI](https://openai.com/index/research-acceleration-jagged-frontier/) も独自の ECI を算出して、モデル開発の加速度合いをモニタリングしています。ECI を使った分析を読む際に、この記事が参考になれば幸いです。
 
 ## 参考文献
 
 - Anson Ho, Jean-Stanislas Denain, David Atanasov, Samuel Albanie, Rohin Shah. [A Rosetta Stone for AI Benchmarks](https://arxiv.org/abs/2512.00193). arXiv, 2025.
 - Epoch AI. [Epoch Capabilities Index](https://epoch.ai/eci).
-- Epoch AI. [Updating the ECI methodology to use a Bayesian model](https://epoch.ai/publications/eci-bayesian-methodology). 2026.
 - Asterisk Magazine. [The most important number in AI](https://asteriskmag.substack.com/p/the-most-important-number-in-ai). 2026.
 - OpenAI. [Research acceleration: The jagged frontier](https://openai.com/index/research-acceleration-jagged-frontier/). 2026.
 - Anthropic. [Claude Fable 5 & Claude Mythos 5 System Card](https://assets.claude.com/d00db56fa754a1b115b6dd7cb2e3c342ee809620.pdf). 2026.

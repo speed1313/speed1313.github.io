@@ -12,7 +12,8 @@ uv run run.py          # fit and analyze -> src/data/blog/eci/eci-data.json
 | --- | --- |
 | `eci.py` | The model, `score = sigmoid(alpha_b (C_m - D_b))`, its fit (`scipy.optimize.least_squares`, with the optimizer's path), domain refits, and rescaling to an index. |
 | `fetch_data.py` | Downloads the leaderboard's `data.js` and `trends.js` and keeps one score per (setting, benchmark), benchmark metadata, and SEM-ECI. |
-| `run.py` | Main fit, optimization path, text and multimodal indices, leave-one-out prediction, robustness to missing scores, and comparison with SEM-ECI. |
+| `run.py` | Main fit, optimization path, text and multimodal indices, leave-one-out prediction, robustness to missing scores (random and band), and the frontier trend of Epoch AI's ECI. |
 | `data/leaderboard.json` | Snapshot of the leaderboard (updated 2026-11-21). |
+| `data/epoch_eci_scores.csv` | Epoch AI's published ECI scores (retrieved 2026-11-23, [CC BY 4.0](https://epoch.ai/eci)), for the frontier trend. |
 
 The interactive charts in the post (`src/data/blog/eci/eci-charts.js`) read `eci-data.json`.
