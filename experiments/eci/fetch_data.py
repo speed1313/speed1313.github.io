@@ -62,6 +62,8 @@ def main() -> None:
                     "type": m["type"],
                     "released": m["released"],
                     "params_b": m["params_b"],
+                    # "max" is the highest effort the leaderboard ran.
+                    "best": cfg == "max",
                 }
             )
             for task, r in c["tasks"].items():

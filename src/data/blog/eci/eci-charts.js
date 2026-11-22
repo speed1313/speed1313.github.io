@@ -63,7 +63,7 @@ function niceTicks(lo, hi, n = 6) {
 const sigmoid = z => 1 / (1 + Math.exp(-z));
 const pct = y => `${(y * 100).toFixed(1)}%`;
 const fmt = (x, n = 1) => (x === null || x === undefined ? "–" : x.toFixed(n));
-const label = s => `${s.model} (${s.effort})`;
+const label = s => s.model;
 
 function svgRoot(container, width, height) {
   return el(
@@ -195,7 +195,13 @@ function slider(parent, labelText, { min, max, step, value }, onInput) {
   };
   input.addEventListener("input", update);
   update();
-  return { input, name, set: v => ((input.value = String(v)), update()) };
+  return {
+    input,
+    name,
+    // Set and redraw, or only move the thumb (for an animation).
+    set: v => ((input.value = String(v)), update()),
+    show: v => (input.value = String(v)),
+  };
 }
 
 function toggle(parent, options, value, onChange) {
@@ -275,133 +281,99 @@ const benchOptions = d =>
 
 const charts = {};
 
-// One benchmark's curve, with sliders for D and alpha.
-charts.sigmoid = (root, d) => {
+// The ECI formula on its own: sliders for D, alpha, and a model's C.
+charts.sigmoid = root => {
   const W = 640,
     H = 340,
     m = { l: 56, r: 16, t: 14, b: 48 };
-  let key = "mathvision";
   const ctl = controls(root);
   const svg = svgRoot(root, W, H);
-  const info = html("p", { class: "eci-note" }, root);
-  const tip = tooltip(root);
-  const x = linear([40, 180], [m.l, W - m.r]);
+  const x = linear([0, 200], [m.l, W - m.r]);
   const y = linear([0, 1], [H - m.b, m.t]);
   axes(svg, x, y, {
     yTicks: [0, 0.25, 0.5, 0.75, 1],
     yFmt: t => `${t * 100}%`,
-    xLabel: "Model capability (ECI)",
-    yLabel: "Benchmark score",
+    xLabel: "Model capability C",
+    yLabel: "Predicted score",
   });
-  const gResid = el("g", {}, svg);
-  const midline = el("line", { stroke: DIM, "stroke-dasharray": "3 3" }, svg);
-  const midText = el("text", { class: "eci-small", fill: DIM }, svg);
-  const fitPath = el(
-    "path",
-    {
-      fill: "none",
-      stroke: DIM,
-      "stroke-dasharray": "5 4",
-      "stroke-width": 1.5,
-    },
-    svg
-  );
+  const half = el("line", { stroke: DIM, "stroke-dasharray": "3 3" }, svg);
+  const halfText = el("text", { class: "eci-small", fill: DIM }, svg);
   const path = el(
     "path",
     { fill: "none", stroke: ACCENT, "stroke-width": 3 },
     svg
   );
-  const gPts = el("g", {}, svg);
-
-  let D, alpha;
-  const sD = slider(
-    ctl,
-    "Difficulty D",
-    { min: 20, max: 180, step: 0.5, value: 100 },
-    v => {
-      D = v;
-      draw();
-      return v.toFixed(1);
-    }
+  const guideV = el(
+    "line",
+    { stroke: FG, "stroke-dasharray": "2 3", opacity: 0.6 },
+    svg
   );
-  const sA = slider(
+  const guideH = el(
+    "line",
+    { stroke: FG, "stroke-dasharray": "2 3", opacity: 0.6 },
+    svg
+  );
+  const dot = el("circle", { r: 6, fill: FG }, svg);
+  const dotText = el("text", { class: "eci-label" }, svg);
+
+  const v = { D: 100, alpha: 0.05, C: 130 };
+  slider(ctl, "Difficulty D", { min: 0, max: 200, step: 1, value: v.D }, n => {
+    v.D = n;
+    draw();
+    return n.toFixed(0);
+  });
+  slider(
     ctl,
     "Slope α",
-    { min: 0.005, max: 0.2, step: 0.001, value: 0.05 },
-    v => {
-      alpha = v;
+    { min: 0.01, max: 0.2, step: 0.005, value: v.alpha },
+    n => {
+      v.alpha = n;
       draw();
-      return v.toFixed(3);
+      return n.toFixed(3);
     }
   );
-  select(ctl, "Benchmark", benchOptions(d), key, v => {
-    key = v;
-    reset();
+  slider(ctl, "Capability C", { min: 0, max: 200, step: 1, value: v.C }, n => {
+    v.C = n;
+    draw();
+    return n.toFixed(0);
   });
-  button(ctl, "Reset to the fit", reset);
-
-  function reset() {
-    const b = d.benchMap.get(key);
-    sD.set(b.D);
-    sA.set(b.alpha);
-  }
 
   function draw() {
-    if (D === undefined || alpha === undefined) return;
-    const b = d.benchMap.get(key);
-    const pts = d.byBenchmark.get(key);
+    const { D, alpha, C } = v;
+    if ([D, alpha, C].some(n => n === undefined)) return;
     path.setAttribute("d", curvePath(x, y, D, alpha, x.domain));
-    fitPath.setAttribute("d", curvePath(x, y, b.D, b.alpha, x.domain));
-    midline.setAttribute("x1", x(D));
-    midline.setAttribute("x2", x(D));
-    midline.setAttribute("y1", y(0));
-    midline.setAttribute("y2", y(0.5));
-    midText.setAttribute("x", x(D) + 4);
-    midText.setAttribute("y", y(0) - 6);
-    midText.textContent = "D (score 50%)";
-    gResid.replaceChildren();
-    gPts.replaceChildren();
-    let sse = 0,
-      sseFit = 0;
-    for (const p of pts) {
-      const yhat = sigmoid(alpha * (p.s.eci - D));
-      sse += (yhat - p.y) ** 2;
-      sseFit += (p.fit - p.y) ** 2;
-      el(
-        "line",
-        {
-          x1: x(p.s.eci),
-          x2: x(p.s.eci),
-          y1: y(p.y),
-          y2: y(yhat),
-          stroke: "#e15759",
-          "stroke-width": 1.2,
-          opacity: 0.7,
-        },
-        gResid
-      );
-      const c = el(
-        "circle",
-        { cx: x(p.s.eci), cy: y(p.y), r: 5, fill: FG, opacity: 0.85 },
-        gPts
-      );
-      hoverable(c, tip, () => [
-        label(p.s),
-        `ECI ${fmt(p.s.eci)}`,
-        `Score ${pct(p.y)}`,
-        `Curve ${pct(sigmoid(alpha * (p.s.eci - D)))}`,
-      ]);
-    }
-    info.textContent = `${b.label}: sum of squared errors ${sse.toFixed(4)} (least-squares fit: ${sseFit.toFixed(4)}, D = ${b.D.toFixed(1)}, α = ${b.alpha.toFixed(3)}). Red lines are the errors.`;
+    half.setAttribute("x1", x(D));
+    half.setAttribute("x2", x(D));
+    half.setAttribute("y1", y(0));
+    half.setAttribute("y2", y(0.5));
+    halfText.setAttribute("x", x(D) + 4);
+    halfText.setAttribute("y", y(0) - 6);
+    halfText.textContent = "C = D: score 50%";
+    const p = sigmoid(alpha * (C - D));
+    guideV.setAttribute("x1", x(C));
+    guideV.setAttribute("x2", x(C));
+    guideV.setAttribute("y1", y(0));
+    guideV.setAttribute("y2", y(p));
+    guideH.setAttribute("x1", x(0));
+    guideH.setAttribute("x2", x(C));
+    guideH.setAttribute("y1", y(p));
+    guideH.setAttribute("y2", y(p));
+    dot.setAttribute("cx", x(C));
+    dot.setAttribute("cy", y(p));
+    const right = x(C) < W - 170;
+    dotText.setAttribute("x", x(C) + (right ? 10 : -10));
+    dotText.setAttribute("y", y(p) - 10);
+    dotText.setAttribute("text-anchor", right ? "start" : "end");
+    dotText.textContent = `score = ${pct(p)}`;
   }
-  reset();
+  draw();
 };
 
 // The optimizer's path, from C = D = 0, alpha = 1 to the fit.
 charts.optimization = (root, d) => {
   const W = 640,
-    H = 420,
-    m = { l: 56, r: 16, t: 14, b: 40 };
+    H = 340,
+    m = { l: 56, r: 16, t: 14, b: 48 };
   const frames = d.frames;
   const settings = d.settings;
   const bIndex = new Map(d.benchmarks.map((b, i) => [b.key, i]));
@@ -409,46 +381,14 @@ charts.optimization = (root, d) => {
   const ctl = controls(root);
   const svg = svgRoot(root, W, H);
   const tip = tooltip(root);
-  const all = frames.flatMap(f => [...f.C, ...f.D]).filter(Number.isFinite);
-  const lo = Math.floor(Math.min(...frames.at(-1).C, 40) / 10) * 10;
-  const hi = Math.ceil(Math.max(...frames.at(-1).C, 170) / 10) * 10;
-  const domain = [Math.min(lo, Math.floor(Math.min(...all) / 10) * 10), hi];
-  const x = linear(domain, [m.l, W - m.r]);
-  const yTop = linear([0, 1], [270, m.t]);
-  axes(svg, x, yTop, {
-    yTicks: [0, 0.5, 1],
+  const x = linear([20, 180], [m.l, W - m.r]);
+  const y = linear([0, 1], [H - m.b, m.t]);
+  axes(svg, x, y, {
+    yTicks: [0, 0.25, 0.5, 0.75, 1],
     yFmt: t => `${t * 100}%`,
-    yLabel: "Score",
+    xLabel: "Model capability (ECI)",
+    yLabel: "Benchmark score",
   });
-  // Strip of capabilities under the curves.
-  const stripY = 330;
-  el(
-    "line",
-    { x1: m.l, x2: W - m.r, y1: stripY, y2: stripY, stroke: DIM },
-    svg
-  );
-  for (const t of niceTicks(...domain))
-    el(
-      "text",
-      { x: x(t), y: stripY + 22, "text-anchor": "middle", class: "eci-small" },
-      svg
-    ).textContent = t;
-  el(
-    "text",
-    {
-      x: (m.l + W - m.r) / 2,
-      y: stripY + 44,
-      "text-anchor": "middle",
-      class: "eci-axis-label",
-    },
-    svg
-  ).textContent =
-    "Model capability C (each dot is a model setting), on the final ECI scale";
-  el(
-    "text",
-    { x: m.l, y: stripY - 10, class: "eci-small", fill: DIM },
-    svg
-  ).textContent = "Capabilities";
   const gCurves = el("g", {}, svg);
   const curves = d.benchmarks.map(() =>
     el("path", { fill: "none", stroke: FAINT, "stroke-width": 1.2 }, gCurves)
@@ -459,44 +399,25 @@ charts.optimization = (root, d) => {
     svg
   );
   const gPts = el("g", {}, svg);
-  const gStrip = el("g", {}, svg);
   const stepText = el(
     "text",
-    { x: m.l + 8, y: m.t + 12, "text-anchor": "start", class: "eci-big" },
+    { x: m.l + 8, y: m.t + 12, class: "eci-big" },
     svg
   );
   const sseText = el(
     "text",
-    {
-      x: m.l + 8,
-      y: m.t + 30,
-      "text-anchor": "start",
-      class: "eci-small",
-      fill: DIM,
-    },
+    { x: m.l + 8, y: m.t + 30, class: "eci-small", fill: DIM },
     svg
   );
 
-  const dots = settings.map((s, i) => {
-    const c = el(
-      "circle",
-      { r: 5, cy: stripY, fill: s.type === "open" ? ACCENT : FG, opacity: 0.8 },
-      gStrip
-    );
-    hoverable(c, tip, () => [
-      label(s),
-      `C = ${fmt(lerp(t).C[i])} (final ${fmt(s.eci)})`,
-    ]);
-    return c;
-  });
-
   let t = 0,
     playing = false,
+    ready = false,
     raf;
   const n = frames.length - 1;
 
   function lerp(tt) {
-    const i = Math.min(Math.floor(tt), n - 1);
+    const i = Math.max(0, Math.min(Math.floor(tt), n - 1));
     const f = tt - i;
     const a = frames[i],
       b = frames[Math.min(i + 1, n)];
@@ -512,24 +433,27 @@ charts.optimization = (root, d) => {
   function draw() {
     const f = lerp(t);
     f.D.forEach((D, i) =>
-      curves[i].setAttribute("d", curvePath(x, yTop, D, f.alpha[i], domain))
+      curves[i].setAttribute("d", curvePath(x, y, D, f.alpha[i], x.domain))
     );
     const bi = bIndex.get(key);
-    sel.setAttribute("d", curvePath(x, yTop, f.D[bi], f.alpha[bi], domain));
+    sel.setAttribute("d", curvePath(x, y, f.D[bi], f.alpha[bi], x.domain));
     gPts.replaceChildren();
     for (const p of d.byBenchmark.get(key)) {
       const i = settings.indexOf(p.s);
       const c = el(
         "circle",
-        { cx: x(f.C[i]), cy: yTop(p.y), r: 4.5, fill: FG, opacity: 0.85 },
+        { cx: x(f.C[i]), cy: y(p.y), r: 4.5, fill: FG, opacity: 0.85 },
         gPts
       );
-      hoverable(c, tip, [label(p.s), `Score ${pct(p.y)}`]);
+      hoverable(c, tip, () => [
+        label(p.s),
+        `Score ${pct(p.y)}`,
+        `Capability now ${fmt(lerp(t).C[i])} (final ${fmt(p.s.eci)})`,
+      ]);
     }
-    dots.forEach((c, i) => c.setAttribute("cx", x(f.C[i])));
     stepText.textContent = `Step ${Math.round(t)} / ${n}`;
     sseText.textContent = `Sum of squared errors: ${f.sse.toFixed(3)}`;
-    scrub.set(t);
+    scrub.show(t);
   }
 
   const play = button(ctl, "Play", () => (playing ? stop() : start()));
@@ -538,15 +462,15 @@ charts.optimization = (root, d) => {
     "Step",
     { min: 0, max: n, step: 0.01, value: 0 },
     v => {
-      if (Math.abs(v - t) > 1e-6) {
-        t = v;
-        stop();
-        draw();
-      }
+      // The slider calls this once when it is created (before drawing starts)
+      // and then on every drag; the animation moves the thumb with show().
+      if (!ready) return "";
+      t = v;
+      stop();
+      draw();
       return "";
     }
   );
-  scrub.name.textContent = "Step";
   select(ctl, "Benchmark", benchOptions(d), key, v => {
     key = v;
     draw();
@@ -558,7 +482,8 @@ charts.optimization = (root, d) => {
     play.textContent = "Pause";
     let last = performance.now();
     const tick = now => {
-      t = Math.min(n, t + ((now - last) / 1000) * 1.6);
+      // The first frame can be stamped slightly before `last`.
+      t = Math.min(n, t + (Math.max(0, now - last) / 1000) * 1.2);
       last = now;
       draw();
       if (t < n && playing) raf = requestAnimationFrame(tick);
@@ -571,17 +496,15 @@ charts.optimization = (root, d) => {
     play.textContent = "Play";
     cancelAnimationFrame(raf);
   }
+  ready = true;
   draw();
 };
 
 // Models ranked by an index, switchable.
 charts.ranking = (root, d) => {
   const metrics = [
-    ["eci", "ECI (all)"],
-    ["text", "ECI (text)"],
-    ["multimodal", "ECI (multimodal)"],
+    ["eci", "ECI"],
     ["mean", "Mean score"],
-    ["sem_all", "SEM-ECI (item level)"],
   ];
   let metric = "eci";
   const ctl = controls(root);
@@ -610,7 +533,7 @@ charts.ranking = (root, d) => {
           class: "eci-small",
         },
         g
-      ).textContent = `${label(s)}${s.text_only ? " †" : ""}`;
+      ).textContent = label(s);
       const bar = el(
         "rect",
         {
@@ -626,9 +549,8 @@ charts.ranking = (root, d) => {
       const val = el("text", { y: rowH / 2 + 4, class: "eci-small" }, g);
       hoverable(g, tip, () => [
         label(s),
-        `ECI ${fmt(s.eci)} · text ${fmt(s.text)} · multimodal ${fmt(s.multimodal)}`,
-        `Mean score ${pct(s.mean)} over ${s.n_scores} benchmarks`,
-        `SEM-ECI ${fmt(s.sem_all)}`,
+        `ECI ${fmt(s.eci)}`,
+        `Mean score ${pct(s.mean)}`,
       ]);
       return [s.key, { g, bar, val }];
     })
@@ -637,12 +559,6 @@ charts.ranking = (root, d) => {
     ["Proprietary", FG],
     ["Open weights", ACCENT],
   ]);
-  html(
-    "p",
-    { class: "eci-note" },
-    root,
-    "† Text-only model: its ECI comes from 8 text benchmarks only."
-  );
 
   function draw() {
     const isMean = metric === "mean";
@@ -694,112 +610,91 @@ charts.ranking = (root, d) => {
   draw();
 };
 
-// Every benchmark's fitted curve, like the SEM-ECI trends page.
+// A few benchmarks' fitted curves, each labeled, with their scores.
 charts.curves = (root, d) => {
+  // [benchmark, color, label position (capability, score), text anchor,
+  //  capability where the leader line meets the curve]
+  const shown = [
+    ["jgraphqa", "#59a14f", [3, 0.93], "start", 45],
+    ["hakushobench", "#f28e2b", [74, 0.38], "start", 62],
+    ["charxiv", "#e15759", [74, 0.27], "start", 56],
+    ["zerobench", "#4e79a7", [150, 0.64], "end", 163],
+  ];
   const W = 640,
     H = 380,
     m = { l: 56, r: 16, t: 14, b: 48 };
-  const ctl = controls(root);
   const svg = svgRoot(root, W, H);
   const tip = tooltip(root);
-  const x = linear([20, 200], [m.l, W - m.r]);
+  const x = linear([0, 200], [m.l, W - m.r]);
   const y = linear([0, 1], [H - m.b, m.t]);
   axes(svg, x, y, {
     yTicks: [0, 0.25, 0.5, 0.75, 1],
     yFmt: t => `${t * 100}%`,
     xLabel: "Model capability (ECI)",
-    yLabel: "Expected score",
+    yLabel: "Benchmark score",
   });
-  // Where the models are.
-  const [cmin, cmax] = [
-    Math.min(...d.settings.map(s => s.eci)),
-    Math.max(...d.settings.map(s => s.eci)),
-  ];
   el(
-    "rect",
+    "line",
     {
-      x: x(cmin),
-      y: m.t,
-      width: x(cmax) - x(cmin),
-      height: H - m.b - m.t,
-      fill: FAINT,
-      opacity: 0.5,
+      x1: x(0),
+      x2: x(200),
+      y1: y(0.5),
+      y2: y(0.5),
+      stroke: DIM,
+      "stroke-dasharray": "3 3",
     },
     svg
   );
-  el(
-    "text",
-    { x: x(cmin) + 4, y: m.t + 12, class: "eci-small", fill: DIM },
-    svg
-  ).textContent = "range of the models";
-  const gCurves = el("g", {}, svg);
-  const gPts = el("g", {}, svg);
-  let active = null;
-  const paths = new Map(
-    d.benchmarks.map(b => {
-      const p = el(
-        "path",
-        {
-          d: curvePath(x, y, b.D, b.alpha, x.domain),
-          fill: "none",
-          stroke: CATEGORY_COLORS[b.category],
-          "stroke-width": 2,
-          opacity: 0.55,
-        },
-        gCurves
-      );
-      hoverable(
-        p,
-        tip,
-        () => [
-          b.label,
-          `${b.category} · ${b.lang === "ja" ? "Japanese" : "English"}`,
-          `D ${fmt(b.D)} · α ${b.alpha.toFixed(3)}`,
-          `Fit R² ${fmt(b.r2, 2)}`,
-        ],
-        () => highlight(b.key),
-        () => highlight(chosen.value || null)
-      );
-      return [b.key, p];
-    })
-  );
-  const chosen = select(
-    ctl,
-    "Highlight",
-    [["", "None"], ...benchOptions(d)],
-    "",
-    v => highlight(v || null)
-  );
-
-  function highlight(key) {
-    if (key === active) return;
-    active = key;
-    for (const [k, p] of paths) {
-      p.setAttribute("opacity", key ? (k === key ? 1 : 0.12) : 0.55);
-      p.setAttribute("stroke-width", k === key ? 3.5 : 2);
-    }
-    if (key) gCurves.appendChild(paths.get(key));
-    gPts.replaceChildren();
-    if (!key) return;
+  for (const [key, col, [lx, ly], anchor, cx] of shown) {
+    const b = d.benchMap.get(key);
+    el(
+      "path",
+      {
+        d: curvePath(x, y, b.D, b.alpha, x.domain),
+        fill: "none",
+        stroke: col,
+        "stroke-width": 3,
+      },
+      svg
+    );
+    // A label in empty space, joined to its curve by a thin line.
+    const cy = sigmoid(b.alpha * (cx - b.D));
+    el(
+      "line",
+      {
+        x1: x(lx) + (anchor === "start" ? -2 : 2),
+        y1: y(ly) - 4,
+        x2: x(cx),
+        y2: y(cy),
+        stroke: col,
+        "stroke-width": 1,
+      },
+      svg
+    );
+    el(
+      "text",
+      {
+        x: x(lx),
+        y: y(ly),
+        "text-anchor": anchor,
+        fill: col,
+        class: "eci-label",
+      },
+      svg
+    ).textContent = `${b.label} (D = ${b.D.toFixed(0)})`;
     for (const p of d.byBenchmark.get(key)) {
       const c = el(
         "circle",
-        { cx: x(p.s.eci), cy: y(p.y), r: 4.5, fill: FG, opacity: 0.85 },
-        gPts
+        { cx: x(p.s.eci), cy: y(p.y), r: 4.5, fill: col, opacity: 0.85 },
+        svg
       );
       hoverable(c, tip, [
-        label(p.s),
+        `${label(p.s)} · ${b.label}`,
         `ECI ${fmt(p.s.eci)}`,
         `Score ${pct(p.y)} (curve ${pct(p.fit)})`,
       ]);
     }
   }
-  legend(
-    root,
-    Object.entries(CATEGORY_COLORS)
-      .filter(([c]) => d.benchmarks.some(b => b.category === c))
-      .map(([c, col]) => [c, col, "line"])
-  );
 };
 
 // Benchmark difficulty, with the range where the score rises from 10% to 90%.
@@ -971,24 +866,18 @@ charts["mean-vs-eci"] = (root, d) => {
       x: s.mean * 100,
       y: s.eci,
       color: s.type === "open" ? ACCENT : FG,
-      hollow: s.text_only,
-      tip: [
-        label(s),
-        `Mean score ${pct(s.mean)} (${s.n_scores} benchmarks)`,
-        `ECI ${fmt(s.eci)}`,
-      ],
+      tip: [label(s), `Mean score ${pct(s.mean)}`, `ECI ${fmt(s.eci)}`],
     })),
     {
-      xDomain: [30, 95],
+      xDomain: [35, 95],
       yDomain: [60, 155],
-      xLabel: "Mean score over the model's benchmarks (%)",
+      xLabel: "Mean score over the 27 benchmarks (%)",
       yLabel: "ECI",
     }
   );
   legend(root, [
     ["Proprietary", FG],
     ["Open weights", ACCENT],
-    ["Text-only (8 text benchmarks)", ACCENT, "ring"],
   ]);
 };
 
@@ -1043,7 +932,7 @@ charts.domains = (root, d) => {
     );
     el("circle", { cx: xs[0], cy: y(s.text), r: 4, fill: col }, g);
     el("circle", { cx: xs[1], cy: y(s.multimodal), r: 4, fill: col }, g);
-    if (Math.abs(diff) > 6)
+    if (Math.abs(diff) > 5.5)
       labels.push({
         y: y(s.multimodal),
         col,
@@ -1209,14 +1098,7 @@ charts.residuals = (root, d) => {
   legend(root, [
     ["Better than predicted", "rgb(78,121,167)"],
     ["Worse than predicted", "rgb(225,87,89)"],
-    ["Not evaluated", "transparent", "ring"],
   ]);
-  html(
-    "p",
-    { class: "eci-note" },
-    root,
-    "Rows: settings by ECI. Columns: benchmarks from easiest to hardest. Darker means a larger gap (30 points or more is darkest)."
-  );
 };
 
 // Ranking agreement as scores go missing.
@@ -1290,38 +1172,6 @@ charts.robustness = (root, d) => {
     ["ECI", ACCENT, "line"],
     ["Mean of available scores", DIM, "line"],
   ]);
-  html(
-    "p",
-    { class: "eci-note" },
-    root,
-    "Missing by difficulty: the weaker half of the models lose scores on the hardest third of the benchmarks, the stronger half on the easiest third, each with the given probability. Bands: 10th to 90th percentile over 30 draws."
-  );
-};
-
-charts.sem = (root, d) => {
-  scatter(
-    root,
-    d.settings
-      .filter(s => s.sem_all)
-      .map(s => ({
-        x: s.eci,
-        y: s.sem_all,
-        color: s.type === "open" ? ACCENT : FG,
-        tip: [
-          label(s),
-          `ECI (benchmark level, least squares) ${fmt(s.eci)}`,
-          `SEM-ECI (question level) ${fmt(s.sem_all)}`,
-          `Difference ${(s.sem_all - s.eci).toFixed(1)}`,
-        ],
-      })),
-    {
-      xDomain: [60, 155],
-      yDomain: [60, 155],
-      xLabel: "ECI, this post (benchmark scores, least squares)",
-      yLabel: "SEM-ECI (every question)",
-      diagonal: true,
-    }
-  );
 };
 
 charts.params = (root, d) => {
@@ -1331,7 +1181,6 @@ charts.params = (root, d) => {
       x: s.params_b,
       y: s.eci,
       color: ACCENT,
-      hollow: s.text_only,
       tip: [
         label(s),
         `${s.params_b >= 100 ? s.params_b.toFixed(0) : s.params_b}B parameters (total)`,
@@ -1357,6 +1206,7 @@ const STYLE = `
 .eci-svg .eci-small{font-size:10.5px}
 .eci-svg .eci-tiny{font-size:9.5px}
 .eci-svg .eci-big{font-size:14px;font-weight:600}
+.eci-svg .eci-label{font-size:12.5px;font-weight:600}
 .eci-svg .eci-axis-label{font-size:11.5px;opacity:.8}
 .eci-axis text{opacity:.7}
 .eci-wide{max-width:none}

@@ -254,7 +254,8 @@
    "dev": "Anthropic",
    "type": "proprietary",
    "released": "2026-09-22",
-   "params_b": null
+   "params_b": null,
+   "best": true
   },
   {
    "key": "opus55__low",
@@ -263,7 +264,8 @@
    "dev": "Anthropic",
    "type": "proprietary",
    "released": "2026-09-22",
-   "params_b": null
+   "params_b": null,
+   "best": false
   },
   {
    "key": "gpt6-astra__max",
@@ -272,7 +274,8 @@
    "dev": "OpenAI",
    "type": "proprietary",
    "released": "2026-09-03",
-   "params_b": null
+   "params_b": null,
+   "best": true
   },
   {
    "key": "gpt6-astra__low",
@@ -281,7 +284,8 @@
    "dev": "OpenAI",
    "type": "proprietary",
    "released": "2026-09-03",
-   "params_b": null
+   "params_b": null,
+   "best": false
   },
   {
    "key": "gemini38-flash__high",
@@ -290,7 +294,8 @@
    "dev": "Google",
    "type": "proprietary",
    "released": "2026-09-02",
-   "params_b": null
+   "params_b": null,
+   "best": true
   },
   {
    "key": "gemini38-flash__low",
@@ -299,7 +304,8 @@
    "dev": "Google",
    "type": "proprietary",
    "released": "2026-09-02",
-   "params_b": null
+   "params_b": null,
+   "best": false
   },
   {
    "key": "qwen38-flash__thinking",
@@ -308,7 +314,8 @@
    "dev": "Alibaba (Qwen)",
    "type": "proprietary",
    "released": "2026-08-26",
-   "params_b": null
+   "params_b": null,
+   "best": true
   },
   {
    "key": "kimi-k31-pro__max",
@@ -317,7 +324,8 @@
    "dev": "Moonshot AI",
    "type": "open",
    "released": "2026-10-23",
-   "params_b": 2800.0
+   "params_b": 2800.0,
+   "best": true
   },
   {
    "key": "kimi-k31-pro__low",
@@ -326,7 +334,8 @@
    "dev": "Moonshot AI",
    "type": "open",
    "released": "2026-10-23",
-   "params_b": 2800.0
+   "params_b": 2800.0,
+   "best": false
   },
   {
    "key": "dsv41-flash__max",
@@ -335,7 +344,8 @@
    "dev": "DeepSeek",
    "type": "open",
    "released": "2026-10-17",
-   "params_b": 552.0
+   "params_b": 552.0,
+   "best": true
   },
   {
    "key": "dsv41-flash__low",
@@ -344,7 +354,8 @@
    "dev": "DeepSeek",
    "type": "open",
    "released": "2026-10-17",
-   "params_b": 552.0
+   "params_b": 552.0,
+   "best": false
   },
   {
    "key": "glm53-flash__max",
@@ -353,7 +364,8 @@
    "dev": "Z.ai",
    "type": "open",
    "released": "2026-08-26",
-   "params_b": 320.0
+   "params_b": 320.0,
+   "best": true
   },
   {
    "key": "glm53-flash__low",
@@ -362,7 +374,8 @@
    "dev": "Z.ai",
    "type": "open",
    "released": "2026-08-26",
-   "params_b": 320.0
+   "params_b": 320.0,
+   "best": false
   },
   {
    "key": "qwen38-27b__xhigh",
@@ -371,7 +384,8 @@
    "dev": "Alibaba (Qwen)",
    "type": "open",
    "released": "2026-08-14",
-   "params_b": 27.0
+   "params_b": 27.0,
+   "best": true
   },
   {
    "key": "qwen38-27b__low",
@@ -380,7 +394,8 @@
    "dev": "Alibaba (Qwen)",
    "type": "open",
    "released": "2026-08-14",
-   "params_b": 27.0
+   "params_b": 27.0,
+   "best": false
   },
   {
    "key": "gemma4-31b__thinking",
@@ -389,7 +404,8 @@
    "dev": "Google",
    "type": "open",
    "released": "2026-04-02",
-   "params_b": 30.7
+   "params_b": 30.7,
+   "best": true
   },
   {
    "key": "muse-glimmer-30b__xhigh",
@@ -398,7 +414,8 @@
    "dev": "Meta",
    "type": "open",
    "released": "2026-08-10",
-   "params_b": 29.6
+   "params_b": 29.6,
+   "best": true
   },
   {
    "key": "muse-glimmer-30b__low",
@@ -407,7 +424,8 @@
    "dev": "Meta",
    "type": "open",
    "released": "2026-08-10",
-   "params_b": 29.6
+   "params_b": 29.6,
+   "best": false
   },
   {
    "key": "qwen35-9b__thinking",
@@ -416,7 +434,8 @@
    "dev": "Alibaba (Qwen)",
    "type": "open",
    "released": "2026-03-02",
-   "params_b": 9.0
+   "params_b": 9.0,
+   "best": true
   },
   {
    "key": "gemma4-12b__thinking",
@@ -425,7 +444,8 @@
    "dev": "Google",
    "type": "open",
    "released": "2026-06-03",
-   "params_b": 11.95
+   "params_b": 11.95,
+   "best": true
   },
   {
    "key": "llmjp4-vl-9b__medium",
@@ -434,7 +454,8 @@
    "dev": "LLM-jp",
    "type": "open",
    "released": "2026-09-01",
-   "params_b": 9.05
+   "params_b": 9.05,
+   "best": true
   },
   {
    "key": "llmjp41-8b-thinking__medium",
@@ -443,7 +464,8 @@
    "dev": "LLM-jp",
    "type": "open",
    "released": "2026-09-15",
-   "params_b": 8.59
+   "params_b": 8.59,
+   "best": true
   }
  ],
  "scores": [

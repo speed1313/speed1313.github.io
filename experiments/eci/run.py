@@ -3,9 +3,10 @@
     uv run fetch_data.py   # refresh data/leaderboard.json (optional)
     uv run run.py          # -> src/data/blog/eci/eci-data.json
 
-Each effort level of a model counts as a model of its own ("setting"), as in
-SEM-ECI. The index uses SEM-ECI's anchors so the two can be compared:
-GPT-6 Astra (max) = 150 and Qwen3.5-9B (thinking) = 100.
+Each model enters with its highest reasoning effort only, and text-only
+models are left out, so every model has a score on every benchmark (13 models
+x 27 benchmarks). The index is anchored at GPT-6 Astra = 150 and
+Qwen3.5-9B = 100, as SEM-ECI on the leaderboard.
 """
 
 import json
@@ -35,11 +36,19 @@ def r(x, n=3):
 def main() -> None:
     d = json.loads(DATA.read_text())
     tasks = {t["key"]: t for t in d["tasks"]}
-    settings = {s["key"]: s for s in d["settings"]}
-    models = list(settings)
     benchmarks = list(tasks)
-    obs = [(m, b, y) for m, b, y in d["scores"]]
+    all_scores = {(m, b): y for m, b, y in d["scores"]}
+    # A text-only model has no score on a benchmark without text questions.
+    text_only = {
+        s["key"]
+        for s in d["settings"]
+        if all(tasks[b]["modality"] == "text" or b in HAS_TEXT_QUESTIONS for (m, b) in all_scores if m == s["key"])
+    }
+    settings = {s["key"]: s for s in d["settings"] if s["best"] and s["key"] not in text_only}
+    models = list(settings)
+    obs = [(m, b, y) for m, b, y in d["scores"] if m in settings]
     score = {(m, b): y for m, b, y in obs}
+    assert len(obs) == len(models) * len(benchmarks), "expected a complete matrix"
 
     # --- Main fit -----------------------------------------------------------
     full = eci.fit(models, benchmarks, obs, ANCHOR_BENCHMARK, record=True)
@@ -51,17 +60,10 @@ def main() -> None:
 
     pred = {(m, b): float(full.predict(models.index(m), benchmarks.index(b))) for m, b, _ in obs}
 
-    # A text-only setting has no score on a benchmark without text questions.
-    text_only = {
-        m
-        for m in models
-        if all(tasks[b]["modality"] == "text" or b in HAS_TEXT_QUESTIONS for (m2, b) in score if m2 == m)
-    }
-
     # --- Domain indices: refit capabilities only, on each modality ----------
     domains = {}
     for dom in ("text", "multimodal"):
-        sub = [o for o in obs if tasks[o[1]]["modality"] == dom and not (dom == "multimodal" and o[0] in text_only)]
+        sub = [o for o in obs if tasks[o[1]]["modality"] == dom]
         domains[dom] = {m: to_index(c) for m, c in eci.refit_capabilities(full, sub).items()}
 
     # --- Leave-one-out: predict each score from a fit without it ------------
@@ -168,11 +170,9 @@ def main() -> None:
                 "rmse": r(np.sqrt(np.mean((yb - pb) ** 2)), 4),
                 "r2": r(1 - np.sum((yb - pb) ** 2) / ss if ss > 0 else None, 3),
                 "mean": r(yb.mean(), 4),
-                "sem_D": r(d["sem_eci"]["all"]["fits"].get(b, {}).get("D"), 1),
             }
         )
 
-    sem = d["sem_eci"]
     setting_out = []
     for m in models:
         s = settings[m]
@@ -187,14 +187,10 @@ def main() -> None:
                 "released": s["released"],
                 "params_b": s["params_b"],
                 "n_scores": len(mine),
-                "text_only": m in text_only,
                 "eci": r(to_index(C[m]), 2),
                 "mean": r(np.mean(mine), 4),
                 "text": r(domains["text"].get(m), 2),
                 "multimodal": r(domains["multimodal"].get(m), 2),
-                "sem_all": sem["all"]["index"].get(m),
-                "sem_text": sem["text"]["index"].get(m),
-                "sem_multimodal": sem["multimodal"]["index"].get(m),
             }
         )
 
