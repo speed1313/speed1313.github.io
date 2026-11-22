@@ -1,0 +1,3862 @@
+{
+ "source": "https://llm-jp.github.io/simple-evals-mm",
+ "updated": "2026-11-21",
+ "tasks": [
+  {
+   "key": "hakushobench",
+   "label": "HakushoBench",
+   "category": "Chart & Table",
+   "lang": "ja",
+   "modality": "multimodal",
+   "n": 2053,
+   "guess": 0.0
+  },
+  {
+   "key": "jdocqa",
+   "label": "JDocQA-Refined",
+   "category": "Document",
+   "lang": "ja",
+   "modality": "multimodal",
+   "n": 861,
+   "guess": 0.0
+  },
+  {
+   "key": "jgraphqa",
+   "label": "JGraphQA-Refined",
+   "category": "Chart & Table",
+   "lang": "ja",
+   "modality": "multimodal",
+   "n": 196,
+   "guess": 0.0
+  },
+  {
+   "key": "ccocrjavqa",
+   "label": "CC-OCR-JA-Refined",
+   "category": "OCR",
+   "lang": "ja",
+   "modality": "multimodal",
+   "n": 145,
+   "guess": 0.0
+  },
+  {
+   "key": "cvqaja",
+   "label": "CVQA-JA-Refined",
+   "category": "General VQA",
+   "lang": "ja",
+   "modality": "multimodal",
+   "n": 200,
+   "guess": 0.25
+  },
+  {
+   "key": "charxiv",
+   "label": "CharXiv Reasoning",
+   "category": "Chart & Table",
+   "lang": "en",
+   "modality": "multimodal",
+   "n": 1000,
+   "guess": 0.0
+  },
+  {
+   "key": "businessslidevqa",
+   "label": "BusinessSlideVQA",
+   "category": "Document",
+   "lang": "ja",
+   "modality": "multimodal",
+   "n": 216,
+   "guess": 0.0
+  },
+  {
+   "key": "mathvision",
+   "label": "MathVision (testmini)",
+   "category": "STEM & Reasoning",
+   "lang": "en",
+   "modality": "multimodal",
+   "n": 304,
+   "guess": 0.125
+  },
+  {
+   "key": "aime26",
+   "label": "AIME 2026",
+   "category": "Text",
+   "lang": "en",
+   "modality": "text",
+   "n": 30,
+   "guess": 0.0
+  },
+  {
+   "key": "countbenchqa",
+   "label": "CountBenchQA",
+   "category": "Counting",
+   "lang": "en",
+   "modality": "multimodal",
+   "n": 491,
+   "guess": 0.0909
+  },
+  {
+   "key": "gpqa",
+   "label": "GPQA Diamond",
+   "category": "Text",
+   "lang": "en",
+   "modality": "text",
+   "n": 198,
+   "guess": 0.25
+  },
+  {
+   "key": "mmmu",
+   "label": "MMMU (val)",
+   "category": "STEM & Reasoning",
+   "lang": "en",
+   "modality": "multimodal",
+   "n": 847,
+   "guess": 0.2624
+  },
+  {
+   "key": "realworldqa",
+   "label": "RealWorldQA",
+   "category": "General VQA",
+   "lang": "en",
+   "modality": "multimodal",
+   "n": 765,
+   "guess": 0.1936
+  },
+  {
+   "key": "ifbench",
+   "label": "IFBench",
+   "category": "Text",
+   "lang": "en",
+   "modality": "text",
+   "n": 300,
+   "guess": 0.0
+  },
+  {
+   "key": "mmmu_pro",
+   "label": "MMMU-Pro (10-option)",
+   "category": "STEM & Reasoning",
+   "lang": "en",
+   "modality": "multimodal",
+   "n": 1730,
+   "guess": 0.1281
+  },
+  {
+   "key": "zerobench",
+   "label": "ZeroBench",
+   "category": "STEM & Reasoning",
+   "lang": "en",
+   "modality": "multimodal",
+   "n": 100,
+   "guess": 0.0
+  },
+  {
+   "key": "babyvision",
+   "label": "BabyVision",
+   "category": "General VQA",
+   "lang": "en",
+   "modality": "multimodal",
+   "n": 388,
+   "guess": 0.0
+  },
+  {
+   "key": "jawildtext",
+   "label": "JaWildText (board VQA)",
+   "category": "OCR",
+   "lang": "ja",
+   "modality": "multimodal",
+   "n": 1025,
+   "guess": 0.0
+  },
+  {
+   "key": "perceptionbench",
+   "label": "PerceptionBench",
+   "category": "General VQA",
+   "lang": "en",
+   "modality": "multimodal",
+   "n": 3000,
+   "guess": 0.0
+  },
+  {
+   "key": "livecodebench",
+   "label": "LiveCodeBench v6",
+   "category": "Text",
+   "lang": "en",
+   "modality": "text",
+   "n": 131,
+   "guess": 0.0
+  },
+  {
+   "key": "mechaja_v2_mini",
+   "label": "MECHA-ja-v2-mini",
+   "category": "General VQA",
+   "lang": "ja",
+   "modality": "multimodal",
+   "n": 1635,
+   "guess": 0.25
+  },
+  {
+   "key": "hle_diamond",
+   "label": "HLE-Diamond",
+   "category": "STEM & Reasoning",
+   "lang": "en",
+   "modality": "multimodal",
+   "n": 1000,
+   "guess": 0.0
+  },
+  {
+   "key": "screenspot_pro",
+   "label": "ScreenSpot-Pro",
+   "category": "GUI",
+   "lang": "en",
+   "modality": "multimodal",
+   "n": 1581,
+   "guess": 0.0
+  },
+  {
+   "key": "omnidocbench",
+   "label": "OmniDocBench v1.6",
+   "category": "Document",
+   "lang": "en",
+   "modality": "multimodal",
+   "n": 1651,
+   "guess": 0.0
+  },
+  {
+   "key": "jamcqa",
+   "label": "JamC-QA v2",
+   "category": "Text",
+   "lang": "ja",
+   "modality": "text",
+   "n": 2464,
+   "guess": 0.25
+  },
+  {
+   "key": "jfinbench",
+   "label": "JFinBench",
+   "category": "Text",
+   "lang": "ja",
+   "modality": "text",
+   "n": 321,
+   "guess": 0.0
+  },
+  {
+   "key": "simpleqa_verified",
+   "label": "SimpleQA Verified",
+   "category": "Text",
+   "lang": "en",
+   "modality": "text",
+   "n": 1000,
+   "guess": 0.0
+  }
+ ],
+ "settings": [
+  {
+   "key": "opus55__max",
+   "model": "Claude Opus 5.5",
+   "effort": "max",
+   "dev": "Anthropic",
+   "type": "proprietary",
+   "released": "2026-09-22",
+   "params_b": null,
+   "best": true
+  },
+  {
+   "key": "opus55__low",
+   "model": "Claude Opus 5.5",
+   "effort": "low",
+   "dev": "Anthropic",
+   "type": "proprietary",
+   "released": "2026-09-22",
+   "params_b": null,
+   "best": false
+  },
+  {
+   "key": "gpt6-astra__max",
+   "model": "GPT-6 Astra",
+   "effort": "max",
+   "dev": "OpenAI",
+   "type": "proprietary",
+   "released": "2026-09-03",
+   "params_b": null,
+   "best": true
+  },
+  {
+   "key": "gpt6-astra__low",
+   "model": "GPT-6 Astra",
+   "effort": "low",
+   "dev": "OpenAI",
+   "type": "proprietary",
+   "released": "2026-09-03",
+   "params_b": null,
+   "best": false
+  },
+  {
+   "key": "gemini38-flash__high",
+   "model": "Gemini 3.8 Flash",
+   "effort": "high",
+   "dev": "Google",
+   "type": "proprietary",
+   "released": "2026-09-02",
+   "params_b": null,
+   "best": true
+  },
+  {
+   "key": "gemini38-flash__low",
+   "model": "Gemini 3.8 Flash",
+   "effort": "low",
+   "dev": "Google",
+   "type": "proprietary",
+   "released": "2026-09-02",
+   "params_b": null,
+   "best": false
+  },
+  {
+   "key": "qwen38-flash__thinking",
+   "model": "Qwen3.8 Flash",
+   "effort": "thinking",
+   "dev": "Alibaba (Qwen)",
+   "type": "proprietary",
+   "released": "2026-08-26",
+   "params_b": null,
+   "best": true
+  },
+  {
+   "key": "kimi-k31-pro__max",
+   "model": "Kimi K3.1 Pro",
+   "effort": "max",
+   "dev": "Moonshot AI",
+   "type": "open",
+   "released": "2026-10-23",
+   "params_b": 2800.0,
+   "best": true
+  },
+  {
+   "key": "kimi-k31-pro__low",
+   "model": "Kimi K3.1 Pro",
+   "effort": "low",
+   "dev": "Moonshot AI",
+   "type": "open",
+   "released": "2026-10-23",
+   "params_b": 2800.0,
+   "best": false
+  },
+  {
+   "key": "dsv41-flash__max",
+   "model": "DeepSeek-V4.1-Flash-1017",
+   "effort": "max",
+   "dev": "DeepSeek",
+   "type": "open",
+   "released": "2026-10-17",
+   "params_b": 552.0,
+   "best": true
+  },
+  {
+   "key": "dsv41-flash__low",
+   "model": "DeepSeek-V4.1-Flash-1017",
+   "effort": "low",
+   "dev": "DeepSeek",
+   "type": "open",
+   "released": "2026-10-17",
+   "params_b": 552.0,
+   "best": false
+  },
+  {
+   "key": "glm53-flash__max",
+   "model": "GLM-5.3 Flash",
+   "effort": "max",
+   "dev": "Z.ai",
+   "type": "open",
+   "released": "2026-08-26",
+   "params_b": 320.0,
+   "best": true
+  },
+  {
+   "key": "glm53-flash__low",
+   "model": "GLM-5.3 Flash",
+   "effort": "low",
+   "dev": "Z.ai",
+   "type": "open",
+   "released": "2026-08-26",
+   "params_b": 320.0,
+   "best": false
+  },
+  {
+   "key": "qwen38-27b__xhigh",
+   "model": "Qwen3.8-27B",
+   "effort": "xhigh",
+   "dev": "Alibaba (Qwen)",
+   "type": "open",
+   "released": "2026-08-14",
+   "params_b": 27.0,
+   "best": true
+  },
+  {
+   "key": "qwen38-27b__low",
+   "model": "Qwen3.8-27B",
+   "effort": "low",
+   "dev": "Alibaba (Qwen)",
+   "type": "open",
+   "released": "2026-08-14",
+   "params_b": 27.0,
+   "best": false
+  },
+  {
+   "key": "gemma4-31b__thinking",
+   "model": "Gemma 4 31B",
+   "effort": "thinking",
+   "dev": "Google",
+   "type": "open",
+   "released": "2026-04-02",
+   "params_b": 30.7,
+   "best": true
+  },
+  {
+   "key": "muse-glimmer-30b__xhigh",
+   "model": "Muse Glimmer 30B",
+   "effort": "xhigh",
+   "dev": "Meta",
+   "type": "open",
+   "released": "2026-08-10",
+   "params_b": 29.6,
+   "best": true
+  },
+  {
+   "key": "muse-glimmer-30b__low",
+   "model": "Muse Glimmer 30B",
+   "effort": "low",
+   "dev": "Meta",
+   "type": "open",
+   "released": "2026-08-10",
+   "params_b": 29.6,
+   "best": false
+  },
+  {
+   "key": "qwen35-9b__thinking",
+   "model": "Qwen3.5-9B",
+   "effort": "thinking",
+   "dev": "Alibaba (Qwen)",
+   "type": "open",
+   "released": "2026-03-02",
+   "params_b": 9.0,
+   "best": true
+  },
+  {
+   "key": "gemma4-12b__thinking",
+   "model": "Gemma 4 12B",
+   "effort": "thinking",
+   "dev": "Google",
+   "type": "open",
+   "released": "2026-06-03",
+   "params_b": 11.95,
+   "best": true
+  },
+  {
+   "key": "llmjp4-vl-9b__medium",
+   "model": "LLM-jp-4-VL 9B",
+   "effort": "medium",
+   "dev": "LLM-jp",
+   "type": "open",
+   "released": "2026-09-01",
+   "params_b": 9.05,
+   "best": true
+  },
+  {
+   "key": "llmjp41-8b-thinking__medium",
+   "model": "LLM-jp-4.1 8B thinking",
+   "effort": "medium",
+   "dev": "LLM-jp",
+   "type": "open",
+   "released": "2026-09-15",
+   "params_b": 8.59,
+   "best": true
+  }
+ ],
+ "scores": [
+  [
+   "opus55__max",
+   "hakushobench",
+   0.963468
+  ],
+  [
+   "opus55__max",
+   "jdocqa",
+   0.989547
+  ],
+  [
+   "opus55__max",
+   "jgraphqa",
+   0.986395
+  ],
+  [
+   "opus55__max",
+   "ccocrjavqa",
+   0.981609
+  ],
+  [
+   "opus55__max",
+   "cvqaja",
+   0.986667
+  ],
+  [
+   "opus55__max",
+   "charxiv",
+   0.925667
+  ],
+  [
+   "opus55__max",
+   "businessslidevqa",
+   0.919753
+  ],
+  [
+   "opus55__max",
+   "mathvision",
+   0.980263
+  ],
+  [
+   "opus55__max",
+   "aime26",
+   1.0
+  ],
+  [
+   "opus55__max",
+   "countbenchqa",
+   0.976918
+  ],
+  [
+   "opus55__max",
+   "gpqa",
+   0.929293
+  ],
+  [
+   "opus55__max",
+   "mmmu",
+   0.912633
+  ],
+  [
+   "opus55__max",
+   "realworldqa",
+   0.917647
+  ],
+  [
+   "opus55__max",
+   "ifbench",
+   0.638
+  ],
+  [
+   "opus55__max",
+   "mmmu_pro",
+   0.878227
+  ],
+  [
+   "opus55__max",
+   "zerobench",
+   0.356667
+  ],
+  [
+   "opus55__max",
+   "babyvision",
+   0.75
+  ],
+  [
+   "opus55__max",
+   "jawildtext",
+   0.941789
+  ],
+  [
+   "opus55__max",
+   "perceptionbench",
+   0.744667
+  ],
+  [
+   "opus55__max",
+   "livecodebench",
+   0.936387
+  ],
+  [
+   "opus55__max",
+   "mechaja_v2_mini",
+   0.976758
+  ],
+  [
+   "opus55__max",
+   "hle_diamond",
+   0.591667
+  ],
+  [
+   "opus55__max",
+   "screenspot_pro",
+   0.92684
+  ],
+  [
+   "opus55__max",
+   "omnidocbench",
+   0.945623
+  ],
+  [
+   "opus55__max",
+   "jamcqa",
+   0.930736
+  ],
+  [
+   "opus55__max",
+   "jfinbench",
+   0.934111
+  ],
+  [
+   "opus55__max",
+   "simpleqa_verified",
+   0.710333
+  ],
+  [
+   "opus55__low",
+   "hakushobench",
+   0.958272
+  ],
+  [
+   "opus55__low",
+   "jdocqa",
+   0.986837
+  ],
+  [
+   "opus55__low",
+   "jgraphqa",
+   0.982993
+  ],
+  [
+   "opus55__low",
+   "ccocrjavqa",
+   0.974713
+  ],
+  [
+   "opus55__low",
+   "cvqaja",
+   0.985
+  ],
+  [
+   "opus55__low",
+   "charxiv",
+   0.913333
+  ],
+  [
+   "opus55__low",
+   "businessslidevqa",
+   0.91358
+  ],
+  [
+   "opus55__low",
+   "mathvision",
+   0.938596
+  ],
+  [
+   "opus55__low",
+   "aime26",
+   0.966667
+  ],
+  [
+   "opus55__low",
+   "countbenchqa",
+   0.965377
+  ],
+  [
+   "opus55__low",
+   "gpqa",
+   0.922559
+  ],
+  [
+   "opus55__low",
+   "mmmu",
+   0.892562
+  ],
+  [
+   "opus55__low",
+   "realworldqa",
+   0.893682
+  ],
+  [
+   "opus55__low",
+   "ifbench",
+   0.563333
+  ],
+  [
+   "opus55__low",
+   "mmmu_pro",
+   0.857418
+  ],
+  [
+   "opus55__low",
+   "zerobench",
+   0.22
+  ],
+  [
+   "opus55__low",
+   "babyvision",
+   0.674399
+  ],
+  [
+   "opus55__low",
+   "jawildtext",
+   0.932033
+  ],
+  [
+   "opus55__low",
+   "perceptionbench",
+   0.711889
+  ],
+  [
+   "opus55__low",
+   "livecodebench",
+   0.880407
+  ],
+  [
+   "opus55__low",
+   "mechaja_v2_mini",
+   0.971662
+  ],
+  [
+   "opus55__low",
+   "hle_diamond",
+   0.429667
+  ],
+  [
+   "opus55__low",
+   "screenspot_pro",
+   0.902804
+  ],
+  [
+   "opus55__low",
+   "omnidocbench",
+   0.940933
+  ],
+  [
+   "opus55__low",
+   "jamcqa",
+   0.929518
+  ],
+  [
+   "opus55__low",
+   "jfinbench",
+   0.937677
+  ],
+  [
+   "opus55__low",
+   "simpleqa_verified",
+   0.672
+  ],
+  [
+   "gpt6-astra__max",
+   "hakushobench",
+   0.95876
+  ],
+  [
+   "gpt6-astra__max",
+   "jdocqa",
+   0.990321
+  ],
+  [
+   "gpt6-astra__max",
+   "jgraphqa",
+   0.989796
+  ],
+  [
+   "gpt6-astra__max",
+   "ccocrjavqa",
+   0.944828
+  ],
+  [
+   "gpt6-astra__max",
+   "cvqaja",
+   0.981667
+  ],
+  [
+   "gpt6-astra__max",
+   "charxiv",
+   0.916667
+  ],
+  [
+   "gpt6-astra__max",
+   "businessslidevqa",
+   0.902778
+  ],
+  [
+   "gpt6-astra__max",
+   "mathvision",
+   0.974781
+  ],
+  [
+   "gpt6-astra__max",
+   "aime26",
+   1.0
+  ],
+  [
+   "gpt6-astra__max",
+   "countbenchqa",
+   0.968092
+  ],
+  [
+   "gpt6-astra__max",
+   "gpqa",
+   0.956229
+  ],
+  [
+   "gpt6-astra__max",
+   "mmmu",
+   0.914601
+  ],
+  [
+   "gpt6-astra__max",
+   "realworldqa",
+   0.864924
+  ],
+  [
+   "gpt6-astra__max",
+   "ifbench",
+   0.735333
+  ],
+  [
+   "gpt6-astra__max",
+   "mmmu_pro",
+   0.870328
+  ],
+  [
+   "gpt6-astra__max",
+   "zerobench",
+   0.41
+  ],
+  [
+   "gpt6-astra__max",
+   "babyvision",
+   0.916667
+  ],
+  [
+   "gpt6-astra__max",
+   "jawildtext",
+   0.942764
+  ],
+  [
+   "gpt6-astra__max",
+   "perceptionbench",
+   0.780333
+  ],
+  [
+   "gpt6-astra__max",
+   "livecodebench",
+   0.946565
+  ],
+  [
+   "gpt6-astra__max",
+   "mechaja_v2_mini",
+   0.970642
+  ],
+  [
+   "gpt6-astra__max",
+   "hle_diamond",
+   0.635
+  ],
+  [
+   "gpt6-astra__max",
+   "screenspot_pro",
+   0.938857
+  ],
+  [
+   "gpt6-astra__max",
+   "omnidocbench",
+   0.937191
+  ],
+  [
+   "gpt6-astra__max",
+   "jamcqa",
+   0.934659
+  ],
+  [
+   "gpt6-astra__max",
+   "jfinbench",
+   0.94541
+  ],
+  [
+   "gpt6-astra__max",
+   "simpleqa_verified",
+   0.751667
+  ],
+  [
+   "gpt6-astra__low",
+   "hakushobench",
+   0.93749
+  ],
+  [
+   "gpt6-astra__low",
+   "jdocqa",
+   0.982191
+  ],
+  [
+   "gpt6-astra__low",
+   "jgraphqa",
+   0.988095
+  ],
+  [
+   "gpt6-astra__low",
+   "ccocrjavqa",
+   0.942529
+  ],
+  [
+   "gpt6-astra__low",
+   "cvqaja",
+   0.983333
+  ],
+  [
+   "gpt6-astra__low",
+   "charxiv",
+   0.907
+  ],
+  [
+   "gpt6-astra__low",
+   "businessslidevqa",
+   0.884259
+  ],
+  [
+   "gpt6-astra__low",
+   "mathvision",
+   0.961623
+  ],
+  [
+   "gpt6-astra__low",
+   "aime26",
+   0.99
+  ],
+  [
+   "gpt6-astra__low",
+   "countbenchqa",
+   0.958588
+  ],
+  [
+   "gpt6-astra__low",
+   "gpqa",
+   0.925926
+  ],
+  [
+   "gpt6-astra__low",
+   "mmmu",
+   0.890201
+  ],
+  [
+   "gpt6-astra__low",
+   "realworldqa",
+   0.856645
+  ],
+  [
+   "gpt6-astra__low",
+   "ifbench",
+   0.645333
+  ],
+  [
+   "gpt6-astra__low",
+   "mmmu_pro",
+   0.84605
+  ],
+  [
+   "gpt6-astra__low",
+   "zerobench",
+   0.346667
+  ],
+  [
+   "gpt6-astra__low",
+   "babyvision",
+   0.858247
+  ],
+  [
+   "gpt6-astra__low",
+   "jawildtext",
+   0.921626
+  ],
+  [
+   "gpt6-astra__low",
+   "perceptionbench",
+   0.724
+  ],
+  [
+   "gpt6-astra__low",
+   "livecodebench",
+   0.938931
+  ],
+  [
+   "gpt6-astra__low",
+   "mechaja_v2_mini",
+   0.971865
+  ],
+  [
+   "gpt6-astra__low",
+   "hle_diamond",
+   0.444
+  ],
+  [
+   "gpt6-astra__low",
+   "screenspot_pro",
+   0.92452
+  ],
+  [
+   "gpt6-astra__low",
+   "omnidocbench",
+   0.944557
+  ],
+  [
+   "gpt6-astra__low",
+   "jamcqa",
+   0.92086
+  ],
+  [
+   "gpt6-astra__low",
+   "jfinbench",
+   0.934474
+  ],
+  [
+   "gpt6-astra__low",
+   "simpleqa_verified",
+   0.713667
+  ],
+  [
+   "gemini38-flash__high",
+   "hakushobench",
+   0.957298
+  ],
+  [
+   "gemini38-flash__high",
+   "jdocqa",
+   0.968254
+  ],
+  [
+   "gemini38-flash__high",
+   "jgraphqa",
+   0.986395
+  ],
+  [
+   "gemini38-flash__high",
+   "ccocrjavqa",
+   0.967816
+  ],
+  [
+   "gemini38-flash__high",
+   "cvqaja",
+   0.983333
+  ],
+  [
+   "gemini38-flash__high",
+   "charxiv",
+   0.879
+  ],
+  [
+   "gemini38-flash__high",
+   "businessslidevqa",
+   0.890432
+  ],
+  [
+   "gemini38-flash__high",
+   "mathvision",
+   0.929825
+  ],
+  [
+   "gemini38-flash__high",
+   "aime26",
+   0.99
+  ],
+  [
+   "gemini38-flash__high",
+   "countbenchqa",
+   0.965377
+  ],
+  [
+   "gemini38-flash__high",
+   "gpqa",
+   0.949495
+  ],
+  [
+   "gemini38-flash__high",
+   "mmmu",
+   0.905549
+  ],
+  [
+   "gemini38-flash__high",
+   "realworldqa",
+   0.881917
+  ],
+  [
+   "gemini38-flash__high",
+   "ifbench",
+   0.77
+  ],
+  [
+   "gemini38-flash__high",
+   "mmmu_pro",
+   0.857611
+  ],
+  [
+   "gemini38-flash__high",
+   "zerobench",
+   0.136667
+  ],
+  [
+   "gemini38-flash__high",
+   "babyvision",
+   0.735395
+  ],
+  [
+   "gemini38-flash__high",
+   "jawildtext",
+   0.921951
+  ],
+  [
+   "gemini38-flash__high",
+   "perceptionbench",
+   0.692222
+  ],
+  [
+   "gemini38-flash__high",
+   "livecodebench",
+   0.926209
+  ],
+  [
+   "gemini38-flash__high",
+   "mechaja_v2_mini",
+   0.97472
+  ],
+  [
+   "gemini38-flash__high",
+   "hle_diamond",
+   0.337
+  ],
+  [
+   "gemini38-flash__high",
+   "screenspot_pro",
+   0.674678
+  ],
+  [
+   "gemini38-flash__high",
+   "omnidocbench",
+   0.908598
+  ],
+  [
+   "gemini38-flash__high",
+   "jamcqa",
+   0.928436
+  ],
+  [
+   "gemini38-flash__high",
+   "jfinbench",
+   0.904757
+  ],
+  [
+   "gemini38-flash__high",
+   "simpleqa_verified",
+   0.733
+  ],
+  [
+   "gemini38-flash__low",
+   "hakushobench",
+   0.947394
+  ],
+  [
+   "gemini38-flash__low",
+   "jdocqa",
+   0.967093
+  ],
+  [
+   "gemini38-flash__low",
+   "jgraphqa",
+   0.989796
+  ],
+  [
+   "gemini38-flash__low",
+   "ccocrjavqa",
+   0.96092
+  ],
+  [
+   "gemini38-flash__low",
+   "cvqaja",
+   0.978333
+  ],
+  [
+   "gemini38-flash__low",
+   "charxiv",
+   0.885
+  ],
+  [
+   "gemini38-flash__low",
+   "businessslidevqa",
+   0.890432
+  ],
+  [
+   "gemini38-flash__low",
+   "mathvision",
+   0.903509
+  ],
+  [
+   "gemini38-flash__low",
+   "aime26",
+   0.916667
+  ],
+  [
+   "gemini38-flash__low",
+   "countbenchqa",
+   0.966735
+  ],
+  [
+   "gemini38-flash__low",
+   "gpqa",
+   0.924242
+  ],
+  [
+   "gemini38-flash__low",
+   "mmmu",
+   0.892562
+  ],
+  [
+   "gemini38-flash__low",
+   "realworldqa",
+   0.869281
+  ],
+  [
+   "gemini38-flash__low",
+   "ifbench",
+   0.61
+  ],
+  [
+   "gemini38-flash__low",
+   "mmmu_pro",
+   0.851252
+  ],
+  [
+   "gemini38-flash__low",
+   "zerobench",
+   0.143333
+  ],
+  [
+   "gemini38-flash__low",
+   "babyvision",
+   0.725086
+  ],
+  [
+   "gemini38-flash__low",
+   "jawildtext",
+   0.908943
+  ],
+  [
+   "gemini38-flash__low",
+   "perceptionbench",
+   0.668556
+  ],
+  [
+   "gemini38-flash__low",
+   "livecodebench",
+   0.860051
+  ],
+  [
+   "gemini38-flash__low",
+   "mechaja_v2_mini",
+   0.974312
+  ],
+  [
+   "gemini38-flash__low",
+   "hle_diamond",
+   0.245333
+  ],
+  [
+   "gemini38-flash__low",
+   "screenspot_pro",
+   0.681636
+  ],
+  [
+   "gemini38-flash__low",
+   "omnidocbench",
+   0.891892
+  ],
+  [
+   "gemini38-flash__low",
+   "jamcqa",
+   0.928707
+  ],
+  [
+   "gemini38-flash__low",
+   "jfinbench",
+   0.868148
+  ],
+  [
+   "gemini38-flash__low",
+   "simpleqa_verified",
+   0.645333
+  ],
+  [
+   "qwen38-flash__thinking",
+   "hakushobench",
+   0.829843
+  ],
+  [
+   "qwen38-flash__thinking",
+   "jdocqa",
+   0.951607
+  ],
+  [
+   "qwen38-flash__thinking",
+   "jgraphqa",
+   0.977891
+  ],
+  [
+   "qwen38-flash__thinking",
+   "ccocrjavqa",
+   0.873563
+  ],
+  [
+   "qwen38-flash__thinking",
+   "cvqaja",
+   0.92
+  ],
+  [
+   "qwen38-flash__thinking",
+   "charxiv",
+   0.831
+  ],
+  [
+   "qwen38-flash__thinking",
+   "businessslidevqa",
+   0.861111
+  ],
+  [
+   "qwen38-flash__thinking",
+   "mathvision",
+   0.835526
+  ],
+  [
+   "qwen38-flash__thinking",
+   "aime26",
+   0.983333
+  ],
+  [
+   "qwen38-flash__thinking",
+   "countbenchqa",
+   0.936864
+  ],
+  [
+   "qwen38-flash__thinking",
+   "gpqa",
+   0.905724
+  ],
+  [
+   "qwen38-flash__thinking",
+   "mmmu",
+   0.853207
+  ],
+  [
+   "qwen38-flash__thinking",
+   "realworldqa",
+   0.853159
+  ],
+  [
+   "qwen38-flash__thinking",
+   "ifbench",
+   0.813333
+  ],
+  [
+   "qwen38-flash__thinking",
+   "mmmu_pro",
+   0.793834
+  ],
+  [
+   "qwen38-flash__thinking",
+   "zerobench",
+   0.073333
+  ],
+  [
+   "qwen38-flash__thinking",
+   "babyvision",
+   0.45189
+  ],
+  [
+   "qwen38-flash__thinking",
+   "jawildtext",
+   0.860163
+  ],
+  [
+   "qwen38-flash__thinking",
+   "perceptionbench",
+   0.553222
+  ],
+  [
+   "qwen38-flash__thinking",
+   "livecodebench",
+   0.913486
+  ],
+  [
+   "qwen38-flash__thinking",
+   "mechaja_v2_mini",
+   0.860754
+  ],
+  [
+   "qwen38-flash__thinking",
+   "hle_diamond",
+   0.166667
+  ],
+  [
+   "qwen38-flash__thinking",
+   "screenspot_pro",
+   0.536159
+  ],
+  [
+   "qwen38-flash__thinking",
+   "omnidocbench",
+   0.931021
+  ],
+  [
+   "qwen38-flash__thinking",
+   "jamcqa",
+   0.71618
+  ],
+  [
+   "qwen38-flash__thinking",
+   "jfinbench",
+   0.605456
+  ],
+  [
+   "qwen38-flash__thinking",
+   "simpleqa_verified",
+   0.253333
+  ],
+  [
+   "kimi-k31-pro__max",
+   "hakushobench",
+   0.927423
+  ],
+  [
+   "kimi-k31-pro__max",
+   "jdocqa",
+   0.98374
+  ],
+  [
+   "kimi-k31-pro__max",
+   "jgraphqa",
+   0.986395
+  ],
+  [
+   "kimi-k31-pro__max",
+   "ccocrjavqa",
+   0.908046
+  ],
+  [
+   "kimi-k31-pro__max",
+   "cvqaja",
+   0.966667
+  ],
+  [
+   "kimi-k31-pro__max",
+   "charxiv",
+   0.888
+  ],
+  [
+   "kimi-k31-pro__max",
+   "businessslidevqa",
+   0.905864
+  ],
+  [
+   "kimi-k31-pro__max",
+   "mathvision",
+   0.961623
+  ],
+  [
+   "kimi-k31-pro__max",
+   "aime26",
+   0.993333
+  ],
+  [
+   "kimi-k31-pro__max",
+   "countbenchqa",
+   0.971487
+  ],
+  [
+   "kimi-k31-pro__max",
+   "gpqa",
+   0.929293
+  ],
+  [
+   "kimi-k31-pro__max",
+   "mmmu",
+   0.895317
+  ],
+  [
+   "kimi-k31-pro__max",
+   "realworldqa",
+   0.851852
+  ],
+  [
+   "kimi-k31-pro__max",
+   "ifbench",
+   0.704667
+  ],
+  [
+   "kimi-k31-pro__max",
+   "mmmu_pro",
+   0.840848
+  ],
+  [
+   "kimi-k31-pro__max",
+   "zerobench",
+   0.306667
+  ],
+  [
+   "kimi-k31-pro__max",
+   "babyvision",
+   0.758591
+  ],
+  [
+   "kimi-k31-pro__max",
+   "jawildtext",
+   0.928455
+  ],
+  [
+   "kimi-k31-pro__max",
+   "perceptionbench",
+   0.687444
+  ],
+  [
+   "kimi-k31-pro__max",
+   "livecodebench",
+   0.936387
+  ],
+  [
+   "kimi-k31-pro__max",
+   "mechaja_v2_mini",
+   0.952294
+  ],
+  [
+   "kimi-k31-pro__max",
+   "hle_diamond",
+   0.363
+  ],
+  [
+   "kimi-k31-pro__max",
+   "screenspot_pro",
+   0.829433
+  ],
+  [
+   "kimi-k31-pro__max",
+   "omnidocbench",
+   0.943865
+  ],
+  [
+   "kimi-k31-pro__max",
+   "jamcqa",
+   0.845509
+  ],
+  [
+   "kimi-k31-pro__max",
+   "jfinbench",
+   0.822689
+  ],
+  [
+   "kimi-k31-pro__max",
+   "simpleqa_verified",
+   0.603333
+  ],
+  [
+   "kimi-k31-pro__low",
+   "hakushobench",
+   0.893652
+  ],
+  [
+   "kimi-k31-pro__low",
+   "jdocqa",
+   0.980643
+  ],
+  [
+   "kimi-k31-pro__low",
+   "jgraphqa",
+   0.988095
+  ],
+  [
+   "kimi-k31-pro__low",
+   "ccocrjavqa",
+   0.887356
+  ],
+  [
+   "kimi-k31-pro__low",
+   "cvqaja",
+   0.95
+  ],
+  [
+   "kimi-k31-pro__low",
+   "charxiv",
+   0.837667
+  ],
+  [
+   "kimi-k31-pro__low",
+   "businessslidevqa",
+   0.893519
+  ],
+  [
+   "kimi-k31-pro__low",
+   "mathvision",
+   0.798246
+  ],
+  [
+   "kimi-k31-pro__low",
+   "aime26",
+   0.816667
+  ],
+  [
+   "kimi-k31-pro__low",
+   "countbenchqa",
+   0.959946
+  ],
+  [
+   "kimi-k31-pro__low",
+   "gpqa",
+   0.858586
+  ],
+  [
+   "kimi-k31-pro__low",
+   "mmmu",
+   0.860291
+  ],
+  [
+   "kimi-k31-pro__low",
+   "realworldqa",
+   0.82658
+  ],
+  [
+   "kimi-k31-pro__low",
+   "ifbench",
+   0.631333
+  ],
+  [
+   "kimi-k31-pro__low",
+   "mmmu_pro",
+   0.79422
+  ],
+  [
+   "kimi-k31-pro__low",
+   "zerobench",
+   0.12
+  ],
+  [
+   "kimi-k31-pro__low",
+   "babyvision",
+   0.475945
+  ],
+  [
+   "kimi-k31-pro__low",
+   "jawildtext",
+   0.901789
+  ],
+  [
+   "kimi-k31-pro__low",
+   "perceptionbench",
+   0.574889
+  ],
+  [
+   "kimi-k31-pro__low",
+   "livecodebench",
+   0.737913
+  ],
+  [
+   "kimi-k31-pro__low",
+   "mechaja_v2_mini",
+   0.940877
+  ],
+  [
+   "kimi-k31-pro__low",
+   "hle_diamond",
+   0.183333
+  ],
+  [
+   "kimi-k31-pro__low",
+   "screenspot_pro",
+   0.770398
+  ],
+  [
+   "kimi-k31-pro__low",
+   "omnidocbench",
+   0.945015
+  ],
+  [
+   "kimi-k31-pro__low",
+   "jamcqa",
+   0.830087
+  ],
+  [
+   "kimi-k31-pro__low",
+   "jfinbench",
+   0.722513
+  ],
+  [
+   "kimi-k31-pro__low",
+   "simpleqa_verified",
+   0.593333
+  ],
+  [
+   "dsv41-flash__max",
+   "hakushobench",
+   0.854197
+  ],
+  [
+   "dsv41-flash__max",
+   "jdocqa",
+   0.922958
+  ],
+  [
+   "dsv41-flash__max",
+   "jgraphqa",
+   0.984694
+  ],
+  [
+   "dsv41-flash__max",
+   "ccocrjavqa",
+   0.811494
+  ],
+  [
+   "dsv41-flash__max",
+   "cvqaja",
+   0.941667
+  ],
+  [
+   "dsv41-flash__max",
+   "charxiv",
+   0.794
+  ],
+  [
+   "dsv41-flash__max",
+   "businessslidevqa",
+   0.876543
+  ],
+  [
+   "dsv41-flash__max",
+   "mathvision",
+   0.837719
+  ],
+  [
+   "dsv41-flash__max",
+   "aime26",
+   0.993333
+  ],
+  [
+   "dsv41-flash__max",
+   "countbenchqa",
+   0.936864
+  ],
+  [
+   "dsv41-flash__max",
+   "gpqa",
+   0.927609
+  ],
+  [
+   "dsv41-flash__max",
+   "mmmu",
+   0.861472
+  ],
+  [
+   "dsv41-flash__max",
+   "realworldqa",
+   0.796514
+  ],
+  [
+   "dsv41-flash__max",
+   "ifbench",
+   0.723333
+  ],
+  [
+   "dsv41-flash__max",
+   "mmmu_pro",
+   0.801734
+  ],
+  [
+   "dsv41-flash__max",
+   "zerobench",
+   0.103333
+  ],
+  [
+   "dsv41-flash__max",
+   "babyvision",
+   0.445876
+  ],
+  [
+   "dsv41-flash__max",
+   "jawildtext",
+   0.837398
+  ],
+  [
+   "dsv41-flash__max",
+   "perceptionbench",
+   0.480667
+  ],
+  [
+   "dsv41-flash__max",
+   "livecodebench",
+   0.92112
+  ],
+  [
+   "dsv41-flash__max",
+   "mechaja_v2_mini",
+   0.904179
+  ],
+  [
+   "dsv41-flash__max",
+   "hle_diamond",
+   0.242667
+  ],
+  [
+   "dsv41-flash__max",
+   "screenspot_pro",
+   0.085178
+  ],
+  [
+   "dsv41-flash__max",
+   "omnidocbench",
+   0.908452
+  ],
+  [
+   "dsv41-flash__max",
+   "jamcqa",
+   0.835904
+  ],
+  [
+   "dsv41-flash__max",
+   "jfinbench",
+   0.738129
+  ],
+  [
+   "dsv41-flash__max",
+   "simpleqa_verified",
+   0.434333
+  ],
+  [
+   "dsv41-flash__low",
+   "hakushobench",
+   0.827245
+  ],
+  [
+   "dsv41-flash__low",
+   "jdocqa",
+   0.910569
+  ],
+  [
+   "dsv41-flash__low",
+   "jgraphqa",
+   0.977891
+  ],
+  [
+   "dsv41-flash__low",
+   "ccocrjavqa",
+   0.783908
+  ],
+  [
+   "dsv41-flash__low",
+   "cvqaja",
+   0.916667
+  ],
+  [
+   "dsv41-flash__low",
+   "charxiv",
+   0.783
+  ],
+  [
+   "dsv41-flash__low",
+   "businessslidevqa",
+   0.876543
+  ],
+  [
+   "dsv41-flash__low",
+   "mathvision",
+   0.807018
+  ],
+  [
+   "dsv41-flash__low",
+   "aime26",
+   0.99
+  ],
+  [
+   "dsv41-flash__low",
+   "countbenchqa",
+   0.946368
+  ],
+  [
+   "dsv41-flash__low",
+   "gpqa",
+   0.912458
+  ],
+  [
+   "dsv41-flash__low",
+   "mmmu",
+   0.86344
+  ],
+  [
+   "dsv41-flash__low",
+   "realworldqa",
+   0.775599
+  ],
+  [
+   "dsv41-flash__low",
+   "ifbench",
+   0.722
+  ],
+  [
+   "dsv41-flash__low",
+   "mmmu_pro",
+   0.797688
+  ],
+  [
+   "dsv41-flash__low",
+   "zerobench",
+   0.12
+  ],
+  [
+   "dsv41-flash__low",
+   "babyvision",
+   0.337629
+  ],
+  [
+   "dsv41-flash__low",
+   "jawildtext",
+   0.814309
+  ],
+  [
+   "dsv41-flash__low",
+   "perceptionbench",
+   0.427333
+  ],
+  [
+   "dsv41-flash__low",
+   "livecodebench",
+   0.928753
+  ],
+  [
+   "dsv41-flash__low",
+   "mechaja_v2_mini",
+   0.866463
+  ],
+  [
+   "dsv41-flash__low",
+   "hle_diamond",
+   0.182
+  ],
+  [
+   "dsv41-flash__low",
+   "screenspot_pro",
+   0.113641
+  ],
+  [
+   "dsv41-flash__low",
+   "omnidocbench",
+   0.909961
+  ],
+  [
+   "dsv41-flash__low",
+   "jamcqa",
+   0.833739
+  ],
+  [
+   "dsv41-flash__low",
+   "jfinbench",
+   0.718766
+  ],
+  [
+   "dsv41-flash__low",
+   "simpleqa_verified",
+   0.438667
+  ],
+  [
+   "glm53-flash__max",
+   "hakushobench",
+   0.828057
+  ],
+  [
+   "glm53-flash__max",
+   "jdocqa",
+   0.941928
+  ],
+  [
+   "glm53-flash__max",
+   "jgraphqa",
+   0.989796
+  ],
+  [
+   "glm53-flash__max",
+   "ccocrjavqa",
+   0.8
+  ],
+  [
+   "glm53-flash__max",
+   "cvqaja",
+   0.93
+  ],
+  [
+   "glm53-flash__max",
+   "charxiv",
+   0.815333
+  ],
+  [
+   "glm53-flash__max",
+   "businessslidevqa",
+   0.887346
+  ],
+  [
+   "glm53-flash__max",
+   "mathvision",
+   0.778509
+  ],
+  [
+   "glm53-flash__max",
+   "aime26",
+   0.933333
+  ],
+  [
+   "glm53-flash__max",
+   "countbenchqa",
+   0.952478
+  ],
+  [
+   "glm53-flash__max",
+   "gpqa",
+   0.910774
+  ],
+  [
+   "glm53-flash__max",
+   "mmmu",
+   0.844156
+  ],
+  [
+   "glm53-flash__max",
+   "realworldqa",
+   0.810022
+  ],
+  [
+   "glm53-flash__max",
+   "ifbench",
+   0.561333
+  ],
+  [
+   "glm53-flash__max",
+   "mmmu_pro",
+   0.783044
+  ],
+  [
+   "glm53-flash__max",
+   "zerobench",
+   0.056667
+  ],
+  [
+   "glm53-flash__max",
+   "babyvision",
+   0.388316
+  ],
+  [
+   "glm53-flash__max",
+   "jawildtext",
+   0.857561
+  ],
+  [
+   "glm53-flash__max",
+   "perceptionbench",
+   0.494556
+  ],
+  [
+   "glm53-flash__max",
+   "livecodebench",
+   0.783715
+  ],
+  [
+   "glm53-flash__max",
+   "mechaja_v2_mini",
+   0.885831
+  ],
+  [
+   "glm53-flash__max",
+   "hle_diamond",
+   0.188333
+  ],
+  [
+   "glm53-flash__max",
+   "screenspot_pro",
+   0.194603
+  ],
+  [
+   "glm53-flash__max",
+   "omnidocbench",
+   0.921349
+  ],
+  [
+   "glm53-flash__max",
+   "jamcqa",
+   0.770022
+  ],
+  [
+   "glm53-flash__max",
+   "jfinbench",
+   0.505207
+  ],
+  [
+   "glm53-flash__max",
+   "simpleqa_verified",
+   0.322333
+  ],
+  [
+   "glm53-flash__low",
+   "hakushobench",
+   0.712291
+  ],
+  [
+   "glm53-flash__low",
+   "jdocqa",
+   0.915989
+  ],
+  [
+   "glm53-flash__low",
+   "jgraphqa",
+   0.97449
+  ],
+  [
+   "glm53-flash__low",
+   "ccocrjavqa",
+   0.809195
+  ],
+  [
+   "glm53-flash__low",
+   "cvqaja",
+   0.903333
+  ],
+  [
+   "glm53-flash__low",
+   "charxiv",
+   0.751667
+  ],
+  [
+   "glm53-flash__low",
+   "businessslidevqa",
+   0.882716
+  ],
+  [
+   "glm53-flash__low",
+   "mathvision",
+   0.684211
+  ],
+  [
+   "glm53-flash__low",
+   "aime26",
+   0.613333
+  ],
+  [
+   "glm53-flash__low",
+   "countbenchqa",
+   0.943652
+  ],
+  [
+   "glm53-flash__low",
+   "gpqa",
+   0.799663
+  ],
+  [
+   "glm53-flash__low",
+   "mmmu",
+   0.819362
+  ],
+  [
+   "glm53-flash__low",
+   "realworldqa",
+   0.799129
+  ],
+  [
+   "glm53-flash__low",
+   "ifbench",
+   0.369333
+  ],
+  [
+   "glm53-flash__low",
+   "mmmu_pro",
+   0.749133
+  ],
+  [
+   "glm53-flash__low",
+   "zerobench",
+   0.043333
+  ],
+  [
+   "glm53-flash__low",
+   "babyvision",
+   0.354811
+  ],
+  [
+   "glm53-flash__low",
+   "jawildtext",
+   0.720976
+  ],
+  [
+   "glm53-flash__low",
+   "perceptionbench",
+   0.440444
+  ],
+  [
+   "glm53-flash__low",
+   "livecodebench",
+   0.671756
+  ],
+  [
+   "glm53-flash__low",
+   "mechaja_v2_mini",
+   0.834251
+  ],
+  [
+   "glm53-flash__low",
+   "hle_diamond",
+   0.122667
+  ],
+  [
+   "glm53-flash__low",
+   "screenspot_pro",
+   0.082437
+  ],
+  [
+   "glm53-flash__low",
+   "omnidocbench",
+   0.930961
+  ],
+  [
+   "glm53-flash__low",
+   "jamcqa",
+   0.73309
+  ],
+  [
+   "glm53-flash__low",
+   "jfinbench",
+   0.491893
+  ],
+  [
+   "glm53-flash__low",
+   "simpleqa_verified",
+   0.267333
+  ],
+  [
+   "qwen38-27b__xhigh",
+   "hakushobench",
+   0.78844
+  ],
+  [
+   "qwen38-27b__xhigh",
+   "jdocqa",
+   0.952381
+  ],
+  [
+   "qwen38-27b__xhigh",
+   "jgraphqa",
+   0.991497
+  ],
+  [
+   "qwen38-27b__xhigh",
+   "ccocrjavqa",
+   0.763218
+  ],
+  [
+   "qwen38-27b__xhigh",
+   "cvqaja",
+   0.763333
+  ],
+  [
+   "qwen38-27b__xhigh",
+   "charxiv",
+   0.821333
+  ],
+  [
+   "qwen38-27b__xhigh",
+   "businessslidevqa",
+   0.882716
+  ],
+  [
+   "qwen38-27b__xhigh",
+   "mathvision",
+   0.844298
+  ],
+  [
+   "qwen38-27b__xhigh",
+   "aime26",
+   0.983333
+  ],
+  [
+   "qwen38-27b__xhigh",
+   "countbenchqa",
+   0.930754
+  ],
+  [
+   "qwen38-27b__xhigh",
+   "gpqa",
+   0.90404
+  ],
+  [
+   "qwen38-27b__xhigh",
+   "mmmu",
+   0.829595
+  ],
+  [
+   "qwen38-27b__xhigh",
+   "realworldqa",
+   0.831808
+  ],
+  [
+   "qwen38-27b__xhigh",
+   "ifbench",
+   0.808
+  ],
+  [
+   "qwen38-27b__xhigh",
+   "mmmu_pro",
+   0.760501
+  ],
+  [
+   "qwen38-27b__xhigh",
+   "zerobench",
+   0.1
+  ],
+  [
+   "qwen38-27b__xhigh",
+   "babyvision",
+   0.469072
+  ],
+  [
+   "qwen38-27b__xhigh",
+   "jawildtext",
+   0.848455
+  ],
+  [
+   "qwen38-27b__xhigh",
+   "perceptionbench",
+   0.536222
+  ],
+  [
+   "qwen38-27b__xhigh",
+   "livecodebench",
+   0.888041
+  ],
+  [
+   "qwen38-27b__xhigh",
+   "mechaja_v2_mini",
+   0.726198
+  ],
+  [
+   "qwen38-27b__xhigh",
+   "hle_diamond",
+   0.136
+  ],
+  [
+   "qwen38-27b__xhigh",
+   "screenspot_pro",
+   0.50622
+  ],
+  [
+   "qwen38-27b__xhigh",
+   "omnidocbench",
+   0.932555
+  ],
+  [
+   "qwen38-27b__xhigh",
+   "jamcqa",
+   0.564394
+  ],
+  [
+   "qwen38-27b__xhigh",
+   "jfinbench",
+   0.535993
+  ],
+  [
+   "qwen38-27b__xhigh",
+   "simpleqa_verified",
+   0.084667
+  ],
+  [
+   "qwen38-27b__low",
+   "hakushobench",
+   0.766521
+  ],
+  [
+   "qwen38-27b__low",
+   "jdocqa",
+   0.947735
+  ],
+  [
+   "qwen38-27b__low",
+   "jgraphqa",
+   0.981293
+  ],
+  [
+   "qwen38-27b__low",
+   "ccocrjavqa",
+   0.783908
+  ],
+  [
+   "qwen38-27b__low",
+   "cvqaja",
+   0.788333
+  ],
+  [
+   "qwen38-27b__low",
+   "charxiv",
+   0.796
+  ],
+  [
+   "qwen38-27b__low",
+   "businessslidevqa",
+   0.87037
+  ],
+  [
+   "qwen38-27b__low",
+   "mathvision",
+   0.803728
+  ],
+  [
+   "qwen38-27b__low",
+   "aime26",
+   0.866667
+  ],
+  [
+   "qwen38-27b__low",
+   "countbenchqa",
+   0.93279
+  ],
+  [
+   "qwen38-27b__low",
+   "gpqa",
+   0.848485
+  ],
+  [
+   "qwen38-27b__low",
+   "mmmu",
+   0.818575
+  ],
+  [
+   "qwen38-27b__low",
+   "realworldqa",
+   0.819608
+  ],
+  [
+   "qwen38-27b__low",
+   "ifbench",
+   0.600667
+  ],
+  [
+   "qwen38-27b__low",
+   "mmmu_pro",
+   0.742389
+  ],
+  [
+   "qwen38-27b__low",
+   "zerobench",
+   0.053333
+  ],
+  [
+   "qwen38-27b__low",
+   "babyvision",
+   0.408935
+  ],
+  [
+   "qwen38-27b__low",
+   "jawildtext",
+   0.84
+  ],
+  [
+   "qwen38-27b__low",
+   "perceptionbench",
+   0.495111
+  ],
+  [
+   "qwen38-27b__low",
+   "livecodebench",
+   0.783715
+  ],
+  [
+   "qwen38-27b__low",
+   "mechaja_v2_mini",
+   0.728848
+  ],
+  [
+   "qwen38-27b__low",
+   "hle_diamond",
+   0.072333
+  ],
+  [
+   "qwen38-27b__low",
+   "screenspot_pro",
+   0.484925
+  ],
+  [
+   "qwen38-27b__low",
+   "omnidocbench",
+   0.930482
+  ],
+  [
+   "qwen38-27b__low",
+   "jamcqa",
+   0.548431
+  ],
+  [
+   "qwen38-27b__low",
+   "jfinbench",
+   0.48951
+  ],
+  [
+   "qwen38-27b__low",
+   "simpleqa_verified",
+   0.075
+  ],
+  [
+   "gemma4-31b__thinking",
+   "hakushobench",
+   0.906965
+  ],
+  [
+   "gemma4-31b__thinking",
+   "jdocqa",
+   0.90089
+  ],
+  [
+   "gemma4-31b__thinking",
+   "jgraphqa",
+   0.97449
+  ],
+  [
+   "gemma4-31b__thinking",
+   "ccocrjavqa",
+   0.857471
+  ],
+  [
+   "gemma4-31b__thinking",
+   "cvqaja",
+   0.903333
+  ],
+  [
+   "gemma4-31b__thinking",
+   "charxiv",
+   0.804667
+  ],
+  [
+   "gemma4-31b__thinking",
+   "businessslidevqa",
+   0.862654
+  ],
+  [
+   "gemma4-31b__thinking",
+   "mathvision",
+   0.752193
+  ],
+  [
+   "gemma4-31b__thinking",
+   "aime26",
+   0.9
+  ],
+  [
+   "gemma4-31b__thinking",
+   "countbenchqa",
+   0.961982
+  ],
+  [
+   "gemma4-31b__thinking",
+   "gpqa",
+   0.858586
+  ],
+  [
+   "gemma4-31b__thinking",
+   "mmmu",
+   0.818575
+  ],
+  [
+   "gemma4-31b__thinking",
+   "realworldqa",
+   0.795207
+  ],
+  [
+   "gemma4-31b__thinking",
+   "ifbench",
+   0.778
+  ],
+  [
+   "gemma4-31b__thinking",
+   "mmmu_pro",
+   0.769364
+  ],
+  [
+   "gemma4-31b__thinking",
+   "zerobench",
+   0.056667
+  ],
+  [
+   "gemma4-31b__thinking",
+   "babyvision",
+   0.357388
+  ],
+  [
+   "gemma4-31b__thinking",
+   "jawildtext",
+   0.827317
+  ],
+  [
+   "gemma4-31b__thinking",
+   "perceptionbench",
+   0.469778
+  ],
+  [
+   "gemma4-31b__thinking",
+   "livecodebench",
+   0.773537
+  ],
+  [
+   "gemma4-31b__thinking",
+   "mechaja_v2_mini",
+   0.854434
+  ],
+  [
+   "gemma4-31b__thinking",
+   "hle_diamond",
+   0.078333
+  ],
+  [
+   "gemma4-31b__thinking",
+   "screenspot_pro",
+   0.283154
+  ],
+  [
+   "gemma4-31b__thinking",
+   "omnidocbench",
+   0.896931
+  ],
+  [
+   "gemma4-31b__thinking",
+   "jamcqa",
+   0.678301
+  ],
+  [
+   "gemma4-31b__thinking",
+   "jfinbench",
+   0.624009
+  ],
+  [
+   "gemma4-31b__thinking",
+   "simpleqa_verified",
+   0.1
+  ],
+  [
+   "muse-glimmer-30b__xhigh",
+   "hakushobench",
+   0.81734
+  ],
+  [
+   "muse-glimmer-30b__xhigh",
+   "jdocqa",
+   0.949284
+  ],
+  [
+   "muse-glimmer-30b__xhigh",
+   "jgraphqa",
+   0.971088
+  ],
+  [
+   "muse-glimmer-30b__xhigh",
+   "ccocrjavqa",
+   0.829885
+  ],
+  [
+   "muse-glimmer-30b__xhigh",
+   "cvqaja",
+   0.923333
+  ],
+  [
+   "muse-glimmer-30b__xhigh",
+   "charxiv",
+   0.787
+  ],
+  [
+   "muse-glimmer-30b__xhigh",
+   "businessslidevqa",
+   0.915123
+  ],
+  [
+   "muse-glimmer-30b__xhigh",
+   "mathvision",
+   0.736842
+  ],
+  [
+   "muse-glimmer-30b__xhigh",
+   "aime26",
+   0.946667
+  ],
+  [
+   "muse-glimmer-30b__xhigh",
+   "countbenchqa",
+   0.892736
+  ],
+  [
+   "muse-glimmer-30b__xhigh",
+   "gpqa",
+   0.840067
+  ],
+  [
+   "muse-glimmer-30b__xhigh",
+   "mmmu",
+   0.813853
+  ],
+  [
+   "muse-glimmer-30b__xhigh",
+   "realworldqa",
+   0.805664
+  ],
+  [
+   "muse-glimmer-30b__xhigh",
+   "ifbench",
+   0.767333
+  ],
+  [
+   "muse-glimmer-30b__xhigh",
+   "mmmu_pro",
+   0.744123
+  ],
+  [
+   "muse-glimmer-30b__xhigh",
+   "zerobench",
+   0.06
+  ],
+  [
+   "muse-glimmer-30b__xhigh",
+   "babyvision",
+   0.265464
+  ],
+  [
+   "muse-glimmer-30b__xhigh",
+   "jawildtext",
+   0.84878
+  ],
+  [
+   "muse-glimmer-30b__xhigh",
+   "perceptionbench",
+   0.449222
+  ],
+  [
+   "muse-glimmer-30b__xhigh",
+   "livecodebench",
+   0.664122
+  ],
+  [
+   "muse-glimmer-30b__xhigh",
+   "mechaja_v2_mini",
+   0.852396
+  ],
+  [
+   "muse-glimmer-30b__xhigh",
+   "hle_diamond",
+   0.095
+  ],
+  [
+   "muse-glimmer-30b__xhigh",
+   "screenspot_pro",
+   0.618807
+  ],
+  [
+   "muse-glimmer-30b__xhigh",
+   "omnidocbench",
+   0.907792
+  ],
+  [
+   "muse-glimmer-30b__xhigh",
+   "jamcqa",
+   0.655032
+  ],
+  [
+   "muse-glimmer-30b__xhigh",
+   "jfinbench",
+   0.560026
+  ],
+  [
+   "muse-glimmer-30b__xhigh",
+   "simpleqa_verified",
+   0.155667
+  ],
+  [
+   "muse-glimmer-30b__low",
+   "hakushobench",
+   0.791849
+  ],
+  [
+   "muse-glimmer-30b__low",
+   "jdocqa",
+   0.943477
+  ],
+  [
+   "muse-glimmer-30b__low",
+   "jgraphqa",
+   0.981293
+  ],
+  [
+   "muse-glimmer-30b__low",
+   "ccocrjavqa",
+   0.811494
+  ],
+  [
+   "muse-glimmer-30b__low",
+   "cvqaja",
+   0.901667
+  ],
+  [
+   "muse-glimmer-30b__low",
+   "charxiv",
+   0.764333
+  ],
+  [
+   "muse-glimmer-30b__low",
+   "businessslidevqa",
+   0.908951
+  ],
+  [
+   "muse-glimmer-30b__low",
+   "mathvision",
+   0.617325
+  ],
+  [
+   "muse-glimmer-30b__low",
+   "aime26",
+   0.64
+  ],
+  [
+   "muse-glimmer-30b__low",
+   "countbenchqa",
+   0.845214
+  ],
+  [
+   "muse-glimmer-30b__low",
+   "gpqa",
+   0.722222
+  ],
+  [
+   "muse-glimmer-30b__low",
+   "mmmu",
+   0.786698
+  ],
+  [
+   "muse-glimmer-30b__low",
+   "realworldqa",
+   0.803486
+  ],
+  [
+   "muse-glimmer-30b__low",
+   "ifbench",
+   0.602667
+  ],
+  [
+   "muse-glimmer-30b__low",
+   "mmmu_pro",
+   0.702697
+  ],
+  [
+   "muse-glimmer-30b__low",
+   "zerobench",
+   0.033333
+  ],
+  [
+   "muse-glimmer-30b__low",
+   "babyvision",
+   0.233677
+  ],
+  [
+   "muse-glimmer-30b__low",
+   "jawildtext",
+   0.827642
+  ],
+  [
+   "muse-glimmer-30b__low",
+   "perceptionbench",
+   0.410222
+  ],
+  [
+   "muse-glimmer-30b__low",
+   "livecodebench",
+   0.562341
+  ],
+  [
+   "muse-glimmer-30b__low",
+   "mechaja_v2_mini",
+   0.836697
+  ],
+  [
+   "muse-glimmer-30b__low",
+   "hle_diamond",
+   0.081
+  ],
+  [
+   "muse-glimmer-30b__low",
+   "screenspot_pro",
+   0.615855
+  ],
+  [
+   "muse-glimmer-30b__low",
+   "omnidocbench",
+   0.902857
+  ],
+  [
+   "muse-glimmer-30b__low",
+   "jamcqa",
+   0.630547
+  ],
+  [
+   "muse-glimmer-30b__low",
+   "jfinbench",
+   0.496426
+  ],
+  [
+   "muse-glimmer-30b__low",
+   "simpleqa_verified",
+   0.135667
+  ],
+  [
+   "qwen35-9b__thinking",
+   "hakushobench",
+   0.756454
+  ],
+  [
+   "qwen35-9b__thinking",
+   "jdocqa",
+   0.938444
+  ],
+  [
+   "qwen35-9b__thinking",
+   "jgraphqa",
+   0.984694
+  ],
+  [
+   "qwen35-9b__thinking",
+   "ccocrjavqa",
+   0.809195
+  ],
+  [
+   "qwen35-9b__thinking",
+   "cvqaja",
+   0.705
+  ],
+  [
+   "qwen35-9b__thinking",
+   "charxiv",
+   0.746333
+  ],
+  [
+   "qwen35-9b__thinking",
+   "businessslidevqa",
+   0.858025
+  ],
+  [
+   "qwen35-9b__thinking",
+   "mathvision",
+   0.710526
+  ],
+  [
+   "qwen35-9b__thinking",
+   "aime26",
+   0.886667
+  ],
+  [
+   "qwen35-9b__thinking",
+   "countbenchqa",
+   0.942295
+  ],
+  [
+   "qwen35-9b__thinking",
+   "gpqa",
+   0.824916
+  ],
+  [
+   "qwen35-9b__thinking",
+   "mmmu",
+   0.794176
+  ],
+  [
+   "qwen35-9b__thinking",
+   "realworldqa",
+   0.797386
+  ],
+  [
+   "qwen35-9b__thinking",
+   "ifbench",
+   0.642
+  ],
+  [
+   "qwen35-9b__thinking",
+   "mmmu_pro",
+   0.721002
+  ],
+  [
+   "qwen35-9b__thinking",
+   "zerobench",
+   0.026667
+  ],
+  [
+   "qwen35-9b__thinking",
+   "babyvision",
+   0.257732
+  ],
+  [
+   "qwen35-9b__thinking",
+   "jawildtext",
+   0.771057
+  ],
+  [
+   "qwen35-9b__thinking",
+   "perceptionbench",
+   0.408556
+  ],
+  [
+   "qwen35-9b__thinking",
+   "livecodebench",
+   0.664122
+  ],
+  [
+   "qwen35-9b__thinking",
+   "mechaja_v2_mini",
+   0.663405
+  ],
+  [
+   "qwen35-9b__thinking",
+   "hle_diamond",
+   0.058667
+  ],
+  [
+   "qwen35-9b__thinking",
+   "screenspot_pro",
+   0.369597
+  ],
+  [
+   "qwen35-9b__thinking",
+   "omnidocbench",
+   0.888951
+  ],
+  [
+   "qwen35-9b__thinking",
+   "jamcqa",
+   0.482684
+  ],
+  [
+   "qwen35-9b__thinking",
+   "jfinbench",
+   0.42606
+  ],
+  [
+   "qwen35-9b__thinking",
+   "simpleqa_verified",
+   0.093667
+  ],
+  [
+   "gemma4-12b__thinking",
+   "hakushobench",
+   0.883747
+  ],
+  [
+   "gemma4-12b__thinking",
+   "jdocqa",
+   0.825784
+  ],
+  [
+   "gemma4-12b__thinking",
+   "jgraphqa",
+   0.97619
+  ],
+  [
+   "gemma4-12b__thinking",
+   "ccocrjavqa",
+   0.758621
+  ],
+  [
+   "gemma4-12b__thinking",
+   "cvqaja",
+   0.796667
+  ],
+  [
+   "gemma4-12b__thinking",
+   "charxiv",
+   0.794333
+  ],
+  [
+   "gemma4-12b__thinking",
+   "businessslidevqa",
+   0.845679
+  ],
+  [
+   "gemma4-12b__thinking",
+   "mathvision",
+   0.682018
+  ],
+  [
+   "gemma4-12b__thinking",
+   "aime26",
+   0.82
+  ],
+  [
+   "gemma4-12b__thinking",
+   "countbenchqa",
+   0.936864
+  ],
+  [
+   "gemma4-12b__thinking",
+   "gpqa",
+   0.712121
+  ],
+  [
+   "gemma4-12b__thinking",
+   "mmmu",
+   0.776072
+  ],
+  [
+   "gemma4-12b__thinking",
+   "realworldqa",
+   0.734205
+  ],
+  [
+   "gemma4-12b__thinking",
+   "ifbench",
+   0.736
+  ],
+  [
+   "gemma4-12b__thinking",
+   "mmmu_pro",
+   0.704432
+  ],
+  [
+   "gemma4-12b__thinking",
+   "zerobench",
+   0.033333
+  ],
+  [
+   "gemma4-12b__thinking",
+   "babyvision",
+   0.225086
+  ],
+  [
+   "gemma4-12b__thinking",
+   "jawildtext",
+   0.706341
+  ],
+  [
+   "gemma4-12b__thinking",
+   "perceptionbench",
+   0.418556
+  ],
+  [
+   "gemma4-12b__thinking",
+   "livecodebench",
+   0.720102
+  ],
+  [
+   "gemma4-12b__thinking",
+   "mechaja_v2_mini",
+   0.727013
+  ],
+  [
+   "gemma4-12b__thinking",
+   "hle_diamond",
+   0.062333
+  ],
+  [
+   "gemma4-12b__thinking",
+   "screenspot_pro",
+   0.21147
+  ],
+  [
+   "gemma4-12b__thinking",
+   "omnidocbench",
+   0.836818
+  ],
+  [
+   "gemma4-12b__thinking",
+   "jamcqa",
+   0.51691
+  ],
+  [
+   "gemma4-12b__thinking",
+   "jfinbench",
+   0.45911
+  ],
+  [
+   "gemma4-12b__thinking",
+   "simpleqa_verified",
+   0.047333
+  ],
+  [
+   "llmjp4-vl-9b__medium",
+   "hakushobench",
+   0.483682
+  ],
+  [
+   "llmjp4-vl-9b__medium",
+   "jdocqa",
+   0.756485
+  ],
+  [
+   "llmjp4-vl-9b__medium",
+   "jgraphqa",
+   0.908163
+  ],
+  [
+   "llmjp4-vl-9b__medium",
+   "ccocrjavqa",
+   0.701149
+  ],
+  [
+   "llmjp4-vl-9b__medium",
+   "cvqaja",
+   0.686667
+  ],
+  [
+   "llmjp4-vl-9b__medium",
+   "charxiv",
+   0.460667
+  ],
+  [
+   "llmjp4-vl-9b__medium",
+   "businessslidevqa",
+   0.611111
+  ],
+  [
+   "llmjp4-vl-9b__medium",
+   "mathvision",
+   0.196272
+  ],
+  [
+   "llmjp4-vl-9b__medium",
+   "aime26",
+   0.163333
+  ],
+  [
+   "llmjp4-vl-9b__medium",
+   "countbenchqa",
+   0.80516
+  ],
+  [
+   "llmjp4-vl-9b__medium",
+   "gpqa",
+   0.407407
+  ],
+  [
+   "llmjp4-vl-9b__medium",
+   "mmmu",
+   0.487997
+  ],
+  [
+   "llmjp4-vl-9b__medium",
+   "realworldqa",
+   0.714161
+  ],
+  [
+   "llmjp4-vl-9b__medium",
+   "ifbench",
+   0.407333
+  ],
+  [
+   "llmjp4-vl-9b__medium",
+   "mmmu_pro",
+   0.331214
+  ],
+  [
+   "llmjp4-vl-9b__medium",
+   "zerobench",
+   0.0
+  ],
+  [
+   "llmjp4-vl-9b__medium",
+   "babyvision",
+   0.121993
+  ],
+  [
+   "llmjp4-vl-9b__medium",
+   "jawildtext",
+   0.380813
+  ],
+  [
+   "llmjp4-vl-9b__medium",
+   "perceptionbench",
+   0.258
+  ],
+  [
+   "llmjp4-vl-9b__medium",
+   "livecodebench",
+   0.262087
+  ],
+  [
+   "llmjp4-vl-9b__medium",
+   "mechaja_v2_mini",
+   0.64526
+  ],
+  [
+   "llmjp4-vl-9b__medium",
+   "hle_diamond",
+   0.037333
+  ],
+  [
+   "llmjp4-vl-9b__medium",
+   "screenspot_pro",
+   0.004217
+  ],
+  [
+   "llmjp4-vl-9b__medium",
+   "omnidocbench",
+   0.63274
+  ],
+  [
+   "llmjp4-vl-9b__medium",
+   "jamcqa",
+   0.500676
+  ],
+  [
+   "llmjp4-vl-9b__medium",
+   "jfinbench",
+   0.255365
+  ],
+  [
+   "llmjp4-vl-9b__medium",
+   "simpleqa_verified",
+   0.082333
+  ],
+  [
+   "llmjp41-8b-thinking__medium",
+   "aime26",
+   0.443333
+  ],
+  [
+   "llmjp41-8b-thinking__medium",
+   "gpqa",
+   0.511785
+  ],
+  [
+   "llmjp41-8b-thinking__medium",
+   "ifbench",
+   0.534667
+  ],
+  [
+   "llmjp41-8b-thinking__medium",
+   "livecodebench",
+   0.335878
+  ],
+  [
+   "llmjp41-8b-thinking__medium",
+   "hle_diamond",
+   0.042125
+  ],
+  [
+   "llmjp41-8b-thinking__medium",
+   "jamcqa",
+   0.510281
+  ],
+  [
+   "llmjp41-8b-thinking__medium",
+   "jfinbench",
+   0.336639
+  ],
+  [
+   "llmjp41-8b-thinking__medium",
+   "simpleqa_verified",
+   0.084
+  ]
+ ],
+ "sem_eci": {
+  "all": {
+   "anchors": {
+    "high": [
+     "gpt6-astra__max",
+     150
+    ],
+    "low": [
+     "qwen35-9b__thinking",
+     100
+    ]
+   },
+   "index": {
+    "opus55__low": 139.17,
+    "opus55__max": 146.14,
+    "gpt6-astra__low": 143.63,
+    "gpt6-astra__max": 150.0,
+    "gemini38-flash__low": 132.03,
+    "gemini38-flash__high": 136.52,
+    "qwen38-flash__thinking": 116.08,
+    "kimi-k31-pro__low": 122.71,
+    "kimi-k31-pro__max": 136.16,
+    "dsv41-flash__low": 114.73,
+    "dsv41-flash__max": 117.22,
+    "glm53-flash__low": 101.82,
+    "glm53-flash__max": 111.41,
+    "qwen38-27b__low": 105.84,
+    "qwen38-27b__xhigh": 110.48,
+    "gemma4-31b__thinking": 108.59,
+    "muse-glimmer-30b__low": 101.72,
+    "muse-glimmer-30b__xhigh": 108.32,
+    "qwen35-9b__thinking": 100.0,
+    "gemma4-12b__thinking": 98.63,
+    "llmjp4-vl-9b__medium": 74.0
+   },
+   "index_benchmark_level": {
+    "opus55__low": 138.48,
+    "opus55__max": 146.11,
+    "gpt6-astra__low": 142.83,
+    "gpt6-astra__max": 150.0,
+    "gemini38-flash__low": 131.15,
+    "gemini38-flash__high": 136.11,
+    "qwen38-flash__thinking": 116.4,
+    "kimi-k31-pro__low": 121.36,
+    "kimi-k31-pro__max": 135.97,
+    "dsv41-flash__low": 113.39,
+    "dsv41-flash__max": 115.76,
+    "glm53-flash__low": 100.69,
+    "glm53-flash__max": 110.56,
+    "qwen38-27b__low": 105.71,
+    "qwen38-27b__xhigh": 110.57,
+    "gemma4-31b__thinking": 108.25,
+    "muse-glimmer-30b__low": 101.99,
+    "muse-glimmer-30b__xhigh": 109.24,
+    "qwen35-9b__thinking": 100.0,
+    "gemma4-12b__thinking": 97.92,
+    "llmjp4-vl-9b__medium": 71.62
+   },
+   "fits": {
+    "hakushobench": {
+     "D": 76.7,
+     "alpha": 0.0529,
+     "rmse": 1.47,
+     "guess": 0.0
+    },
+    "jdocqa": {
+     "D": 42.2,
+     "alpha": 0.0463,
+     "rmse": 1.2,
+     "guess": 0.0
+    },
+    "jgraphqa": {
+     "D": -22.1,
+     "alpha": 0.0324,
+     "rmse": 0.4,
+     "guess": 0.0
+    },
+    "ccocrjavqa": {
+     "D": 70.4,
+     "alpha": 0.0484,
+     "rmse": 1.83,
+     "guess": 0.0
+    },
+    "cvqaja": {
+     "D": 67.9,
+     "alpha": 0.0506,
+     "rmse": 1.21,
+     "guess": 0.25
+    },
+    "charxiv": {
+     "D": 80.2,
+     "alpha": 0.0506,
+     "rmse": 2.17,
+     "guess": 0.0
+    },
+    "businessslidevqa": {
+     "D": 63.9,
+     "alpha": 0.0484,
+     "rmse": 2.45,
+     "guess": 0.0
+    },
+    "mathvision": {
+     "D": 89.9,
+     "alpha": 0.0605,
+     "rmse": 1.33,
+     "guess": 0.125
+    },
+    "aime26": {
+     "D": 79.2,
+     "alpha": 0.0661,
+     "rmse": 0.58,
+     "guess": 0.0
+    },
+    "countbenchqa": {
+     "D": 41.7,
+     "alpha": 0.0443,
+     "rmse": 1.3,
+     "guess": 0.0909
+    },
+    "gpqa": {
+     "D": 80.7,
+     "alpha": 0.0579,
+     "rmse": 1.73,
+     "guess": 0.25
+    },
+    "mmmu": {
+     "D": 80.2,
+     "alpha": 0.0529,
+     "rmse": 2.53,
+     "guess": 0.2624
+    },
+    "realworldqa": {
+     "D": 74.9,
+     "alpha": 0.0424,
+     "rmse": 2.58,
+     "guess": 0.1936
+    },
+    "ifbench": {
+     "D": 96.7,
+     "alpha": 0.0339,
+     "rmse": 2.12,
+     "guess": 0.0
+    },
+    "mmmu_pro": {
+     "D": 88.9,
+     "alpha": 0.0506,
+     "rmse": 2.88,
+     "guess": 0.1281
+    },
+    "zerobench": {
+     "D": 158.9,
+     "alpha": 0.0554,
+     "rmse": 1.06,
+     "guess": 0.0
+    },
+    "babyvision": {
+     "D": 119.2,
+     "alpha": 0.0529,
+     "rmse": 0.28,
+     "guess": 0.0
+    },
+    "jawildtext": {
+     "D": 79.9,
+     "alpha": 0.0554,
+     "rmse": 1.64,
+     "guess": 0.0
+    },
+    "perceptionbench": {
+     "D": 113.2,
+     "alpha": 0.0424,
+     "rmse": 0.83,
+     "guess": 0.0
+    },
+    "livecodebench": {
+     "D": 87.4,
+     "alpha": 0.0554,
+     "rmse": 1.73,
+     "guess": 0.0
+    },
+    "mechaja_v2_mini": {
+     "D": 76.9,
+     "alpha": 0.0506,
+     "rmse": 1.14,
+     "guess": 0.25
+    },
+    "hle_diamond": {
+     "D": 145.7,
+     "alpha": 0.0554,
+     "rmse": 0.57,
+     "guess": 0.0
+    },
+    "screenspot_pro": {
+     "D": 116.9,
+     "alpha": 0.0605,
+     "rmse": 0.21,
+     "guess": 0.0
+    },
+    "omnidocbench": {
+     "D": 46.4,
+     "alpha": 0.0424,
+     "rmse": 1.16,
+     "guess": 0.0
+    },
+    "jamcqa": {
+     "D": 95.4,
+     "alpha": 0.0506,
+     "rmse": 0.63,
+     "guess": 0.25
+    },
+    "jfinbench": {
+     "D": 102.2,
+     "alpha": 0.0554,
+     "rmse": 0.59,
+     "guess": 0.0
+    },
+    "simpleqa_verified": {
+     "D": 127.9,
+     "alpha": 0.0605,
+     "rmse": 0.75,
+     "guess": 0.0
+    }
+   }
+  },
+  "multimodal": {
+   "anchors": {
+    "high": [
+     "gpt6-astra__max",
+     150
+    ],
+    "low": [
+     "qwen35-9b__thinking",
+     100
+    ]
+   },
+   "index": {
+    "opus55__low": 138.48,
+    "opus55__max": 146.6,
+    "gpt6-astra__low": 142.78,
+    "gpt6-astra__max": 150.0,
+    "gemini38-flash__low": 130.84,
+    "gemini38-flash__high": 132.79,
+    "qwen38-flash__thinking": 114.56,
+    "kimi-k31-pro__low": 121.89,
+    "kimi-k31-pro__max": 135.62,
+    "dsv41-flash__low": 106.44,
+    "dsv41-flash__max": 109.58,
+    "glm53-flash__low": 101.28,
+    "glm53-flash__max": 108.77,
+    "qwen38-27b__low": 107.76,
+    "qwen38-27b__xhigh": 110.38,
+    "gemma4-31b__thinking": 107.38,
+    "muse-glimmer-30b__low": 105.08,
+    "muse-glimmer-30b__xhigh": 108.8,
+    "qwen35-9b__thinking": 100.0,
+    "gemma4-12b__thinking": 98.0,
+    "llmjp4-vl-9b__medium": 73.84
+   },
+   "index_benchmark_level": {
+    "opus55__low": 138.46,
+    "opus55__max": 147.03,
+    "gpt6-astra__low": 141.99,
+    "gpt6-astra__max": 150.0,
+    "gemini38-flash__low": 130.56,
+    "gemini38-flash__high": 132.51,
+    "qwen38-flash__thinking": 114.99,
+    "kimi-k31-pro__low": 121.72,
+    "kimi-k31-pro__max": 135.54,
+    "dsv41-flash__low": 105.66,
+    "dsv41-flash__max": 108.54,
+    "glm53-flash__low": 100.89,
+    "glm53-flash__max": 108.32,
+    "qwen38-27b__low": 107.73,
+    "qwen38-27b__xhigh": 110.25,
+    "gemma4-31b__thinking": 107.23,
+    "muse-glimmer-30b__low": 106.23,
+    "muse-glimmer-30b__xhigh": 109.89,
+    "qwen35-9b__thinking": 100.0,
+    "gemma4-12b__thinking": 97.34,
+    "llmjp4-vl-9b__medium": 71.68
+   },
+   "fits": {
+    "hakushobench": {
+     "D": 76.0,
+     "alpha": 0.0529,
+     "rmse": 1.45,
+     "guess": 0.0
+    },
+    "jdocqa": {
+     "D": 42.5,
+     "alpha": 0.0463,
+     "rmse": 1.2,
+     "guess": 0.0
+    },
+    "jgraphqa": {
+     "D": -22.2,
+     "alpha": 0.0324,
+     "rmse": 0.4,
+     "guess": 0.0
+    },
+    "ccocrjavqa": {
+     "D": 70.5,
+     "alpha": 0.0484,
+     "rmse": 1.75,
+     "guess": 0.0
+    },
+    "cvqaja": {
+     "D": 67.0,
+     "alpha": 0.0506,
+     "rmse": 1.23,
+     "guess": 0.25
+    },
+    "charxiv": {
+     "D": 80.0,
+     "alpha": 0.0506,
+     "rmse": 2.14,
+     "guess": 0.0
+    },
+    "businessslidevqa": {
+     "D": 64.3,
+     "alpha": 0.0506,
+     "rmse": 2.44,
+     "guess": 0.0
+    },
+    "mathvision": {
+     "D": 89.0,
+     "alpha": 0.0605,
+     "rmse": 1.32,
+     "guess": 0.125
+    },
+    "countbenchqa": {
+     "D": 41.0,
+     "alpha": 0.0443,
+     "rmse": 1.3,
+     "guess": 0.0909
+    },
+    "mmmu": {
+     "D": 79.5,
+     "alpha": 0.0529,
+     "rmse": 2.56,
+     "guess": 0.2624
+    },
+    "realworldqa": {
+     "D": 74.8,
+     "alpha": 0.0443,
+     "rmse": 2.55,
+     "guess": 0.1936
+    },
+    "mmmu_pro": {
+     "D": 88.0,
+     "alpha": 0.0506,
+     "rmse": 2.93,
+     "guess": 0.1281
+    },
+    "zerobench": {
+     "D": 157.8,
+     "alpha": 0.0554,
+     "rmse": 1.06,
+     "guess": 0.0
+    },
+    "babyvision": {
+     "D": 117.8,
+     "alpha": 0.0554,
+     "rmse": 0.36,
+     "guess": 0.0
+    },
+    "jawildtext": {
+     "D": 79.8,
+     "alpha": 0.0579,
+     "rmse": 1.61,
+     "guess": 0.0
+    },
+    "perceptionbench": {
+     "D": 112.0,
+     "alpha": 0.0443,
+     "rmse": 0.89,
+     "guess": 0.0
+    },
+    "mechaja_v2_mini": {
+     "D": 76.0,
+     "alpha": 0.0506,
+     "rmse": 1.17,
+     "guess": 0.25
+    },
+    "hle_diamond": {
+     "D": 143.3,
+     "alpha": 0.0554,
+     "rmse": 0.43,
+     "guess": 0.0
+    },
+    "screenspot_pro": {
+     "D": 115.5,
+     "alpha": 0.0661,
+     "rmse": 0.39,
+     "guess": 0.0
+    },
+    "omnidocbench": {
+     "D": 46.5,
+     "alpha": 0.0424,
+     "rmse": 1.15,
+     "guess": 0.0
+    }
+   }
+  },
+  "text": {
+   "anchors": {
+    "high": [
+     "gpt6-astra__max",
+     150
+    ],
+    "low": [
+     "qwen35-9b__thinking",
+     100
+    ]
+   },
+   "index": {
+    "opus55__low": 138.6,
+    "opus55__max": 145.44,
+    "gpt6-astra__low": 142.58,
+    "gpt6-astra__max": 150.0,
+    "gemini38-flash__low": 131.24,
+    "gemini38-flash__high": 140.37,
+    "qwen38-flash__thinking": 117.6,
+    "kimi-k31-pro__low": 121.62,
+    "kimi-k31-pro__max": 134.74,
+    "dsv41-flash__low": 125.45,
+    "dsv41-flash__max": 127.13,
+    "glm53-flash__low": 101.89,
+    "glm53-flash__max": 114.55,
+    "qwen38-27b__low": 102.94,
+    "qwen38-27b__xhigh": 110.68,
+    "gemma4-31b__thinking": 109.21,
+    "muse-glimmer-30b__low": 96.67,
+    "muse-glimmer-30b__xhigh": 107.46,
+    "qwen35-9b__thinking": 100.0,
+    "gemma4-12b__thinking": 99.17,
+    "llmjp4-vl-9b__medium": 74.8,
+    "llmjp41-8b-thinking__medium": 82.7
+   },
+   "index_benchmark_level": {
+    "opus55__low": 137.23,
+    "opus55__max": 145.02,
+    "gpt6-astra__low": 141.46,
+    "gpt6-astra__max": 150.0,
+    "gemini38-flash__low": 129.75,
+    "gemini38-flash__high": 139.78,
+    "qwen38-flash__thinking": 117.62,
+    "kimi-k31-pro__low": 118.87,
+    "kimi-k31-pro__max": 134.12,
+    "dsv41-flash__low": 125.12,
+    "dsv41-flash__max": 126.8,
+    "glm53-flash__low": 99.93,
+    "glm53-flash__max": 113.62,
+    "qwen38-27b__low": 102.37,
+    "qwen38-27b__xhigh": 110.66,
+    "gemma4-31b__thinking": 108.54,
+    "muse-glimmer-30b__low": 95.88,
+    "muse-glimmer-30b__xhigh": 107.59,
+    "qwen35-9b__thinking": 100.0,
+    "gemma4-12b__thinking": 98.54,
+    "llmjp4-vl-9b__medium": 72.19,
+    "llmjp41-8b-thinking__medium": 81.77
+   },
+   "fits": {
+    "aime26": {
+     "D": 82.3,
+     "alpha": 0.0692,
+     "rmse": 0.37,
+     "guess": 0.0
+    },
+    "gpqa": {
+     "D": 83.0,
+     "alpha": 0.0605,
+     "rmse": 1.56,
+     "guess": 0.25
+    },
+    "ifbench": {
+     "D": 96.0,
+     "alpha": 0.0355,
+     "rmse": 2.14,
+     "guess": 0.0
+    },
+    "livecodebench": {
+     "D": 89.8,
+     "alpha": 0.0605,
+     "rmse": 1.51,
+     "guess": 0.0
+    },
+    "hle_diamond": {
+     "D": 146.3,
+     "alpha": 0.0554,
+     "rmse": 0.67,
+     "guess": 0.0
+    },
+    "jamcqa": {
+     "D": 95.3,
+     "alpha": 0.0506,
+     "rmse": 0.67,
+     "guess": 0.25
+    },
+    "jfinbench": {
+     "D": 101.8,
+     "alpha": 0.0529,
+     "rmse": 0.64,
+     "guess": 0.0
+    },
+    "simpleqa_verified": {
+     "D": 129.0,
+     "alpha": 0.0633,
+     "rmse": 0.56,
+     "guess": 0.0
+    }
+   }
+  }
+ }
+}

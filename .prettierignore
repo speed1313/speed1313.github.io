@@ -12,3 +12,5 @@
 !.prettierrc
 !eslint.config.js
 !README.md
+# Data written by experiments (experiments/<slug>/), not edited by hand
+src/data/blog/**/*-data.json

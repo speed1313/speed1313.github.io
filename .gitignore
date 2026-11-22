@@ -33,3 +33,7 @@ cv/files/*.out
 
 # Local notes for AI coding assistants
 CLAUDE.md
+
+# Python environments of experiments
+.venv/
+__pycache__/
