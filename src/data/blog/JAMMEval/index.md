@@ -6,7 +6,7 @@ slug: JAMMEval
 featured: false
 draft: false
 tags:
-  - Benchmarks
+  - Evaluations
 description: "本稿では、7つの既存日本語VQAベンチマークを人手で精緻化することで構築したベンチマークコレクションJAMMEvalを紹介します。"
 ---
 

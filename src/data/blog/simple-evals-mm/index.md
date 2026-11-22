@@ -6,7 +6,7 @@ slug: simple-evals-mm
 featured: false
 draft: false
 tags:
-  - Benchmarks
+  - Evaluations
 description: "本稿では、新たに開発したVLM評価フレームワーク simple-evals-mm を紹介します。"
 ---
 

@@ -6,7 +6,7 @@ slug: HakushoBench
 featured: false
 draft: false
 tags:
-  - Benchmarks
+  - Evaluations
 description: "本稿では、我々が新たに構築した日本語図表VQAベンチマークHakushoBenchを紹介します。"
 ---
 

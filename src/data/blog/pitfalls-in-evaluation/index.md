@@ -6,7 +6,7 @@ slug: pitfalls-in-evaluation
 featured: false
 draft: false
 tags:
-  - Benchmarks
+  - Evaluations
 description: "モデル評価には様々な落とし穴があります。ここでは、評価スコアに影響する様々な要因について整理します。"
 ---
 
