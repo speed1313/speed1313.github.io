@@ -1297,19 +1297,19 @@ charts.robustness = (root, d) => {
     m = { l: 60, r: 20, t: 14, b: 48 };
   const svg = svgRoot(root, W, H);
   const tip = tooltip(root);
-  const x = linear([0, 0.7], [m.l, W - m.r]);
-  const y = linear([0.5, 1], [H - m.b, m.t]);
+  const x = linear([0, 0.75], [m.l, W - m.r]);
+  const y = linear([0, 1], [H - m.b, m.t]);
   axes(svg, x, y, {
     xTicks: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7],
     xFmt: t => `${Math.round(t * 100)}%`,
-    yTicks: [0.5, 0.6, 0.7, 0.8, 0.9, 1],
+    yTicks: [0, 0.2, 0.4, 0.6, 0.8, 1],
     yFmt: t => t.toFixed(1),
     xLabel: "Share of all scores removed",
     yLabel: "Kendall τ with the full mean ranking",
   });
   const series = [
     ["random", ACCENT, "Missing at random"],
-    ["difficulty", "#4e79a7", "Missing by difficulty"],
+    ["window", "#4e79a7", "Only benchmarks near the model's level"],
   ];
   for (const [scenario, col, name] of series) {
     const rows = d.robustness.filter(r => r.scenario === scenario);

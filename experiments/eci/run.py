@@ -87,27 +87,33 @@ def main() -> None:
     # have all of them (the text-only model is left out).
     complete = [m for m in models if all((m, b) in score for b in benchmarks)]
     true_mean = {m: np.mean([score[(m, b)] for b in benchmarks]) for m in complete}
-    order_D = sorted(benchmarks, key=lambda b: full.D[benchmarks.index(b)])
-    third = len(benchmarks) // 3
-    easy, hard = set(order_D[:third]), set(order_D[-third:])
-    strong = set(sorted(complete, key=lambda m: -true_mean[m])[: len(complete) // 2])
+    # Positions on [0, 1]: models by their full mean (a proxy for release
+    # date), benchmarks by difficulty (a proxy for when they were made).
+    by_mean = sorted(complete, key=lambda m: true_mean[m])
+    pos_m = {m: i / (len(by_mean) - 1) for i, m in enumerate(by_mean)}
+    by_D = sorted(benchmarks, key=lambda b: full.D[benchmarks.index(b)])
+    pos_b = {b: i / (len(by_D) - 1) for i, b in enumerate(by_D)}
     rng = np.random.default_rng(SEED)
 
-    def drop(p, scenario):
+    def drop_random(p):
         kept = []
         for m in complete:
-            mine = []
-            for b in benchmarks:
-                if scenario == "random":
-                    q = p
-                else:  # older (weaker) models miss hard benchmarks, newer miss easy ones
-                    q = p if (b in hard and m not in strong) or (b in easy and m in strong) else 0
-                if rng.random() >= q:
-                    mine.append((m, b, score[(m, b)]))
+            mine = [(m, b, score[(m, b)]) for b in benchmarks if rng.random() >= p]
             if len(mine) < 4:  # Epoch requires 4 benchmarks for an index
-                keep_b = rng.choice(benchmarks, 4, replace=False)
-                mine = [(m, b, score[(m, b)]) for b in keep_b]
+                mine = [(m, b, score[(m, b)]) for b in rng.choice(benchmarks, 4, replace=False)]
             kept += mine
+        return kept
+
+    def drop_window(w):
+        # Each model keeps only the benchmarks near its own level: old models
+        # were evaluated on old, easy benchmarks and new ones on new, hard ones.
+        kept = []
+        for m in complete:
+            near = sorted(benchmarks, key=lambda b: abs(pos_m[m] - pos_b[b]))
+            mine = [b for b in benchmarks if abs(pos_m[m] - pos_b[b]) <= w]
+            if len(mine) < 4:
+                mine = near[:4]
+            kept += [(m, b, score[(m, b)]) for b in mine]
         return kept
 
     def tau(est):
@@ -117,26 +123,27 @@ def main() -> None:
     def summary(xs):
         return [r(np.mean(xs)), r(np.percentile(xs, 10)), r(np.percentile(xs, 90))]
 
-    # x is the share of all scores actually removed. Missing by difficulty can
-    # only remove a third of each model's scores (its hardest or easiest
-    # third), so its removal probability q goes up to 0.9 (about 30%).
+    # x is the share of all scores removed. Random removal is drawn 30 times;
+    # the window is deterministic.
     total = len(complete) * len(benchmarks)
-    plans = {
-        "random": [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7],
-        "difficulty": [0.0, 0.15, 0.3, 0.45, 0.6, 0.75, 0.9],
-    }
     robustness = []
-    for scenario, qs in plans.items():
-        for q in qs:
+    for scenario, params in (
+        ("random", [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7]),
+        ("window", [1.0, 0.6, 0.45, 0.35, 0.28, 0.22, 0.18, 0.15]),
+    ):
+        for q in params:
             taus, shares = [], []
-            for _ in range(30 if q > 0 else 1):
-                kept = drop(q, scenario)
+            draws = 30 if scenario == "random" and q > 0 else 1
+            for _ in range(draws):
+                kept = drop_random(q) if scenario == "random" else drop_window(q)
                 shares.append(1 - len(kept) / total)
                 present = sorted({b for _, b, _ in kept}, key=benchmarks.index)
                 anchor = max(present, key=lambda b: sum(1 for _, b2, _ in kept if b2 == b))
                 f = eci.fit(complete, present, kept, anchor)
                 taus.append(tau(dict(zip(complete, f.C))))
-            robustness.append({"scenario": scenario, "q": q, "removed": r(np.mean(shares)), "eci": summary(taus)})
+            robustness.append(
+                {"scenario": scenario, "q": q, "removed": r(np.mean(shares)), "eci": summary(taus)}
+            )
 
     # --- Optimization path, on the final index scale --------------------------
     frames = [
