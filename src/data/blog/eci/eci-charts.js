@@ -1070,28 +1070,6 @@ function scatter(
   return svg;
 }
 
-charts["mean-vs-eci"] = (root, d) => {
-  scatter(
-    root,
-    d.settings.map(s => ({
-      x: s.mean * 100,
-      y: s.eci,
-      color: s.type === "open" ? ACCENT : FG,
-      tip: [label(s), `Mean score ${pct(s.mean)}`, `ECI ${fmt(s.eci)}`],
-    })),
-    {
-      xDomain: [35, 95],
-      yDomain: [60, 155],
-      xLabel: "Mean score over the 27 benchmarks (%)",
-      yLabel: "ECI",
-    }
-  );
-  legend(root, [
-    ["Proprietary", FG],
-    ["Open weights", ACCENT],
-  ]);
-};
-
 // Text vs multimodal capability, one line per setting.
 charts.domains = (root, d) => {
   const rows = d.settings.filter(s => s.text !== null && s.multimodal !== null);
