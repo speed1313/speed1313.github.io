@@ -14,7 +14,7 @@ description: "多くのベンチマークのスコアから、AI モデルの能
 
 AI モデルの能力が急速に向上する中で、その向上を長期的にトラッキングする指標として、Epoch AI が開発した Epoch Capabilities Index ([ECI](https://epoch.ai/eci)) が注目されています。[OpenAI](https://openai.com/index/research-acceleration-jagged-frontier/) や [Anthropic](https://assets.claude.com/d00db56fa754a1b115b6dd7cb2e3c342ee809620.pdf) も独自の ECI を算出し、モデル開発の加速度合いをモニタリングしています。
 
-この記事では、ECI の元になった論文 [A Rosetta Stone for AI Benchmarks](https://arxiv.org/abs/2512.00193) の方法を解説し、テキストやマルチモーダルのタスクで様々な AI モデルを評価した [simple-evals-mm](https://llm-jp.github.io/simple-evals-mm/) のリーダーボードのスコアを使って、実際に ECI を算出し、ECI の解釈方法や利用ケースを紹介します。
+この記事では、まず ECI の元になった論文 [A Rosetta Stone for AI Benchmarks](https://arxiv.org/abs/2512.00193) の方法を解説します。そのうえで、評価フレームワーク [simple-evals-mm](https://llm-jp.github.io/simple-evals-mm/) のリーダーボードのスコアから実際に ECI を算出し、ECI の解釈方法や利用ケースを紹介します。
 
 ## AI モデルの総合的な能力をどう測るか
 
