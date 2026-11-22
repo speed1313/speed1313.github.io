@@ -61,6 +61,28 @@ function niceTicks(lo, hi, n = 6) {
 }
 
 const sigmoid = z => 1 / (1 + Math.exp(-z));
+
+// "D_b" in a label is written as an italic D with a subscript b, as in the post.
+const MATH = /([A-Za-zα])_([a-z])/g;
+function mathText(node, str) {
+  node.textContent = "";
+  let last = 0;
+  for (const m of String(str).matchAll(MATH)) {
+    if (m.index > last) node.append(str.slice(last, m.index));
+    el("tspan", { "font-style": "italic" }, node).textContent = m[1];
+    el("tspan", { dy: "0.3em", "font-size": "75%" }, node).textContent = m[2];
+    // Back to the baseline for the rest of the label.
+    el("tspan", { dy: "-0.3em" }, node).textContent = "\u200b";
+    last = m.index + m[0].length;
+  }
+  if (last < String(str).length) node.append(String(str).slice(last));
+  return node;
+}
+const mathHTML = str =>
+  String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(MATH, "<i>$1</i><sub>$2</sub>");
 const pct = y => `${(y * 100).toFixed(1)}%`;
 const fmt = (x, n = 1) => (x === null || x === undefined ? "–" : x.toFixed(n));
 const label = s => s.model;
@@ -106,8 +128,8 @@ function axes(
     ).textContent = yFmt(t);
   }
   el("line", { x1: x0, x2: x1, y1: y0, y2: y0, stroke: DIM }, ax);
-  if (xLabel)
-    el(
+  if (xLabel) {
+    const t = el(
       "text",
       {
         x: (x0 + x1) / 2,
@@ -116,9 +138,11 @@ function axes(
         class: "eci-axis-label",
       },
       ax
-    ).textContent = xLabel;
-  if (yLabel)
-    el(
+    );
+    mathText(t, xLabel);
+  }
+  if (yLabel) {
+    const t = el(
       "text",
       {
         x: -(y0 + y1) / 2,
@@ -128,7 +152,9 @@ function axes(
         class: "eci-axis-label",
       },
       ax
-    ).textContent = yLabel;
+    );
+    mathText(t, yLabel);
+  }
 }
 
 // A tooltip that follows the pointer inside a chart.
@@ -138,7 +164,9 @@ function tooltip(container) {
   return {
     show(evt, lines) {
       tip.replaceChildren();
-      lines.forEach((l, i) => html(i === 0 ? "strong" : "div", {}, tip, l));
+      lines.forEach((l, i) => {
+        html(i === 0 ? "strong" : "div", {}, tip).innerHTML = mathHTML(l);
+      });
       tip.hidden = false;
       const box = container.getBoundingClientRect();
       const px = evt.clientX - box.left;
@@ -183,7 +211,8 @@ function select(parent, labelText, options, value, onChange) {
 
 function slider(parent, labelText, { min, max, step, value }, onInput) {
   const wrap = html("label", { class: "eci-field eci-slider" }, parent);
-  const name = html("span", {}, wrap, labelText);
+  const name = html("span", {}, wrap);
+  name.innerHTML = mathHTML(labelText);
   const input = html(
     "input",
     { type: "range", min, max, step, value: String(value) },
@@ -293,7 +322,7 @@ charts.sigmoid = root => {
   axes(svg, x, y, {
     yTicks: [0, 0.25, 0.5, 0.75, 1],
     yFmt: t => `${t * 100}%`,
-    xLabel: "Model capability C",
+    xLabel: "Model capability C_m",
     yLabel: "Predicted score",
   });
   const half = el("line", { stroke: DIM, "stroke-dasharray": "3 3" }, svg);
@@ -317,14 +346,19 @@ charts.sigmoid = root => {
   const dotText = el("text", { class: "eci-label" }, svg);
 
   const v = { D: 100, alpha: 0.05, C: 130 };
-  slider(ctl, "Difficulty D", { min: 0, max: 200, step: 1, value: v.D }, n => {
-    v.D = n;
-    draw();
-    return n.toFixed(0);
-  });
   slider(
     ctl,
-    "Slope α",
+    "Difficulty D_b",
+    { min: 0, max: 200, step: 1, value: v.D },
+    n => {
+      v.D = n;
+      draw();
+      return n.toFixed(0);
+    }
+  );
+  slider(
+    ctl,
+    "Slope α_b",
     { min: 0.01, max: 0.2, step: 0.005, value: v.alpha },
     n => {
       v.alpha = n;
@@ -332,11 +366,16 @@ charts.sigmoid = root => {
       return n.toFixed(3);
     }
   );
-  slider(ctl, "Capability C", { min: 0, max: 200, step: 1, value: v.C }, n => {
-    v.C = n;
-    draw();
-    return n.toFixed(0);
-  });
+  slider(
+    ctl,
+    "Capability C_m",
+    { min: 0, max: 200, step: 1, value: v.C },
+    n => {
+      v.C = n;
+      draw();
+      return n.toFixed(0);
+    }
+  );
 
   function draw() {
     const { D, alpha, C } = v;
@@ -348,7 +387,7 @@ charts.sigmoid = root => {
     half.setAttribute("y2", y(0.5));
     halfText.setAttribute("x", x(D) + 4);
     halfText.setAttribute("y", y(0) - 6);
-    halfText.textContent = "C = D: score 50%";
+    mathText(halfText, "C_m = D_b: score 50%");
     const p = sigmoid(alpha * (C - D));
     guideV.setAttribute("x1", x(C));
     guideV.setAttribute("x2", x(C));
@@ -681,7 +720,8 @@ charts.curves = (root, d) => {
         class: "eci-label",
       },
       svg
-    ).textContent = `${b.label} (D = ${b.D.toFixed(0)})`;
+    ).textContent = "";
+    mathText(svg.lastChild, `${b.label} (D_b = ${b.D.toFixed(0)})`);
     for (const p of d.byBenchmark.get(key)) {
       const c = el(
         "circle",
@@ -726,7 +766,7 @@ charts.difficulty = (root, d) => {
     },
     svg
   ).textContent =
-    "ECI (dot: difficulty D, where the expected score is 50%; bar: 10% to 90%)";
+    "ECI (dot: difficulty D_b, where the expected score is 50%; bar: 10% to 90%)";
   const top = d.settings.reduce((a, s) => (s.eci > a.eci ? s : a));
   const low = d.settings.reduce((a, s) => (s.eci < a.eci ? s : a));
   for (const [s, name] of [
@@ -790,7 +830,7 @@ charts.difficulty = (root, d) => {
     hoverable(hit, tip, [
       b.label,
       `${b.category} · ${b.lang === "ja" ? "Japanese" : "English"}`,
-      `D ${fmt(b.D)} · α ${b.alpha.toFixed(3)}`,
+      `D_b ${fmt(b.D)} · α_b ${b.alpha.toFixed(3)}`,
       `10% at ${fmt(lo)}, 90% at ${fmt(hi)}`,
       `${b.n_obs} scores · fit R² ${fmt(b.r2, 2)}`,
     ]);
