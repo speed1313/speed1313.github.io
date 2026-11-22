@@ -1,7 +1,7 @@
 ---
 title: "Epoch Capabilities Index (ECI) を理解する"
 author: speed1313
-pubDatetime: 2026-11-23
+pubDatetime: 2026-11-23T00:00:00+09:00
 slug: eci
 featured: false
 draft: false
