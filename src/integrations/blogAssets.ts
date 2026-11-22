@@ -32,6 +32,10 @@ const MIME: Record<string, string> = {
   ".webm": "video/webm",
   ".mp3": "audio/mpeg",
   ".wav": "audio/wav",
+  // Scripts and data for interactive figures.
+  ".js": "text/javascript",
+  ".json": "application/json",
+  ".csv": "text/csv",
 };
 
 function isRelative(url: string) {
