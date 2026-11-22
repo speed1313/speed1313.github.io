@@ -70,7 +70,13 @@ function mathText(node, str) {
   for (const m of String(str).matchAll(MATH)) {
     if (m.index > last) node.append(str.slice(last, m.index));
     el("tspan", { "font-style": "italic" }, node).textContent = m[1];
-    el("tspan", { dy: "0.3em", "font-size": "75%" }, node).textContent = m[2];
+    // A small gap and a thin outline, so the subscript's outline (for
+    // labels drawn over lines) does not cover the italic letter.
+    el(
+      "tspan",
+      { dx: "0.12em", dy: "0.3em", "font-size": "75%", "stroke-width": 2 },
+      node
+    ).textContent = m[2];
     // Back to the baseline for the rest of the label.
     el("tspan", { dy: "-0.3em" }, node).textContent = "\u200b";
     last = m.index + m[0].length;
