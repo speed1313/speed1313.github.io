@@ -126,7 +126,9 @@ export default async ({
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          padding: "0 110px",
+          // No horizontal padding: with width 100% it widened the box and
+          // pushed everything 110px right. Titles are kept within 980px by
+          // layoutTitle, which leaves the same margins.
           background: bg,
           color: fg,
           fontFamily: "Noto Sans JP",
