@@ -18,7 +18,9 @@ AI モデルの能力が急速に向上する中で、その向上を長期的�
 
 ## AI モデルの総合的な能力をどう測るか
 
-最も素朴な方法は、決まったベンチマークのセットで全モデルを評価し、スコアを平均することです。たとえば Artificial Analysis の [Intelligence Index](https://artificialanalysis.ai/methodology/intelligence-benchmarking) (v5) は、9 つの高難度ベンチマークのスコアを重み付きで平均して、モデルを比較します。
+ECI は、AI モデルの総合的な能力を単一の値で測る方法の一つです。ほかの方法と比べると、ECI の特徴がわかりやすくなります。
+
+単一の値で測る最も素朴な方法は、決まったベンチマークのセットで全モデルを評価し、スコアを平均することです。たとえば Artificial Analysis の [Intelligence Index](https://artificialanalysis.ai/methodology/intelligence-benchmarking) (v5) は、9 つの高難度ベンチマークのスコアを重み付きで平均して、モデルを比較します。
 
 一方で、この方法で長期的なモデルの性能のトレンドを評価しようとすると、すべての (モデル, ベンチマーク) の組を評価する必要があります。また、固定のセットで評価すると、ベンチマークが飽和するたびにセットを入れ替える必要があり、長期のトレンドを追えません。
 
