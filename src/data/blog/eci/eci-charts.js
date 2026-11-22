@@ -197,16 +197,97 @@ function controls(container) {
   return html("div", { class: "eci-controls" }, container);
 }
 
+// A menu like the site's Sort menu: a pill button whose chevron turns when
+// open, and a panel of options.
+let openMenu = null;
 function select(parent, labelText, options, value, onChange) {
-  const wrap = html("label", { class: "eci-field" }, parent);
-  html("span", {}, wrap, labelText);
-  const s = html("select", {}, wrap);
-  for (const [v, t] of options) {
-    const o = html("option", { value: v }, s, t);
-    if (v === value) o.selected = true;
+  const wrap = html("div", { class: "eci-menu" }, parent);
+  const btn = html(
+    "button",
+    {
+      type: "button",
+      class: "eci-menu-button",
+      "aria-expanded": "false",
+      "aria-haspopup": "listbox",
+    },
+    wrap
+  );
+  html("span", { class: "eci-menu-label" }, btn, labelText);
+  const current = html("span", {}, btn);
+  const chev = el(
+    "svg",
+    { viewBox: "0 0 24 24", class: "eci-chevron", "aria-hidden": "true" },
+    btn
+  );
+  el(
+    "path",
+    {
+      d: "M15 6l-6 6l6 6",
+      fill: "none",
+      stroke: "currentColor",
+      "stroke-width": 2,
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round",
+    },
+    chev
+  );
+  const panel = html(
+    "div",
+    { class: "eci-menu-panel", role: "listbox", "aria-label": labelText },
+    wrap
+  );
+  panel.hidden = true;
+  const items = options.map(([v, t]) => {
+    const o = html(
+      "button",
+      { type: "button", role: "option", class: "eci-menu-option" },
+      panel
+    );
+    html("span", { class: "eci-radio", "aria-hidden": "true" }, o);
+    o.append(t);
+    o.addEventListener("click", () => {
+      choose(v);
+      close(true);
+      onChange(v);
+    });
+    return [v, t, o];
+  });
+  function choose(v) {
+    value = v;
+    for (const [ov, t, o] of items) {
+      o.setAttribute("aria-selected", String(ov === v));
+      if (ov === v) current.textContent = t;
+    }
   }
-  s.addEventListener("change", () => onChange(s.value));
-  return s;
+  function open() {
+    if (openMenu && openMenu !== close) openMenu();
+    openMenu = close;
+    panel.hidden = false;
+    btn.setAttribute("aria-expanded", "true");
+    items.find(([v]) => v === value)?.[2].focus();
+  }
+  function close(refocus = false) {
+    if (panel.hidden) return;
+    panel.hidden = true;
+    btn.setAttribute("aria-expanded", "false");
+    if (openMenu === close) openMenu = null;
+    if (refocus) btn.focus();
+  }
+  btn.addEventListener("click", () => (panel.hidden ? open() : close()));
+  wrap.addEventListener("keydown", e => {
+    if (e.key === "Escape") close(true);
+  });
+  document.addEventListener("click", e => {
+    if (!wrap.contains(e.target)) close();
+  });
+  choose(value);
+  return {
+    get value() {
+      return value;
+    },
+    // Change the shown choice without calling onChange.
+    set: v => choose(v),
+  };
 }
 
 function slider(parent, labelText, { min, max, step, value }, onInput) {
@@ -251,14 +332,24 @@ function toggle(parent, options, value, onChange) {
   return wrap;
 }
 
-function button(parent, text, onClick) {
-  const b = html(
-    "button",
-    { type: "button", class: "eci-button" },
-    parent,
-    text
-  );
+// A round play / pause / replay button with an icon instead of text.
+const ICONS = {
+  play: "M8 5v14l11-7z",
+  pause: "M6 5h4v14H6zM14 5h4v14h-4z",
+  replay: "M12 5V1L7 6l5 5V7a6 6 0 1 1-6 6H4a8 8 0 1 0 8-8z",
+};
+function playButton(parent, onClick) {
+  const b = html("button", { type: "button", class: "eci-play" }, parent);
+  const svg = el("svg", { viewBox: "0 0 24 24", "aria-hidden": "true" }, b);
+  const path = el("path", { fill: "currentColor" }, svg);
   b.addEventListener("click", onClick);
+  const labels = { play: "Play", pause: "Pause", replay: "Replay" };
+  b.setState = state => {
+    path.setAttribute("d", ICONS[state]);
+    b.setAttribute("aria-label", labels[state]);
+    b.title = labels[state];
+  };
+  b.setState("play");
   return b;
 }
 
@@ -429,14 +520,56 @@ charts.optimization = (root, d) => {
     yLabel: "Benchmark score",
   });
   const gCurves = el("g", {}, svg);
-  const curves = d.benchmarks.map(() =>
-    el("path", { fill: "none", stroke: FAINT, "stroke-width": 1.2 }, gCurves)
-  );
+  let hovered = -1;
+  let frame; // parameters at the current step, for the tooltips
+  const curves = d.benchmarks.map((b, i) => {
+    const line = el(
+      "path",
+      { fill: "none", stroke: FAINT, "stroke-width": 1.2 },
+      gCurves
+    );
+    // A wider invisible path makes the thin curve easy to point at.
+    const hit = el(
+      "path",
+      { fill: "none", stroke: "transparent", "stroke-width": 10 },
+      gCurves
+    );
+    hoverable(
+      hit,
+      tip,
+      () => [
+        b.label,
+        `D_b ${fmt(frame.D[i])} · α_b ${frame.alpha[i].toFixed(3)} at this step`,
+        "Click to select",
+      ],
+      () => {
+        hovered = i;
+        styleCurves();
+      },
+      () => {
+        hovered = -1;
+        styleCurves();
+      }
+    );
+    hit.addEventListener("click", () => {
+      key = b.key;
+      menu.set(key);
+      draw();
+    });
+    return { line, hit };
+  });
+  function styleCurves() {
+    curves.forEach(({ line }, i) => {
+      line.setAttribute("stroke", i === hovered ? DIM : FAINT);
+      line.setAttribute("stroke-width", i === hovered ? 2.5 : 1.2);
+    });
+  }
   const sel = el(
     "path",
     { fill: "none", stroke: ACCENT, "stroke-width": 3 },
     svg
   );
+  const selLabel = el("text", { class: "eci-label", fill: ACCENT }, svg);
   const gPts = el("g", {}, svg);
   const stepText = el(
     "text",
@@ -471,11 +604,19 @@ charts.optimization = (root, d) => {
 
   function draw() {
     const f = lerp(t);
-    f.D.forEach((D, i) =>
-      curves[i].setAttribute("d", curvePath(x, y, D, f.alpha[i], x.domain))
-    );
+    frame = f;
+    f.D.forEach((D, i) => {
+      const path = curvePath(x, y, D, f.alpha[i], x.domain);
+      curves[i].line.setAttribute("d", path);
+      curves[i].hit.setAttribute("d", path);
+    });
     const bi = bIndex.get(key);
     sel.setAttribute("d", curvePath(x, y, f.D[bi], f.alpha[bi], x.domain));
+    // The selected benchmark's name, beside its curve at the 50% point.
+    const mid = Math.min(Math.max(f.D[bi], x.domain[0]), x.domain[1]);
+    selLabel.setAttribute("x", x(mid) + 10);
+    selLabel.setAttribute("y", y(0.5) + 4);
+    selLabel.textContent = d.benchMap.get(key).label;
     gPts.replaceChildren();
     for (const p of d.byBenchmark.get(key)) {
       const i = settings.indexOf(p.s);
@@ -495,7 +636,7 @@ charts.optimization = (root, d) => {
     scrub.show(t);
   }
 
-  const play = button(ctl, "Play", () => (playing ? stop() : start()));
+  const play = playButton(ctl, () => (playing ? stop() : start()));
   const scrub = slider(
     ctl,
     "Step",
@@ -510,7 +651,7 @@ charts.optimization = (root, d) => {
       return "";
     }
   );
-  select(ctl, "Benchmark", benchOptions(d), key, v => {
+  const menu = select(ctl, "Benchmark", benchOptions(d), key, v => {
     key = v;
     draw();
   });
@@ -518,7 +659,7 @@ charts.optimization = (root, d) => {
   function start() {
     if (t >= n) t = 0;
     playing = true;
-    play.textContent = "Pause";
+    play.setState("pause");
     let last = performance.now();
     const tick = now => {
       // The first frame can be stamped slightly before `last`.
@@ -532,7 +673,7 @@ charts.optimization = (root, d) => {
   }
   function stop() {
     playing = false;
-    play.textContent = "Play";
+    play.setState(t >= n ? "replay" : "play");
     cancelAnimationFrame(raf);
   }
   ready = true;
@@ -1242,23 +1383,38 @@ charts.params = (root, d) => {
 const STYLE = `
 .eci-chart{position:relative;margin:1.5rem 0;font-size:.8rem;color:var(--foreground)}
 .eci-svg{display:block;width:100%;height:auto;overflow:visible;font-family:inherit}
-.eci-svg text{fill:var(--foreground);font-size:11px}
+.eci-svg text{font-size:11px}
+.eci-svg text:not([fill]){fill:var(--foreground)}
 .eci-svg .eci-small{font-size:10.5px}
 .eci-svg .eci-tiny{font-size:9.5px}
 .eci-svg .eci-big{font-size:14px;font-weight:600}
-.eci-svg .eci-label{font-size:12.5px;font-weight:600}
+.eci-svg .eci-label{font-size:12.5px;font-weight:600;paint-order:stroke;stroke:var(--background);stroke-width:4px;stroke-linejoin:round}
 .eci-svg .eci-axis-label{font-size:11.5px;opacity:.8}
 .eci-axis text{opacity:.7}
 .eci-wide{max-width:none}
 .eci-chart:has(.eci-wide){overflow-x:auto}
 .eci-controls{display:flex;flex-wrap:wrap;gap:.5rem 1rem;align-items:center;margin-bottom:.5rem}
 .eci-field{display:inline-flex;gap:.4rem;align-items:center}
-.eci-field select{border:1px solid var(--border);background:var(--background);color:inherit;border-radius:.4rem;padding:.15rem .3rem}
+.eci-menu{position:relative}
+.eci-menu-button{display:inline-flex;align-items:center;gap:.4rem;border:0;border-radius:999px;padding:.3rem .75rem;background:transparent;color:inherit;cursor:pointer}
+.eci-menu-button:hover,.eci-menu-button[aria-expanded=true]{background:var(--surface)}
+.eci-menu-label{opacity:.65}
+.eci-chevron{width:1rem;height:1rem;transform:rotate(-90deg);transition:transform .2s}
+.eci-menu-button[aria-expanded=true] .eci-chevron{transform:rotate(90deg)}
+@media (prefers-reduced-motion:reduce){.eci-chevron{transition:none}}
+.eci-menu-panel{position:absolute;z-index:6;top:100%;left:0;margin-top:.4rem;min-width:14rem;max-height:18rem;overflow-y:auto;border-radius:.75rem;background:var(--surface);padding:.5rem;box-shadow:0 10px 25px rgb(0 0 0/.15)}
+.eci-menu-option{display:flex;width:100%;align-items:center;gap:.6rem;border:0;border-radius:.25rem;padding:.35rem .5rem;background:transparent;color:inherit;text-align:left;cursor:pointer}
+.eci-menu-option:hover,.eci-menu-option:focus-visible{background:color-mix(in srgb,var(--foreground) 5%,transparent);outline:none}
+.eci-radio{width:.85rem;height:.85rem;border-radius:50%;border:1.5px solid color-mix(in srgb,var(--foreground) 45%,transparent);flex:none}
+.eci-menu-option[aria-selected=true] .eci-radio{border:4px solid var(--foreground)}
 .eci-slider input{width:8.5rem;accent-color:var(--accent)}
 .eci-slider output{font-variant-numeric:tabular-nums;min-width:3.2rem}
 .eci-toggle{display:inline-flex;flex-wrap:wrap;gap:.25rem}
 .eci-toggle button,.eci-button{border:1px solid var(--border);border-radius:999px;padding:.15rem .7rem;background:var(--background);color:inherit;cursor:pointer}
 .eci-toggle button[aria-pressed=true]{background:var(--foreground);color:var(--background);border-color:var(--foreground)}
+.eci-play{display:inline-grid;place-items:center;width:2.1rem;height:2.1rem;border-radius:50%;border:0;background:var(--accent);color:var(--background);cursor:pointer;flex:none}
+.eci-play svg{width:1.15rem;height:1.15rem}
+.eci-play:hover{opacity:.85}
 .eci-legend{display:flex;flex-wrap:wrap;gap:.2rem .9rem;margin-top:.3rem;opacity:.85}
 .eci-legend span{display:inline-flex;align-items:center;gap:.35rem}
 .eci-legend i{display:inline-block;width:.7rem;height:.7rem;border-radius:50%;box-sizing:border-box}
