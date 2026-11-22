@@ -1290,22 +1290,8 @@ charts.residuals = (root, d) => {
   ]);
 };
 
-// Ranking agreement as scores go missing.
+// Ranking agreement as scores go missing, for both ways of removing them.
 charts.robustness = (root, d) => {
-  let scenario = "difficulty";
-  const ctl = controls(root);
-  toggle(
-    ctl,
-    [
-      ["difficulty", "Missing by difficulty"],
-      ["random", "Missing at random"],
-    ],
-    scenario,
-    v => {
-      scenario = v;
-      draw();
-    }
-  );
   const W = 640,
     H = 340,
     m = { l: 60, r: 20, t: 14, b: 48 };
@@ -1316,45 +1302,48 @@ charts.robustness = (root, d) => {
   axes(svg, x, y, {
     xTicks: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7],
     xFmt: t => `${Math.round(t * 100)}%`,
-    yFmt: t => t.toFixed(1),
-    xLabel: "Share of scores removed",
     yTicks: [0.5, 0.6, 0.7, 0.8, 0.9, 1],
+    yFmt: t => t.toFixed(1),
+    xLabel: "Share of all scores removed",
     yLabel: "Kendall τ with the full mean ranking",
   });
-  const g = el("g", {}, svg);
-  function draw() {
-    g.replaceChildren();
+  const series = [
+    ["random", ACCENT, "Missing at random"],
+    ["difficulty", "#4e79a7", "Missing by difficulty"],
+  ];
+  for (const [scenario, col, name] of series) {
     const rows = d.robustness.filter(r => r.scenario === scenario);
-    for (const [k, col, name] of [["eci", ACCENT, "ECI"]]) {
-      const band = rows
-        .map(r => `${x(r.p)},${y(r[k][2])}`)
-        .concat(rows.map(r => `${x(r.p)},${y(r[k][1])}`).reverse());
-      el("polygon", { points: band.join(" "), fill: col, opacity: 0.15 }, g);
-      el(
-        "polyline",
-        {
-          points: rows.map(r => `${x(r.p)},${y(r[k][0])}`).join(" "),
-          fill: "none",
-          stroke: col,
-          "stroke-width": 2.5,
-        },
-        g
+    const band = rows
+      .map(r => `${x(r.removed)},${y(r.eci[2])}`)
+      .concat(rows.map(r => `${x(r.removed)},${y(r.eci[1])}`).reverse());
+    el("polygon", { points: band.join(" "), fill: col, opacity: 0.12 }, svg);
+    el(
+      "polyline",
+      {
+        points: rows.map(r => `${x(r.removed)},${y(r.eci[0])}`).join(" "),
+        fill: "none",
+        stroke: col,
+        "stroke-width": 2.5,
+      },
+      svg
+    );
+    for (const r of rows) {
+      const c = el(
+        "circle",
+        { cx: x(r.removed), cy: y(r.eci[0]), r: 4, fill: col },
+        svg
       );
-      for (const r of rows) {
-        const c = el(
-          "circle",
-          { cx: x(r.p), cy: y(r[k][0]), r: 4, fill: col },
-          g
-        );
-        hoverable(c, tip, [
-          name,
-          `${Math.round(r.p * 100)}% removed`,
-          `τ = ${r[k][0].toFixed(3)} (10–90%: ${r[k][1].toFixed(2)}–${r[k][2].toFixed(2)})`,
-        ]);
-      }
+      hoverable(c, tip, [
+        name,
+        `${Math.round(r.removed * 100)}% of the scores removed`,
+        `τ = ${r.eci[0].toFixed(3)}`,
+      ]);
     }
   }
-  draw();
+  legend(
+    root,
+    series.map(([, col, name]) => [name, col, "line"])
+  );
 };
 
 charts.params = (root, d) => {

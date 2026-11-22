@@ -117,17 +117,26 @@ def main() -> None:
     def summary(xs):
         return [r(np.mean(xs)), r(np.percentile(xs, 10)), r(np.percentile(xs, 90))]
 
+    # x is the share of all scores actually removed. Missing by difficulty can
+    # only remove a third of each model's scores (its hardest or easiest
+    # third), so its removal probability q goes up to 0.9 (about 30%).
+    total = len(complete) * len(benchmarks)
+    plans = {
+        "random": [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7],
+        "difficulty": [0.0, 0.15, 0.3, 0.45, 0.6, 0.75, 0.9],
+    }
     robustness = []
-    for scenario in ("random", "difficulty"):
-        for p in [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7]:
-            taus = []
-            for _ in range(30 if p > 0 else 1):
-                kept = drop(p, scenario)
+    for scenario, qs in plans.items():
+        for q in qs:
+            taus, shares = [], []
+            for _ in range(30 if q > 0 else 1):
+                kept = drop(q, scenario)
+                shares.append(1 - len(kept) / total)
                 present = sorted({b for _, b, _ in kept}, key=benchmarks.index)
                 anchor = max(present, key=lambda b: sum(1 for _, b2, _ in kept if b2 == b))
                 f = eci.fit(complete, present, kept, anchor)
                 taus.append(tau(dict(zip(complete, f.C))))
-            robustness.append({"scenario": scenario, "p": p, "eci": summary(taus)})
+            robustness.append({"scenario": scenario, "q": q, "removed": r(np.mean(shares)), "eci": summary(taus)})
 
     # --- Optimization path, on the final index scale --------------------------
     frames = [
