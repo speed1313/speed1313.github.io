@@ -1312,23 +1312,20 @@ charts.robustness = (root, d) => {
   const svg = svgRoot(root, W, H);
   const tip = tooltip(root);
   const x = linear([0, 0.7], [m.l, W - m.r]);
-  const y = linear([0, 1], [H - m.b, m.t]);
+  const y = linear([0.5, 1], [H - m.b, m.t]);
   axes(svg, x, y, {
     xTicks: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7],
     xFmt: t => `${Math.round(t * 100)}%`,
     yFmt: t => t.toFixed(1),
     xLabel: "Share of scores removed",
-    yTicks: [0, 0.2, 0.4, 0.6, 0.8, 1],
+    yTicks: [0.5, 0.6, 0.7, 0.8, 0.9, 1],
     yLabel: "Kendall τ with the full mean ranking",
   });
   const g = el("g", {}, svg);
   function draw() {
     g.replaceChildren();
     const rows = d.robustness.filter(r => r.scenario === scenario);
-    for (const [k, col, name] of [
-      ["common", DIM, "Mean over shared benchmarks"],
-      ["eci", ACCENT, "ECI"],
-    ]) {
+    for (const [k, col, name] of [["eci", ACCENT, "ECI"]]) {
       const band = rows
         .map(r => `${x(r.p)},${y(r[k][2])}`)
         .concat(rows.map(r => `${x(r.p)},${y(r[k][1])}`).reverse());
@@ -1353,21 +1350,11 @@ charts.robustness = (root, d) => {
           name,
           `${Math.round(r.p * 100)}% removed`,
           `τ = ${r[k][0].toFixed(3)} (10–90%: ${r[k][1].toFixed(2)}–${r[k][2].toFixed(2)})`,
-          ...(k === "common"
-            ? [
-                `Shared benchmarks: ${r.common_benchmarks} on average`,
-                `Could rank in ${Math.round(r.common_ranked * 100)}% of draws`,
-              ]
-            : []),
         ]);
       }
     }
   }
   draw();
-  legend(root, [
-    ["ECI", ACCENT, "line"],
-    ["Mean over shared benchmarks (τ = 0 when none are shared)", DIM, "line"],
-  ]);
 };
 
 charts.params = (root, d) => {
