@@ -1346,6 +1346,101 @@ charts.robustness = (root, d) => {
   );
 };
 
+// Which scores the window keeps: models by capability (rows) against
+// benchmarks by difficulty (columns).
+charts.window = (root, d) => {
+  const steps = d.robustness.filter(r => r.scenario === "window");
+  const models = [...d.settings].sort((a, b) => b.mean - a.mean);
+  const benches = [...d.benchmarks].sort((a, b) => a.D - b.D);
+  // Same positions as the experiment: 0 (weakest, easiest) to 1.
+  const posM = new Map(
+    [...models].reverse().map((s, i) => [s.key, i / (models.length - 1)])
+  );
+  const posB = new Map(
+    benches.map((b, i) => [b.key, i / (benches.length - 1)])
+  );
+  const ctl = controls(root);
+  const cell = 15,
+    m = { l: 150, t: 34, r: 10, b: 30 };
+  const W = m.l + benches.length * cell + m.r,
+    H = m.t + models.length * cell + m.b;
+  const svg = svgRoot(root, W, H);
+  const status = el(
+    "text",
+    { x: m.l, y: 14, class: "eci-label", fill: FG },
+    svg
+  );
+  el(
+    "text",
+    { x: m.l, y: m.t - 6, class: "eci-small", fill: DIM },
+    svg
+  ).textContent = "Benchmarks: easiest → hardest";
+  el(
+    "text",
+    {
+      x: m.l + (benches.length * cell) / 2,
+      y: H - 8,
+      "text-anchor": "middle",
+      class: "eci-small",
+      fill: DIM,
+    },
+    svg
+  ).textContent = "Filled: score kept · empty: score removed";
+  models.forEach((s, i) => {
+    el(
+      "text",
+      {
+        x: m.l - 6,
+        y: m.t + i * cell + cell / 2 + 4,
+        "text-anchor": "end",
+        class: "eci-tiny",
+      },
+      svg
+    ).textContent = label(s);
+  });
+  const rects = models.map((s, i) =>
+    benches.map((b, j) =>
+      el(
+        "rect",
+        {
+          x: m.l + j * cell + 1,
+          y: m.t + i * cell + 1,
+          width: cell - 2,
+          height: cell - 2,
+          rx: 2,
+        },
+        svg
+      )
+    )
+  );
+  function draw(k) {
+    const step = steps[k];
+    const w = step.q;
+    models.forEach((s, i) => {
+      const dist = benches.map(b =>
+        Math.abs(posM.get(s.key) - posB.get(b.key))
+      );
+      // A model keeps at least its 4 nearest benchmarks, as in the experiment.
+      const fourth = [...dist].sort((a, b) => a - b)[3];
+      benches.forEach((b, j) => {
+        const keep = dist[j] <= w || dist[j] <= fourth;
+        rects[i][j].setAttribute("fill", keep ? ACCENT : "none");
+        rects[i][j].setAttribute("stroke", keep ? "none" : FAINT);
+      });
+    });
+    status.textContent = `${Math.round(step.removed * 100)}% of the scores removed · τ = ${step.eci[0].toFixed(2)}`;
+  }
+  slider(
+    ctl,
+    "Window",
+    { min: 0, max: steps.length - 1, step: 1, value: 3 },
+    k => {
+      draw(k);
+      return steps[k].q === 1 ? "all" : `±${steps[k].q}`;
+    }
+  );
+};
+
 charts.params = (root, d) => {
   const pts = d.settings
     .filter(s => s.params_b)
