@@ -167,7 +167,7 @@ $$
 
 <figure>
 <div data-eci-chart="residuals"></div>
-<figcaption>実際のスコアと予測の差。青は予測より良く、赤は予測より悪いことを表します。行は ECI の順、列はベンチマークの易しい順です。</figcaption>
+<figcaption>実際のスコアと予測値の差。青は予測値より良く、赤は予測値より悪いことを表します。行は ECI の順、列はベンチマークの易しい順です。</figcaption>
 </figure>
 
 - ScreenSpot-Pro (GUI 操作) は、最も予測が外れたベンチマークでした。DeepSeek-V4.1-Flash は予測の 59% に対して実際は 8.5% と大きく下回り、Muse Glimmer 30B は予測の 26% に対して 62% と大きく上回りました。GUI 操作の能力は、総合的な能力とは異なる傾向があることがわかります。
