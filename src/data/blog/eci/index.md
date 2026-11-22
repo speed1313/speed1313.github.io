@@ -6,8 +6,8 @@ slug: eci
 featured: false
 draft: false
 tags:
-  - Benchmarks
-description: "多くのベンチマークのスコアから、AI モデルの能力とベンチマークの難易度を推定する ECI の仕組みを理解し、simple-evals-mm のリーダーボードのスコアで実際にフィットして挙動を確かめます。"
+  - Evaluations
+description: "AI モデルの総合的な能力値を推定する ECI の仕組みを理解し、実際の評価結果を用いて ECI の挙動や利用ケースを確認します。"
 ---
 
 ## はじめに
